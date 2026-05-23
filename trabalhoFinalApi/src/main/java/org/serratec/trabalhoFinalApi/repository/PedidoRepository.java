@@ -1,6 +1,13 @@
 package org.serratec.trabalhoFinalApi.repository;
 
+import org.serratec.trabalhoFinalApi.entity.Pedido;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-//public interface PedidoRepository extends JpaRepository<> {
-//}
+import java.util.UUID;
+
+@Repository
+public interface PedidoRepository extends JpaRepository<Pedido, UUID> {
+
+
+}
