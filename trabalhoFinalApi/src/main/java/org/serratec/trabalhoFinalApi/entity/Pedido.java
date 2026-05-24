@@ -24,7 +24,7 @@ public class Pedido {
     private UUID id;
 
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ItemPedido> itensPedido = new ArrayList<>();
+    private List<ItemPedido> itens = new ArrayList<>();
 
 //    @ManyToOne
 //    private Cliente cliente;
@@ -46,6 +46,8 @@ public class Pedido {
         this.formaDePagamento = pedidoCriar.getFormasDePagamento();
         this.status = pedidoCriar.getStatus();
         this.dataPedido = pedidoCriar.getDataPedido();
+
+//        this.valorTotal = pedidoCriar
 
     }
 }

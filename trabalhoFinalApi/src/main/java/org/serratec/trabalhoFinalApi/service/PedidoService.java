@@ -8,13 +8,16 @@ package org.serratec.trabalhoFinalApi.service;
 //import org.serratec.trabalhoFinalApi.entity.Pedido;
 //import org.serratec.trabalhoFinalApi.entity.Produto;
 //import org.serratec.trabalhoFinalApi.model.ItemPedidoSolicitacao;
+//import org.serratec.trabalhoFinalApi.model.PedidoBuscar;
 //import org.serratec.trabalhoFinalApi.model.PedidoCriar;
 //import org.serratec.trabalhoFinalApi.repository.PedidoRepository;
 //import org.springframework.stereotype.Service;
 //
 //import java.time.LocalDateTime;
 //import java.util.ArrayList;
+//import java.util.Collections;
 //import java.util.List;
+//import java.util.UUID;
 //
 //@Service
 //public class PedidoService {
@@ -52,5 +55,21 @@ package org.serratec.trabalhoFinalApi.service;
 //        return pedidoRepository.save(pedido);
 //    }
 //
+//    public List<PedidoBuscar> listarPedidos(UUID id){
+//
+//        Pedido pedidoExistente = buscarPedido(id);
+//        //ver sobre !
+//        List<Pedido> pedidos = pedidoRepository.findAllById(Collections.singleton(id));
+//
+//        List<PedidoBuscar> pedidosDTO = new ArrayList<>();
+//
+//        //Pedro: para cada pedido da lista de pedidos(que pode ter varios) percorra o loop e transforme em DTO
+//        for (Pedido pedido : pedidos) {
+//
+//            pedidosDTO.add(new PedidoBuscar(pedido));
+//        }
+//
+//        return pedidosDTO;
+//    }
 //
 //}
