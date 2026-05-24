@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.serratec.trabalhoFinalApi.model.ProdutoCriar;
 import org.springframework.boot.autoconfigure.web.WebProperties;
 
 import java.util.UUID;
@@ -37,4 +38,13 @@ public class Produto {
     @JoinColumn(name = "categoria_id", nullable = false)
     private Categoria categoria;
 
+    public Produto(ProdutoCriar produto, Categoria categoria){
+        this.nome = produto.getNome();
+        this.descricao = produto.getDescricao();
+        this.preco = produto.getPreco();
+        this.estoque = produto.getEstoque();
+        this.ativo = false;
+        this.categoria = categoria;
+
+    }
 }

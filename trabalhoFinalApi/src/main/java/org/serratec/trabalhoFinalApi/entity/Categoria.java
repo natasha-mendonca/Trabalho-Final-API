@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.serratec.trabalhoFinalApi.model.CategoriaCriar;
 
 import java.util.List;
 import java.util.UUID;
@@ -25,4 +26,8 @@ public class Categoria {
     @OneToMany( mappedBy = "categoria")
     @JsonIgnore
     private List<Produto> produtos;
+
+    public Categoria(CategoriaCriar categoria){
+        this.nome = categoria.getNome();
+    }
 }
