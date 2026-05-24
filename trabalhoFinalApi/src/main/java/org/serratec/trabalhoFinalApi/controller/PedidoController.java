@@ -18,11 +18,12 @@ public class PedidoController {
         this.pedidoService = pedidoService;
     }
 
-//    @PostMapping
-//    ResponseEntity<PedidoCriar> criar (@RequestBody @Valid PedidoCriar pedidoCriar, Cliente cliente){
-//
-//        return  ;
-//    }
+    @PostMapping
+    ResponseEntity<Void> criar (@RequestBody @Valid PedidoCriar pedidoCriar){
+
+        this.pedidoService.inserirPedido(pedidoCriar);
+        return  ResponseEntity.ok().build();
+    }
 
 //    @GetMapping
     //ADICIONAR A FUNCIONALIADE PAGABLE
