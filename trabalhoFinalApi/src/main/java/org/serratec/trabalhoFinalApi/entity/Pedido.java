@@ -5,9 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.serratec.trabalhoFinalApi.model.FormasPagamento;
+import org.serratec.trabalhoFinalApi.model.PedidoCriar;
 import org.serratec.trabalhoFinalApi.model.Status;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,8 +23,8 @@ public class Pedido {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @OneToMany(mappedBy = "pedido")
-    private List<ItemPedido> itensPedido;
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ItemPedido> itensPedido = new ArrayList<>();
 
 //    @ManyToOne
 //    private Cliente cliente;
@@ -39,12 +41,11 @@ public class Pedido {
     @Column(name = "data_pedido")
     private LocalDateTime dataPedido;
 
+    public Pedido(PedidoCriar pedidoCriar) {
+        this.observacoes = pedidoCriar.getObservacoes();
+        this.formaDePagamento = pedidoCriar.getFormasDePagamento();
+        this.status = pedidoCriar.getStatus();
+        this.dataPedido = pedidoCriar.getDataPedido();
 
-    public Pedido(List<ItemPedido> itensPedido, String observacoes, FormasPagamento formaDePagamento, Status status, LocalDateTime dataPedido) {
-        this.itensPedido = itensPedido;
-        this.observacoes = observacoes;
-        this.formaDePagamento = formaDePagamento;
-        this.status = status;
-        this.dataPedido = dataPedido;
     }
 }
