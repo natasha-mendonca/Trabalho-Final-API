@@ -34,12 +34,14 @@ public class Pedido {
     private String observacoes;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private FormasPagamento formaDePagamento;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Status status;
 
-    @Column(name = "data_pedido")
+    @Column(name = "data_pedido", nullable = false)
     private LocalDateTime dataPedido;
 
     public Pedido(PedidoCriar pedidoCriar) {

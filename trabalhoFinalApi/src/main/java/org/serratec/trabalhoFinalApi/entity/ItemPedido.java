@@ -26,11 +26,11 @@ public class ItemPedido {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "produto_id")
+    @JoinColumn(name = "produto_id", nullable = false)
     private Produto produto;
 
     @ManyToOne
-    @JoinColumn(name = "pedido_id")
+    @JoinColumn(name = "pedido_id", nullable = false)
     @JsonIgnore
     private Pedido pedido;
 
@@ -40,7 +40,7 @@ public class ItemPedido {
     @Column(name = "valor_venda", nullable = false)
     private Double valorVenda;
 
-    @Column
+    @Column(nullable = false)
     private Double desconto;
 
     @Column(name = "sub_total")

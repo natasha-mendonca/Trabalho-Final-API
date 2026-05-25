@@ -12,13 +12,12 @@ import org.serratec.trabalhoFinalApi.entity.ItemPedido;
 public class ItemPedidoBuscar {
 
     private Long id;
-    private String nomeProduto; // Aqui está o segredo: apenas o nome em vez do objeto inteiro
+    private String nomeProduto;
     private Integer quantidade;
     private Double valorVenda;
     private Double desconto;
     private Double subTotal;
 
-    // Construtor para converter a Entidade no DTO
     public ItemPedidoBuscar(ItemPedido itemPedido) {
         this.id = itemPedido.getId();
         this.quantidade = itemPedido.getQuantidade();
@@ -26,7 +25,7 @@ public class ItemPedidoBuscar {
         this.desconto = itemPedido.getDesconto();
         this.subTotal = itemPedido.getSubTotal();
 
-        // Evita NullPointerException caso o produto venha nulo por algum motivo
+        // Verificacao caso o produto venha nulo por algum motivo
         if (itemPedido.getProduto() != null) {
             this.nomeProduto = itemPedido.getProduto().getNome();
         }
