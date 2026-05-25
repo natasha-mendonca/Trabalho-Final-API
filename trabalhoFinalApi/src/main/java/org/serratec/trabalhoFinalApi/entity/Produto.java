@@ -4,8 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.serratec.trabalhoFinalApi.model.ProdutoCriar;
-import org.springframework.boot.autoconfigure.web.WebProperties;
+import org.serratec.trabalhoFinalApi.model.ProdutoDto.ProdutoCriar;
 
 import java.util.UUID;
 

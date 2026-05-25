@@ -1,4 +1,4 @@
-package org.serratec.trabalhoFinalApi.model;
+package org.serratec.trabalhoFinalApi.model.EnderecoDto;
 
 import lombok.Data;
 import org.serratec.trabalhoFinalApi.entity.Endereco;

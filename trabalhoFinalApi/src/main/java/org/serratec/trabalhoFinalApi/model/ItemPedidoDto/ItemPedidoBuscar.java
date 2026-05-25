@@ -1,4 +1,4 @@
-package org.serratec.trabalhoFinalApi.model;
+package org.serratec.trabalhoFinalApi.model.ItemPedidoDto;
 
 
 import lombok.AllArgsConstructor;

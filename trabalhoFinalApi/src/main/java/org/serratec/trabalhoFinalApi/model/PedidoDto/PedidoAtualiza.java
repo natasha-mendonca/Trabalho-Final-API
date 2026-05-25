@@ -1,8 +1,10 @@
-package org.serratec.trabalhoFinalApi.model;
+package org.serratec.trabalhoFinalApi.model.PedidoDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.serratec.trabalhoFinalApi.model.FormasPagamento;
+import org.serratec.trabalhoFinalApi.model.Status;
 
 @Data
 @AllArgsConstructor

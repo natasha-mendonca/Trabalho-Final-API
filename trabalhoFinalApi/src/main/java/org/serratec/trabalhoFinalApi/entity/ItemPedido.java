@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Check;
-import org.serratec.trabalhoFinalApi.model.ItemPedidoSolicitacao;
+import org.serratec.trabalhoFinalApi.model.ItemPedidoDto.ItemPedidoSolicitacao;
 
 
 @Data

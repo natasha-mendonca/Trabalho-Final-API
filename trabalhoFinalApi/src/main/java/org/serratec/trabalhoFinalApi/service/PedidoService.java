@@ -5,28 +5,19 @@ package org.serratec.trabalhoFinalApi.service;
 // TIRAR OS COMENTARIOS GERAIS QUANDO PRODUTO E CLIENTE ESTIVEREM FUNCIONANDO
 
 
-import org.serratec.trabalhoFinalApi.entity.ItemPedido;
 import org.serratec.trabalhoFinalApi.entity.Pedido;
-import org.serratec.trabalhoFinalApi.entity.Produto;
-import org.serratec.trabalhoFinalApi.model.ItemPedidoSolicitacao;
-import org.serratec.trabalhoFinalApi.model.PedidoAtualiza;
-import org.serratec.trabalhoFinalApi.model.PedidoBuscar;
-import org.serratec.trabalhoFinalApi.model.PedidoCriar;
+import org.serratec.trabalhoFinalApi.model.PedidoDto.PedidoAtualiza;
+import org.serratec.trabalhoFinalApi.model.PedidoDto.PedidoBuscar;
 import org.serratec.trabalhoFinalApi.repository.PedidoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.UUID;
 
 @Service
 public class PedidoService {
 
     private PedidoRepository pedidoRepository;
-//    private ProdutoService produtoService;
+    private ProdutoService produtoService;
 
 //    @Autowired
 //    private ItemPedidoService itemPedidoService;
@@ -34,10 +25,10 @@ public class PedidoService {
 //    private ClienteRepository clienteRepository;
 
 
-//    public PedidoService(PedidoRepository pedidoRepository, ProdutoService produtoService) {
-//        this.pedidoRepository = pedidoRepository;
-//        this.produtoService = produtoService;
-//    }
+    public PedidoService(PedidoRepository pedidoRepository, ProdutoService produtoService) {
+        this.pedidoRepository = pedidoRepository;
+        this.produtoService = produtoService;
+    }
 
     public PedidoService(PedidoRepository pedidoRepository) {
         this.pedidoRepository = pedidoRepository;
