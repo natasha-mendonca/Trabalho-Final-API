@@ -1,6 +1,7 @@
 package org.serratec.trabalhoFinalApi.controller;
 
-    // TIRAR O COMENTARIO GERAL QUANDO O SERVICE DE PEDIDO ESTIVER FUNCIONANDO
+// ------ NECESSITA CONECTAR COM A TABELA PRODUTO E CLIENTE---------
+// TIRAR OS COMENTARIOS GERAIS QUANDO PRODUTO E CLIENTE ESTIVEREM FUNCIONANDO
 
 
 import jakarta.validation.Valid;
@@ -26,16 +27,16 @@ public class PedidoController {
         this.pedidoService = pedidoService;
     }
 
-    @PostMapping
-    ResponseEntity<Void> criar (@RequestBody @Valid PedidoCriar pedidoCriar){
-
-        this.pedidoService.inserirPedido(pedidoCriar);
-        return  ResponseEntity.ok().build();
-    }
+//    @PostMapping
+//    ResponseEntity<Void> criar (@RequestBody @Valid PedidoCriar pedidoCriar){
+//
+//        this.pedidoService.inserirPedido(pedidoCriar);
+//        return  ResponseEntity.ok().build();
+//    }
 
     @GetMapping("/{id}")
-    ResponseEntity<List<PedidoBuscar>> listarPedidos(@PathVariable UUID id){
-        return ResponseEntity.ok().body(this.pedidoService.listarPedidos(id));
+    ResponseEntity<PedidoBuscar> listarPedido(@PathVariable UUID id){
+        return ResponseEntity.ok(this.pedidoService.listarPedido(id));
     }
 
     @PutMapping("/{id}")

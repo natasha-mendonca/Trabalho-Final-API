@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Data
 @AllArgsConstructor
@@ -21,7 +22,8 @@ public class PedidoCriar {
     @NotEmpty(message = "os itens do pedido precisam ser informados")
     private List<ItemPedidoSolicitacao> itens;
 
-//     private Cliente cliente;
+    @NotNull(message = "Para criar um pedido, é necessario que o cliente seja inserido tambem")
+    private UUID clienteId;
 
     @Max(40)
     private String observacoes;
