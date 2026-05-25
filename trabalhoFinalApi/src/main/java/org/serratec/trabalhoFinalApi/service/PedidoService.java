@@ -64,21 +64,11 @@ public class PedidoService {
         return pedidoRepository.save(pedido);
     }
 
-    public List<PedidoBuscar> listarPedidos(UUID id){
+    public PedidoBuscar listarPedido(UUID id){
 
-        Pedido pedidoExistente = buscarPedido(id);
-        //ver sobre !
-        List<Pedido> pedidos = pedidoRepository.findAllById(Collections.singleton(id));
+        Pedido pedido = buscarPedido(id);
 
-        List<PedidoBuscar> pedidosDTO = new ArrayList<>();
-
-        //Pedro: para cada pedido da lista de pedidos(que pode ter varios) percorra o loop e transforme em DTO
-        for (Pedido pedido : pedidos) {
-
-            pedidosDTO.add(new PedidoBuscar(pedido));
-        }
-
-        return pedidosDTO;
+        return new PedidoBuscar(pedido);
     }
 
     public void atualizarPedido(UUID id, PedidoAtualiza pedidoAtualiza){

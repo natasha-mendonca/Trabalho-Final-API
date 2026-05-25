@@ -34,8 +34,8 @@ public class PedidoController {
     }
 
     @GetMapping("/{id}")
-    ResponseEntity<List<PedidoBuscar>> listarPedidos(@PathVariable UUID id){
-        return ResponseEntity.ok().body(this.pedidoService.listarPedidos(id));
+    ResponseEntity<PedidoBuscar> listarPedido(@PathVariable UUID id){
+        return ResponseEntity.ok(this.pedidoService.listarPedido(id));
     }
 
     @PutMapping("/{id}")
