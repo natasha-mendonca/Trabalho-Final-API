@@ -6,8 +6,8 @@ package org.serratec.trabalhoFinalApi.service;
 
 
 import org.serratec.trabalhoFinalApi.entity.Pedido;
-import org.serratec.trabalhoFinalApi.model.PedidoDto.PedidoAtualiza;
-import org.serratec.trabalhoFinalApi.model.PedidoDto.PedidoBuscar;
+import org.serratec.trabalhoFinalApi.model.PedidoAtualiza;
+import org.serratec.trabalhoFinalApi.model.PedidoBuscar;
 import org.serratec.trabalhoFinalApi.repository.PedidoRepository;
 import org.springframework.stereotype.Service;
 

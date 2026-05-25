@@ -1,7 +1,5 @@
-package org.serratec.trabalhoFinalApi.model.ProdutoDto;
+package org.serratec.trabalhoFinalApi.model;
 
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,27 +10,24 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProdutoAtualizar {
+public class ProdutoBuscar {
+    private UUID id;
     private String nome;
-
-    @Size(max = 1000)
     private String descricao;
-
     private Double preco;
-
-    @Min(0)
     private Integer estoque;
-
     private Boolean ativo;
-
     private UUID categoriaId;
+    private String categoriaNome;
 
-    public ProdutoAtualizar(Produto produto){
+    public ProdutoBuscar(Produto produto){
+        this.id =  produto.getId();
         this.nome = produto.getNome();
         this.descricao = produto.getDescricao();
         this.preco = produto.getPreco();
         this.estoque = produto.getEstoque();
         this.ativo = produto.getAtivo();
         this.categoriaId = produto.getCategoria().getId();
+        this.categoriaNome = produto.getCategoria().getNome();
     }
 }

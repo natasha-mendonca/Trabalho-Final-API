@@ -1,4 +1,4 @@
-package org.serratec.trabalhoFinalApi.model.CategoriaDto;
+package org.serratec.trabalhoFinalApi.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
