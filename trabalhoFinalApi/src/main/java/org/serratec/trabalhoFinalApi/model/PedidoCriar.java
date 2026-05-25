@@ -1,4 +1,4 @@
-package org.serratec.trabalhoFinalApi.model.PedidoDto;
+package org.serratec.trabalhoFinalApi.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
@@ -8,8 +8,6 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.serratec.trabalhoFinalApi.model.FormasPagamento;
-import org.serratec.trabalhoFinalApi.model.ItemPedidoDto.ItemPedidoSolicitacao;
 
 import java.util.List;
 import java.util.UUID;

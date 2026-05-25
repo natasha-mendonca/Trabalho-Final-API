@@ -1,4 +1,4 @@
-package org.serratec.trabalhoFinalApi.model.EnderecoDto;
+package org.serratec.trabalhoFinalApi.model;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;

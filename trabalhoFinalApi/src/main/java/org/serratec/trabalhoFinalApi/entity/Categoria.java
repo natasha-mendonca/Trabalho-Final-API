@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.serratec.trabalhoFinalApi.model.CategoriaDto.CategoriaCriar;
+import org.serratec.trabalhoFinalApi.model.CategoriaCriar;
 
 import java.util.List;
 import java.util.UUID;

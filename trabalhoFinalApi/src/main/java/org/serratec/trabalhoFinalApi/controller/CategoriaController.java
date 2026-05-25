@@ -2,9 +2,9 @@ package org.serratec.trabalhoFinalApi.controller;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.serratec.trabalhoFinalApi.model.CategoriaDto.CategoriaAtualizar;
-import org.serratec.trabalhoFinalApi.model.CategoriaDto.CategoriaBuscar;
-import org.serratec.trabalhoFinalApi.model.CategoriaDto.CategoriaCriar;
+import org.serratec.trabalhoFinalApi.model.CategoriaAtualizar;
+import org.serratec.trabalhoFinalApi.model.CategoriaBuscar;
+import org.serratec.trabalhoFinalApi.model.CategoriaCriar;
 import org.serratec.trabalhoFinalApi.service.CategoriaService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

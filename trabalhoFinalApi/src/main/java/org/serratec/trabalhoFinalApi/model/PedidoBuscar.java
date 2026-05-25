@@ -1,13 +1,10 @@
-package org.serratec.trabalhoFinalApi.model.PedidoDto;
+package org.serratec.trabalhoFinalApi.model;
 
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.serratec.trabalhoFinalApi.entity.Pedido;
-import org.serratec.trabalhoFinalApi.model.FormasPagamento;
-import org.serratec.trabalhoFinalApi.model.ItemPedidoDto.ItemPedidoBuscar;
-import org.serratec.trabalhoFinalApi.model.Status;
 
 import java.time.LocalDateTime;
 import java.util.List;
