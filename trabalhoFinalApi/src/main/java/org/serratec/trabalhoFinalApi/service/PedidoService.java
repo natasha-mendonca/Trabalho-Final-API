@@ -8,6 +8,7 @@ import org.serratec.trabalhoFinalApi.entity.ItemPedido;
 import org.serratec.trabalhoFinalApi.entity.Pedido;
 import org.serratec.trabalhoFinalApi.entity.Produto;
 import org.serratec.trabalhoFinalApi.model.ItemPedidoSolicitacao;
+import org.serratec.trabalhoFinalApi.model.PedidoAtualiza;
 import org.serratec.trabalhoFinalApi.model.PedidoBuscar;
 import org.serratec.trabalhoFinalApi.model.PedidoCriar;
 import org.serratec.trabalhoFinalApi.repository.PedidoRepository;
@@ -79,6 +80,14 @@ public class PedidoService {
 
         return pedidosDTO;
     }
+
+    public void atualizarPedido(UUID id, PedidoAtualiza pedidoAtualiza){
+        Pedido pedidoExistente =  buscarPedido(id);
+
+        pedidoExistente.atualizarDados(pedidoAtualiza);
+        this.pedidoRepository.save(pedidoExistente);
+    }
+
 
     public void deletarPedido(UUID id){
 

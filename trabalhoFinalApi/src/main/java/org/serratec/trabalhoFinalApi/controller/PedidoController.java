@@ -5,6 +5,7 @@ package org.serratec.trabalhoFinalApi.controller;
 
 import jakarta.validation.Valid;
 import org.serratec.trabalhoFinalApi.model.MensagemSucesso;
+import org.serratec.trabalhoFinalApi.model.PedidoAtualiza;
 import org.serratec.trabalhoFinalApi.model.PedidoBuscar;
 import org.serratec.trabalhoFinalApi.model.PedidoCriar;
 import org.serratec.trabalhoFinalApi.service.PedidoService;
@@ -36,6 +37,14 @@ public class PedidoController {
     ResponseEntity<List<PedidoBuscar>> listarPedidos(@PathVariable UUID id){
         return ResponseEntity.ok().body(this.pedidoService.listarPedidos(id));
     }
+
+    @PutMapping("/{id}")
+    ResponseEntity<MensagemSucesso> atualizar(@PathVariable UUID id, @Valid @RequestBody PedidoAtualiza pedidoAtualiza){
+        this.pedidoService.atualizarPedido(id, pedidoAtualiza);
+        return ResponseEntity.status(HttpStatus.OK).body(new MensagemSucesso("Pedido atualizado com sucesso!"));
+    }
+
+
 
     @DeleteMapping("/{id}")
     ResponseEntity<MensagemSucesso> deletar(@PathVariable UUID id){

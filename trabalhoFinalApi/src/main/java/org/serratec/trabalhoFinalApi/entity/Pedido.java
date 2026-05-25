@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.serratec.trabalhoFinalApi.model.FormasPagamento;
+import org.serratec.trabalhoFinalApi.model.PedidoAtualiza;
 import org.serratec.trabalhoFinalApi.model.PedidoCriar;
 import org.serratec.trabalhoFinalApi.model.Status;
 
@@ -48,6 +49,22 @@ public class Pedido {
         this.dataPedido = pedidoCriar.getDataPedido();
 
 //        this.valorTotal = pedidoCriar
+    }
 
+    public void atualizarDados(PedidoAtualiza pedidoAtualiza) {
+
+        if(pedidoAtualiza.getObservacoes() != null){
+            this.observacoes = pedidoAtualiza.getObservacoes();
+        }
+
+        if(pedidoAtualiza.getFormasDePagamento() != null) {
+            this.formaDePagamento = pedidoAtualiza.getFormasDePagamento();
+        }
+
+        if (pedidoAtualiza.getStatus() != null){
+            this.status = pedidoAtualiza.getStatus();
+        }
+
+        //data pedido altera em algo?
     }
 }
