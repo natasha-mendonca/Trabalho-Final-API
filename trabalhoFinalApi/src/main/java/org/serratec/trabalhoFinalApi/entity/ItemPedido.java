@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Check;
 import org.serratec.trabalhoFinalApi.model.ItemPedidoSolicitacao;
 
 
@@ -13,6 +14,7 @@ import org.serratec.trabalhoFinalApi.model.ItemPedidoSolicitacao;
 @NoArgsConstructor
 @Entity
 @Table(name = "item_pedido")
+@Check(constraints = "quantidade >= 1")
 public class ItemPedido {
 
 //    @EmbeddedId
@@ -24,21 +26,21 @@ public class ItemPedido {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "produto_id")
+    @JoinColumn(name = "produto_id", nullable = false)
     private Produto produto;
 
     @ManyToOne
-    @JoinColumn(name = "pedido_id")
+    @JoinColumn(name = "pedido_id", nullable = false)
     @JsonIgnore
     private Pedido pedido;
 
-    @Column
+    @Column(nullable = false)
     private Integer quantidade;
 
-    @Column(name = "valor_venda")
+    @Column(name = "valor_venda", nullable = false)
     private Double valorVenda;
 
-    @Column
+    @Column(nullable = false)
     private Double desconto;
 
     @Column(name = "sub_total")

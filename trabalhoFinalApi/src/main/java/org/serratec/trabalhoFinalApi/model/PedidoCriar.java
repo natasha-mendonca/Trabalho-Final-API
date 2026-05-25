@@ -1,6 +1,8 @@
 package org.serratec.trabalhoFinalApi.model;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -15,6 +17,8 @@ import java.util.List;
 @NoArgsConstructor
 public class PedidoCriar {
 
+    @Valid
+    @NotEmpty(message = "os itens do pedido precisam ser informados")
     private List<ItemPedidoSolicitacao> itens;
 
 //     private Cliente cliente;
@@ -22,13 +26,7 @@ public class PedidoCriar {
     @Max(40)
     private String observacoes;
 
-    @NotNull
+    @NotNull(message = "A forma de pagamento nao pode ser null")
     private FormasPagamento formasDePagamento;
-
-    @NotNull
-    private Status status;
-
-    @NotNull
-    private LocalDateTime dataPedido;
 
  }
