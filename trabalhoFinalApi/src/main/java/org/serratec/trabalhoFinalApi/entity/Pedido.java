@@ -45,8 +45,8 @@ public class Pedido {
     public Pedido(PedidoCriar pedidoCriar) {
         this.observacoes = pedidoCriar.getObservacoes();
         this.formaDePagamento = pedidoCriar.getFormasDePagamento();
-        this.status = pedidoCriar.getStatus();
-        this.dataPedido = pedidoCriar.getDataPedido();
+        this.status = Status.CRIADO;
+        this.dataPedido = LocalDateTime.now();
 
 //        this.valorTotal = pedidoCriar
     }
