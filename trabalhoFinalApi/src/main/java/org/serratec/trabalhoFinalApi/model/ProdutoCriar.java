@@ -28,6 +28,5 @@ public class ProdutoCriar {
     private Boolean ativo;
 
     @NotNull
-    @NotBlank
     private UUID categoriaId;
 }

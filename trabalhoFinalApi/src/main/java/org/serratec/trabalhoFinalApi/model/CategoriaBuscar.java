@@ -21,10 +21,12 @@ public class CategoriaBuscar {
     public CategoriaBuscar(Categoria categoria){
         this.id  = categoria.getId();
         this.nome = categoria.getNome();
-        this.produtos = categoria.getProdutos()
-                .stream()
-                .map(Produto::getNome)
-                .toList();
+        if (categoria.getProdutos() != null && !categoria.getProdutos().isEmpty()) {
+            this.produtos = categoria.getProdutos()
+                    .stream()
+                    .map(Produto::getNome)
+                    .toList();
+        }
     }
 
 }
