@@ -2,7 +2,9 @@ package org.serratec.trabalhoFinalApi.service;
 
 import lombok.AllArgsConstructor;
 import org.serratec.trabalhoFinalApi.entity.Categoria;
-import org.serratec.trabalhoFinalApi.model.*;
+import org.serratec.trabalhoFinalApi.model.CategoriaDto.CategoriaAtualizar;
+import org.serratec.trabalhoFinalApi.model.CategoriaDto.CategoriaBuscar;
+import org.serratec.trabalhoFinalApi.model.CategoriaDto.CategoriaCriar;
 import org.serratec.trabalhoFinalApi.repository.CategoriaRepository;
 import org.springframework.stereotype.Service;
 

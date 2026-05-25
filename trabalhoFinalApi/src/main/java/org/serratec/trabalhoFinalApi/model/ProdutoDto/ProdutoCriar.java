@@ -1,4 +1,4 @@
-package org.serratec.trabalhoFinalApi.model;
+package org.serratec.trabalhoFinalApi.model.ProdutoDto;
 
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;

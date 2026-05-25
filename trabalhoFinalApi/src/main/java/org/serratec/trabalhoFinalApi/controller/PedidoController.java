@@ -12,16 +12,15 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.serratec.trabalhoFinalApi.model.MensagemSucesso;
-import org.serratec.trabalhoFinalApi.model.PedidoAtualiza;
-import org.serratec.trabalhoFinalApi.model.PedidoBuscar;
-import org.serratec.trabalhoFinalApi.model.PedidoCriar;
+import org.serratec.trabalhoFinalApi.model.PedidoDto.PedidoAtualiza;
+import org.serratec.trabalhoFinalApi.model.PedidoDto.PedidoBuscar;
+import org.serratec.trabalhoFinalApi.model.PedidoDto.PedidoCriar;
 import org.serratec.trabalhoFinalApi.service.PedidoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -49,7 +48,7 @@ public class PedidoController {
 //                           @ApiResponse(description = "Erro inteiro no servidor", responseCode = "500", content = @Content(
 //                                   mediaType = "application/json",
 //                                   schema = @Schema(implementation = ErrorResponse.class)))})
-    @PostMapping
+//    @PostMapping
 //    ResponseEntity<Void> criar (@RequestBody @Valid PedidoCriar pedidoCriar){
 //
 //        this.pedidoService.inserirPedido(pedidoCriar);

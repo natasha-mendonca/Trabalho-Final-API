@@ -1,4 +1,4 @@
-package org.serratec.trabalhoFinalApi.model;
+package org.serratec.trabalhoFinalApi.model.CategoriaDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import org.serratec.trabalhoFinalApi.entity.Categoria;
 import org.serratec.trabalhoFinalApi.entity.Produto;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
