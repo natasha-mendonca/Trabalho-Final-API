@@ -1,7 +1,8 @@
 package org.serratec.trabalhoFinalApi.service;
 
 
-// ------ NECESSITA CONECTAR COM A TABELA PRODUTO ---------
+// ------ NECESSITA CONECTAR COM A TABELA PRODUTO E CLIENTE---------
+// TIRAR OS COMENTARIOS GERAIS QUANDO PRODUTO E CLIENTE ESTIVEREM FUNCIONANDO
 
 
 import org.serratec.trabalhoFinalApi.entity.ItemPedido;
@@ -12,6 +13,7 @@ import org.serratec.trabalhoFinalApi.model.PedidoAtualiza;
 import org.serratec.trabalhoFinalApi.model.PedidoBuscar;
 import org.serratec.trabalhoFinalApi.model.PedidoCriar;
 import org.serratec.trabalhoFinalApi.repository.PedidoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -28,6 +30,8 @@ public class PedidoService {
 
 //    @Autowired
 //    private ItemPedidoService itemPedidoService;
+//    @Autowired
+//    private ClienteRepository clienteRepository;
 
 
 //    public PedidoService(PedidoRepository pedidoRepository, ProdutoService produtoService) {
@@ -43,26 +47,30 @@ public class PedidoService {
         return this.pedidoRepository.findById(id).orElseThrow(() -> new RuntimeException("Pedido não encontrado pelo id: " + id + " especificado. Informe outro!"));
     }
 
-    public Pedido inserirPedido(PedidoCriar pedidoCriar){
+//    public Cliente buscarCliente(UUID id){
+//        return this.clienteRepository.findById(id).orElseThrow(() -> new RuntimeException("Cliente não encontrado pelo id: " + id + " especificado. Informe outro!"));
+//    }
 
-        Pedido pedido = new Pedido(pedidoCriar);
-
-        pedido.setDataPedido(LocalDateTime.now());
-
-        List<ItemPedido> itens = new ArrayList<>();
-
-        for (ItemPedidoSolicitacao itemDTO : pedidoCriar.getItens()) {
-
+//    public Pedido inserirPedido(PedidoCriar pedidoCriar){
+//
+//        Cliente clienteExistente = buscarCliente(pedidoCriar.getClienteId());
+//        Pedido pedido = new Pedido(pedidoCriar, clienteExistente);
+//
+//        List<ItemPedido> itens = new ArrayList<>();
+//
+//        for (ItemPedidoSolicitacao itemDTO : pedidoCriar.getItens()) {
+//
 //            Produto produto = produtoService.buscarProduto(itemDTO.getProdutoId());
-
+//
 //            ItemPedido item = new ItemPedido(pedido, produto, itemDTO);
-
+//
 //            itens.add(item);
-        }
-
-        pedido.setItens(itens);
-        return pedidoRepository.save(pedido);
-    }
+//        }
+//
+        //rever esse setItens dentro do service!
+//        pedido.setItens(itens);
+//        return pedidoRepository.save(pedido);
+//    }
 
     public PedidoBuscar listarPedido(UUID id){
 

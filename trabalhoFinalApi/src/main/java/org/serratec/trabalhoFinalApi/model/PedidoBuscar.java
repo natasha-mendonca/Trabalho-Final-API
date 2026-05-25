@@ -23,6 +23,7 @@ public class PedidoBuscar {
     private Status status;
     private LocalDateTime dataPedido;
     private Double valorTotal;
+    private UUID clienteId;
 
     //@ManyToOne
 //    private Cliente cliente;
@@ -42,17 +43,19 @@ public class PedidoBuscar {
         this.status = pedido.getStatus();
         this.formaDePagamento = pedido.getFormaDePagamento();
 
-        // Funcionalidade: Converter a lista de entidades ItemPedido dentro de Pedido para ItemPedidoBuscar(dto)
+        // Funcionalidade: Pedro: converter a lista de entidades ItemPedido dentro de Pedido para ItemPedidoBuscar(dto)
         if (pedido.getItens() != null) {
             this.itens = pedido.getItens().stream()
                     .map(ItemPedidoBuscar::new)
                     .collect(Collectors.toList());
         }
-        //Funcionalidade: para cada item do ItemPedidoBuscar pegue o subtotal e some(.sum())
+        //Funcionalidade: Pedro: para cada item do ItemPedidoBuscar pegue o subtotal e some(.sum())
         if (this.itens != null) {
             this.valorTotal = this.itens.stream()
                     .mapToDouble(ItemPedidoBuscar::getSubTotal)
                     .sum();
         }
+
+//        this.clienteID = pedido.getCliente().getId();
     }
 }

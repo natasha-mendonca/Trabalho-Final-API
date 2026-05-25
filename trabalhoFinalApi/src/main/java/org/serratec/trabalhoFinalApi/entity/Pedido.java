@@ -28,6 +28,7 @@ public class Pedido {
     private List<ItemPedido> itens = new ArrayList<>();
 
 //    @ManyToOne
+//    @JoinColumn(name = "cliente_id")
 //    private Cliente cliente;
 
     @Column
@@ -44,13 +45,18 @@ public class Pedido {
     @Column(name = "data_pedido", nullable = false)
     private LocalDateTime dataPedido;
 
+    @Column(name = "nome_cliente")
+    private String nomeCliente;
+
     public Pedido(PedidoCriar pedidoCriar) {
         this.observacoes = pedidoCriar.getObservacoes();
         this.formaDePagamento = pedidoCriar.getFormasDePagamento();
         this.status = Status.CRIADO;
         this.dataPedido = LocalDateTime.now();
 
-//        this.valorTotal = pedidoCriar
+//        this.cliente = cliente;
+//        this.nomeCliente = cliente.getNome();
+
     }
 
     public void atualizarDados(PedidoAtualiza pedidoAtualiza) {
