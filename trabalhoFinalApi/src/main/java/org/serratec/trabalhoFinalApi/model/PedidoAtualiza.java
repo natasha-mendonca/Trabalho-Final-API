@@ -1,5 +1,7 @@
 package org.serratec.trabalhoFinalApi.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,10 +11,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PedidoAtualiza {
 
+    @Size(max = 40)
+    @Schema(description = "Campo contendo observacoes", example = "Pedido entregue ao destinatário", maxLength = 40)
     private String observacoes;
 
+    @Schema(description = "Campo contendo a forma de pagamento", nullable = false, example = "PIX")
     private FormasPagamento formasDePagamento;
 
+    @Schema(description = "Campo contendo o status", nullable = false, example = "ENTREGUE")
     private Status status;
 
 //    private LocalDateTime datePedidoAtualizado;

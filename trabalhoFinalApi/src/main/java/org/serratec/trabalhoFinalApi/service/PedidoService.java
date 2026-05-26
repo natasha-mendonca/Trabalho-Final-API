@@ -1,5 +1,7 @@
 package org.serratec.trabalhoFinalApi.service;
-import lombok.RequiredArgsConstructor;
+import jakarta.persistence.EntityManager;
+import org.hibernate.envers.AuditReader;
+import org.hibernate.envers.AuditReaderFactory;
 import org.serratec.trabalhoFinalApi.entity.Cliente;
 import org.serratec.trabalhoFinalApi.entity.ItemPedido;
 import org.serratec.trabalhoFinalApi.entity.Pedido;
@@ -23,16 +25,14 @@ public class PedidoService {
     private ProdutoService produtoService;
     private ClienteRepository clienteRepository;
     private EmailService emailService;
+    private EntityManager entityManager;
 
-    public PedidoService(PedidoRepository pedidoRepository,
-                         ProdutoService produtoService,
-                         ClienteRepository clienteRepository,
-                         EmailService emailService) {
-
+    public PedidoService(PedidoRepository pedidoRepository, ProdutoService produtoService, ClienteRepository clienteRepository, EmailService emailService, EntityManager entityManager) {
         this.pedidoRepository = pedidoRepository;
         this.produtoService = produtoService;
         this.clienteRepository = clienteRepository;
         this.emailService = emailService;
+        this.entityManager = entityManager;
     }
 
     public Pedido buscarPedido(UUID id){
@@ -42,6 +42,28 @@ public class PedidoService {
     public Cliente buscarCliente(UUID id){
         return this.clienteRepository.findById(id).orElseThrow(() -> new RuntimeException("Cliente não encontrado pelo id: " + id + " especificado. Informe outro!"));
     }
+
+    public List<Number> buscarRevisoes(UUID pedidoId) {
+        AuditReader reader = AuditReaderFactory.get(entityManager);
+
+        return reader.getRevisions(Pedido.class, pedidoId);
+    }
+
+//    public Pedido buscarPedidoNaRevisao(UUID id, Integer numeroRevisao) {
+//        // 1. Criamos o leitor de auditoria do Envers passando o EntityManager
+//        AuditReader auditReader = AuditReaderFactory.get(entityManager);
+//
+//        // 2. Fazemos a busca da entidade (Pedido.class), pelo ID e pelo número da revisão
+//        Pedido pedidoHistorico = auditReader.find(Pedido.class, id, numeroRevisao);
+//
+//        // 3. Uma boa prática: se não achar a revisão, lançamos uma exceção
+//        if (pedidoHistorico == null) {
+//            throw new RuntimeException("Revisão " + numeroRevisao + " não encontrada para o pedido " + id);
+//        }
+//
+//        return pedidoHistorico;
+//    }
+
 
     public Pedido inserirPedido(PedidoCriar pedidoCriar){
 
@@ -98,4 +120,5 @@ public class PedidoService {
                 pedidoExistente);
 
     }
+
 }

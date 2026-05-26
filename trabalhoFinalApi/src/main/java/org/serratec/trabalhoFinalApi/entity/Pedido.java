@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.envers.Audited;
 import org.serratec.trabalhoFinalApi.model.FormasPagamento;
 import org.serratec.trabalhoFinalApi.model.PedidoAtualiza;
 import org.serratec.trabalhoFinalApi.model.PedidoCriar;
@@ -18,7 +19,8 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Pedido {
+@Audited
+public class Pedido extends Auditoria{
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
