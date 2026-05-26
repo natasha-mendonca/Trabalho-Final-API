@@ -17,9 +17,11 @@ import java.util.UUID;
 public class ClienteService {
 
     private ClienteRepository clienteRepository;
+    private EmailService emailService;
 
-    public ClienteService(ClienteRepository clienteRepository) {
+    public ClienteService(ClienteRepository clienteRepository, EmailService emailService) {
         this.clienteRepository = clienteRepository;
+        this.emailService = emailService;
     }
 
     public Cliente buscarCliente (UUID id){
@@ -31,7 +33,9 @@ public class ClienteService {
             throw new CpfJaCadastradoNatasha("CPF ja Cadastrado");
         }
         Cliente cliente1 = new Cliente(cliente);
-        return new ClienteBuscar(clienteRepository.save(cliente1));
+        Cliente clienteSalvo = clienteRepository.save(cliente1);
+        emailService.enviarEmailCadastro(clienteSalvo.getEmail());
+        return new ClienteBuscar(clienteSalvo);
     }
 
     public ClienteAtualizar atualizarCliente(UUID id, ClienteAtualizar cliente) {
@@ -50,7 +54,10 @@ public class ClienteService {
         clienteAtualizado.setTelefone(cliente.getTelefone());
         clienteAtualizado.setEndereco(cliente.getEndereco());
 
-        return new ClienteAtualizar(clienteRepository.save(clienteAtualizado));
+        clienteRepository.save(clienteAtualizado);
+        emailService.enviarEmailAlteracao(clienteAtualizado.getEmail());
+
+        return new ClienteAtualizar(clienteAtualizado);
     }
 }
 

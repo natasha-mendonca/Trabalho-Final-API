@@ -22,11 +22,17 @@ public class PedidoService {
     private PedidoRepository pedidoRepository;
     private ProdutoService produtoService;
     private ClienteRepository clienteRepository;
+    private EmailService emailService;
 
-    public PedidoService(PedidoRepository pedidoRepository, ProdutoService produtoService, ClienteRepository clienteRepository) {
+    public PedidoService(PedidoRepository pedidoRepository,
+                         ProdutoService produtoService,
+                         ClienteRepository clienteRepository,
+                         EmailService emailService) {
+
         this.pedidoRepository = pedidoRepository;
         this.produtoService = produtoService;
         this.clienteRepository = clienteRepository;
+        this.emailService = emailService;
     }
 
     public Pedido buscarPedido(UUID id){
@@ -55,7 +61,10 @@ public class PedidoService {
 
         //rever esse setItens dentro do service!
         pedido.setItens(itens);
-        return pedidoRepository.save(pedido);
+        Pedido pedidoSalvo = pedidoRepository.save(pedido);
+        emailService.enviarEmailPedidoAprovado(clienteExistente.getEmail(), pedidoSalvo);
+
+        return pedidoSalvo;
     }
 
     public PedidoBuscar listarPedido(UUID id){
@@ -69,9 +78,9 @@ public class PedidoService {
         Pedido pedidoExistente =  buscarPedido(id);
 
         pedidoExistente.atualizarDados(pedidoAtualiza);
-        this.pedidoRepository.save(pedidoExistente);
+        Pedido pedidoAtualizado = this.pedidoRepository.save(pedidoExistente);
+        emailService.enviarEmailPedidoAtualizado(pedidoAtualizado.getCliente().getEmail(), pedidoAtualizado);
     }
-
 
     public void deletarPedido(UUID id){
 
@@ -83,7 +92,8 @@ public class PedidoService {
             return;
         }
         this.pedidoRepository.delete(pedidoExistente);
+        emailService.enviarEmailPedidoCancelado(pedidoExistente.getCliente().getEmail(),
+                pedidoExistente);
 
     }
-
 }

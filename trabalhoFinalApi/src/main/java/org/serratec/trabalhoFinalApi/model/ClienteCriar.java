@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -29,5 +28,5 @@ public class ClienteCriar {
     private String telefone;
 
     @NotBlank
-    private String endereco;
+    private String cep;
 }
