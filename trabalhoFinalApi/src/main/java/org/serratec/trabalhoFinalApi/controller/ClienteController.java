@@ -1,5 +1,6 @@
 package org.serratec.trabalhoFinalApi.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.serratec.trabalhoFinalApi.entity.Cliente;
 import org.serratec.trabalhoFinalApi.model.ClienteCriar;
@@ -14,6 +15,7 @@ import java.util.UUID;
 
 @RequestMapping("cliente")
 @RestController
+@Tag(name = "Cliente", description = "Pacote contendo as requisições envolvendo clientes")
 public class ClienteController {
 
     @Autowired
@@ -25,7 +27,7 @@ public class ClienteController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Cliente> buscarPorId(@PathVariable UUID id) {
-        Cliente cliente = this.clienteService.buscarPorId(id);
+        Cliente cliente = this.clienteService.buscarCliente(id);
         return ResponseEntity.status(OK).body(cliente);
     }
 

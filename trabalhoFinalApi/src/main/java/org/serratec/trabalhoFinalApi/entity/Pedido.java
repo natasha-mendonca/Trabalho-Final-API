@@ -27,9 +27,9 @@ public class Pedido {
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ItemPedido> itens = new ArrayList<>();
 
-//    @ManyToOne
-//    @JoinColumn(name = "cliente_id")
-//    private Cliente cliente;
+    @ManyToOne
+    @JoinColumn(name = "cliente_id")
+    private Cliente cliente;
 
     @Column
     private String observacoes;
@@ -48,14 +48,14 @@ public class Pedido {
     @Column(name = "nome_cliente")
     private String nomeCliente;
 
-    public Pedido(PedidoCriar pedidoCriar) {
+    public Pedido(PedidoCriar pedidoCriar, Cliente cliente) {
         this.observacoes = pedidoCriar.getObservacoes();
         this.formaDePagamento = pedidoCriar.getFormasDePagamento();
         this.status = Status.CRIADO;
         this.dataPedido = LocalDateTime.now();
 
-//        this.cliente = cliente;
-//        this.nomeCliente = cliente.getNome();
+        this.cliente = cliente;
+        this.nomeCliente = cliente.getNome();
 
     }
 

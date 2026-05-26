@@ -27,19 +27,6 @@ import java.util.UUID;
 public class CategoriaController {
     private CategoriaService categoriaService;
 
-    @Operation(summary = "Buscar categorias", description = "Busca as categorias por: ID ou nome")
-    @ApiResponses(value = {
-            @ApiResponse(description = "Categorias encontradas com sucesso", responseCode = "200"),
-            @ApiResponse (description = "Dados informados inválidos", responseCode = "400", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
-            @ApiResponse (description = "Dados não encontrados", responseCode = "404", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
-            @ApiResponse (description = "Erro interno no servidor", responseCode = "500", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
-    })
-    @GetMapping
-    public ResponseEntity<List<CategoriaBuscar>> buscarCategoria(@RequestParam(required = false) UUID id, @RequestParam(required = false) String nome){
-        List<CategoriaBuscar> categorias = categoriaService.buscarCategoria(id, nome);
-        return ResponseEntity.status(HttpStatus.OK).body(categorias);
-    }
-
     @Operation(summary = "Cadastrar categoria", description = "Cadastra uma nova categoria no sistema")
     @ApiResponses(value = {
             @ApiResponse (description = "categoria criada com sucesso", responseCode = "200"),
@@ -51,6 +38,19 @@ public class CategoriaController {
     public ResponseEntity<CategoriaBuscar> cadastrarCategoria(@RequestBody @Valid CategoriaCriar categoriaCriar){
         CategoriaBuscar categoria = categoriaService.cadastrarCategoria(categoriaCriar);
         return ResponseEntity.status(HttpStatus.CREATED).body(categoria);
+    }
+
+    @Operation(summary = "Buscar categorias", description = "Busca as categorias por: ID ou nome")
+    @ApiResponses(value = {
+            @ApiResponse(description = "Categorias encontradas com sucesso", responseCode = "200"),
+            @ApiResponse (description = "Dados informados inválidos", responseCode = "400", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse (description = "Dados não encontrados", responseCode = "404", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse (description = "Erro interno no servidor", responseCode = "500", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+    })
+    @GetMapping
+    public ResponseEntity<List<CategoriaBuscar>> buscarCategoria(@RequestParam(required = false) UUID id, @RequestParam(required = false) String nome){
+        List<CategoriaBuscar> categorias = categoriaService.buscarCategoria(id, nome);
+        return ResponseEntity.status(HttpStatus.OK).body(categorias);
     }
 
 

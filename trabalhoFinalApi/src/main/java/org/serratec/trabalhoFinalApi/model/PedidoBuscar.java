@@ -56,6 +56,6 @@ public class PedidoBuscar {
                     .sum();
         }
 
-//        this.clienteID = pedido.getCliente().getId();
+        this.clienteId = pedido.getCliente().getId();
     }
 }

@@ -1,19 +1,17 @@
 package org.serratec.trabalhoFinalApi.controller;
 
-// ------ NECESSITA CONECTAR COM A TABELA PRODUTO E CLIENTE---------
-// TIRAR OS COMENTARIOS GERAIS QUANDO PRODUTO E CLIENTE ESTIVEREM FUNCIONANDO
-
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.serratec.trabalhoFinalApi.model.MensagemSucesso;
 import org.serratec.trabalhoFinalApi.model.PedidoAtualiza;
 import org.serratec.trabalhoFinalApi.model.PedidoBuscar;
+import org.serratec.trabalhoFinalApi.model.PedidoCriar;
 import org.serratec.trabalhoFinalApi.service.PedidoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +22,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/pedido")
+@Tag(name = "Pedido", description = "Pacote contendo as requisições envolvendo pedidos")
 public class PedidoController {
 
     PedidoService pedidoService;
@@ -33,26 +32,26 @@ public class PedidoController {
     }
 
     //CRIAR A CLASSE ERRORESPONSE
-//    @Operation(summary = "Criar", description = "Insere dados do pedido no sistema")
-//    @ApiResponses(value = {@ApiResponse(description = "Pedido criado com sucesso", responseCode = "201"),
-//                           @ApiResponse(description = "Dados invalidos", responseCode = "400", content = @Content(
-//                                   mediaType = "application/json",
-//                                   schema = @Schema(implementation = ErrorResponse.class))),
-//                           @ApiResponse(description = "Dados não encontrados", responseCode = "404", content = @Content(
-//                                   mediaType = "applicaton/json",
-//                                   schema = @Schema(implementation = ErrorResponse.class))),
-//                           @ApiResponse(description = "Dados já existentes", responseCode = "409", content = @Content(
-//                                   mediaType = "application/json",
-//                                   schema = @Schema(implementation = ErrorResponse.class))),
-//                           @ApiResponse(description = "Erro inteiro no servidor", responseCode = "500", content = @Content(
-//                                   mediaType = "application/json",
-//                                   schema = @Schema(implementation = ErrorResponse.class)))})
-//    @PostMapping
-//    ResponseEntity<Void> criar (@RequestBody @Valid PedidoCriar pedidoCriar){
-//
-//        this.pedidoService.inserirPedido(pedidoCriar);
-//        return  ResponseEntity.ok().build();
-//    }
+    @Operation(summary = "Criar", description = "Insere dados do pedido no sistema")
+    @ApiResponses(value = {@ApiResponse(description = "Pedido criado com sucesso", responseCode = "201"),
+                           @ApiResponse(description = "Dados invalidos", responseCode = "400", content = @Content(
+                                   mediaType = "application/json",
+                                   schema = @Schema(implementation = ErrorResponse.class))),
+                           @ApiResponse(description = "Dados não encontrados", responseCode = "404", content = @Content(
+                                   mediaType = "applicaton/json",
+                                   schema = @Schema(implementation = ErrorResponse.class))),
+                           @ApiResponse(description = "Dados já existentes", responseCode = "409", content = @Content(
+                                   mediaType = "application/json",
+                                   schema = @Schema(implementation = ErrorResponse.class))),
+                           @ApiResponse(description = "Erro inteiro no servidor", responseCode = "500", content = @Content(
+                                   mediaType = "application/json",
+                                   schema = @Schema(implementation = ErrorResponse.class)))})
+    @PostMapping
+    ResponseEntity<Void> criar (@RequestBody @Valid PedidoCriar pedidoCriar){
+
+        this.pedidoService.inserirPedido(pedidoCriar);
+        return  ResponseEntity.ok().build();
+    }
 
     @Operation(summary = "Buscar pedido por id", description = "Retorna um pedido especificado pelo ID")
     @ApiResponses(value = {@ApiResponse(description = "Busca de pedido retornada", responseCode = "200"),

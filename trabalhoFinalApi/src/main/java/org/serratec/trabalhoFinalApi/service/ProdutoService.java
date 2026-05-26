@@ -22,6 +22,10 @@ public class ProdutoService {
     private ProdutoRepository produtoRepository;
     private CategoriaRepository categoriaRepository;
 
+    public Produto buscarProdutoId(UUID id) {
+        return this.produtoRepository.findById(id).orElseThrow(() -> new RuntimeException("Produto não encontrado pelo id: " + id + " especificado. Informe outro!"));
+    }
+
     public List<ProdutoBuscar> buscarProduto(UUID id, Boolean ativo, String nome, String categoriaNome){
         List<Produto> produtos = new ArrayList<>();
 
