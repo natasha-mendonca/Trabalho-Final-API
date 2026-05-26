@@ -1,13 +1,13 @@
 package org.serratec.trabalhoFinalApi.service;
 
 import org.serratec.trabalhoFinalApi.entity.Cliente;
+import org.serratec.trabalhoFinalApi.entity.Endereco;
 import org.serratec.trabalhoFinalApi.exception.ClienteNaoEncontradoNatasha;
 import org.serratec.trabalhoFinalApi.exception.CpfJaCadastradoNatasha;
 import org.serratec.trabalhoFinalApi.model.ClienteAtualizar;
 import org.serratec.trabalhoFinalApi.model.ClienteBuscar;
 import org.serratec.trabalhoFinalApi.model.ClienteCriar;
 import org.serratec.trabalhoFinalApi.repository.ClienteRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -17,9 +17,13 @@ import java.util.UUID;
 public class ClienteService {
 
     private ClienteRepository clienteRepository;
+    private EmailService emailService;
+    private EnderecoService enderecoService;
 
-    public ClienteService(ClienteRepository clienteRepository) {
+    public ClienteService(ClienteRepository clienteRepository, EmailService emailService, EnderecoService enderecoService) {
         this.clienteRepository = clienteRepository;
+        this.emailService = emailService;
+        this.enderecoService = this.enderecoService;
     }
 
     public Cliente buscarCliente (UUID id){
@@ -27,11 +31,17 @@ public class ClienteService {
     }
 
     public ClienteBuscar inserirCliente(ClienteCriar cliente) {
+
         if (clienteRepository.findByCpf(cliente.getCpf()).isPresent()){
             throw new CpfJaCadastradoNatasha("CPF ja Cadastrado");
         }
-        Cliente cliente1 = new Cliente(cliente);
-        return new ClienteBuscar(clienteRepository.save(cliente1));
+
+        Endereco endereco = enderecoService.adicionarEndereco(cliente.getEndereco());
+
+        Cliente cliente1 = new Cliente(cliente, endereco);
+        Cliente clienteSalvo = clienteRepository.save(cliente1);
+        emailService.enviarEmailCadastro(clienteSalvo.getEmail());
+        return new ClienteBuscar(clienteSalvo);
     }
 
     public ClienteAtualizar atualizarCliente(UUID id, ClienteAtualizar cliente) {
@@ -48,9 +58,15 @@ public class ClienteService {
         clienteAtualizado.setNome(cliente.getNome());
         clienteAtualizado.setEmail(cliente.getEmail());
         clienteAtualizado.setTelefone(cliente.getTelefone());
-        clienteAtualizado.setEndereco(cliente.getEndereco());
 
-        return new ClienteAtualizar(clienteRepository.save(clienteAtualizado));
+        Endereco enderecoAtualizado = enderecoService.adicionarEndereco(cliente.getEndereco());
+
+        clienteAtualizado.setEndereco(enderecoAtualizado);
+
+        clienteRepository.save(clienteAtualizado);
+        emailService.enviarEmailAlteracao(clienteAtualizado.getEmail());
+
+        return new ClienteAtualizar(clienteAtualizado);
     }
 }
 
