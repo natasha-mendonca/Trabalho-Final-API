@@ -49,22 +49,6 @@ public class PedidoService {
         return reader.getRevisions(Pedido.class, pedidoId);
     }
 
-//    public Pedido buscarPedidoNaRevisao(UUID id, Integer numeroRevisao) {
-//        // 1. Criamos o leitor de auditoria do Envers passando o EntityManager
-//        AuditReader auditReader = AuditReaderFactory.get(entityManager);
-//
-//        // 2. Fazemos a busca da entidade (Pedido.class), pelo ID e pelo número da revisão
-//        Pedido pedidoHistorico = auditReader.find(Pedido.class, id, numeroRevisao);
-//
-//        // 3. Uma boa prática: se não achar a revisão, lançamos uma exceção
-//        if (pedidoHistorico == null) {
-//            throw new RuntimeException("Revisão " + numeroRevisao + " não encontrada para o pedido " + id);
-//        }
-//
-//        return pedidoHistorico;
-//    }
-
-
     public Pedido inserirPedido(PedidoCriar pedidoCriar){
 
         Cliente clienteExistente = buscarCliente(pedidoCriar.getClienteId());
