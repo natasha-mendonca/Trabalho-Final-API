@@ -16,7 +16,7 @@ public class ClienteBuscar {
     private String cpf;
     private String email;
     private String telefone;
-    private String endereco;
+    private EnderecoBuscar endereco;
 
     public ClienteBuscar (Cliente cliente){
         this.id = cliente.getId();
@@ -24,6 +24,6 @@ public class ClienteBuscar {
         this.cpf = cliente.getCpf();
         this.email = cliente.getEmail();
         this.telefone = cliente.getTelefone();
-        this.endereco = cliente.getEndereco();
+        this.endereco = new EnderecoBuscar(cliente.getEndereco());
     }
 }

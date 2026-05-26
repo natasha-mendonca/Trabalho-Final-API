@@ -31,17 +31,17 @@ public class Endereco {
     private String bairro;
 
     @Column(nullable = false)
-    private String cidade;
+    private String localidade;
 
     @Column(nullable = false)
-    private String estado;
+    private String uf;
 
     public Endereco(EnderecoCriar enderecoCriar, ViaCepResponse viaCepResponse) {
         this.logradouro = viaCepResponse.logradouro();
         this.bairro = viaCepResponse.bairro();
-        this.cidade = viaCepResponse.cidade();
-        this.estado = viaCepResponse.estado();
+        this.localidade = viaCepResponse.localidade();
+        this.uf = viaCepResponse.uf();
         this.cep = enderecoCriar.getCep();
-        this.complemento = enderecoCriar.getCep();
+        this.complemento = enderecoCriar.getComplemento();
     }
 }
