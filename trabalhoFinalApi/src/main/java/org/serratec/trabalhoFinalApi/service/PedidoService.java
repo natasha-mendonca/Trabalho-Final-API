@@ -1,6 +1,5 @@
 package org.serratec.trabalhoFinalApi.service;
 import jakarta.persistence.EntityManager;
-import lombok.RequiredArgsConstructor;
 import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;
 import org.serratec.trabalhoFinalApi.entity.Cliente;
@@ -13,7 +12,6 @@ import org.serratec.trabalhoFinalApi.model.PedidoBuscar;
 import org.serratec.trabalhoFinalApi.model.PedidoCriar;
 import org.serratec.trabalhoFinalApi.repository.ClienteRepository;
 import org.serratec.trabalhoFinalApi.repository.PedidoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -26,14 +24,14 @@ public class PedidoService {
     private PedidoRepository pedidoRepository;
     private ProdutoService produtoService;
     private ClienteRepository clienteRepository;
-
+    private EmailService emailService;
     private EntityManager entityManager;
 
-
-    public PedidoService(PedidoRepository pedidoRepository, ProdutoService produtoService, ClienteRepository clienteRepository, EntityManager entityManager) {
+    public PedidoService(PedidoRepository pedidoRepository, ProdutoService produtoService, ClienteRepository clienteRepository, EmailService emailService, EntityManager entityManager) {
         this.pedidoRepository = pedidoRepository;
         this.produtoService = produtoService;
         this.clienteRepository = clienteRepository;
+        this.emailService = emailService;
         this.entityManager = entityManager;
     }
 
@@ -78,6 +76,8 @@ public class PedidoService {
 
             Produto produto = produtoService.buscarProdutoId(itemDTO.getProdutoId());
 
+            produtoService.atualizarEstoque(produto.getId(), itemDTO.getQuantidade());
+
             ItemPedido item = new ItemPedido(pedido, produto, itemDTO);
 
             itens.add(item);
@@ -85,7 +85,10 @@ public class PedidoService {
 
         //rever esse setItens dentro do service!
         pedido.setItens(itens);
-        return pedidoRepository.save(pedido);
+        Pedido pedidoSalvo = pedidoRepository.save(pedido);
+        emailService.enviarEmailPedidoAprovado(clienteExistente.getEmail(), pedidoSalvo);
+
+        return pedidoSalvo;
     }
 
     public PedidoBuscar listarPedido(UUID id){
@@ -99,9 +102,9 @@ public class PedidoService {
         Pedido pedidoExistente =  buscarPedido(id);
 
         pedidoExistente.atualizarDados(pedidoAtualiza);
-        this.pedidoRepository.save(pedidoExistente);
+        Pedido pedidoAtualizado = this.pedidoRepository.save(pedidoExistente);
+        emailService.enviarEmailPedidoAtualizado(pedidoAtualizado.getCliente().getEmail(), pedidoAtualizado);
     }
-
 
     public void deletarPedido(UUID id){
 
@@ -113,10 +116,9 @@ public class PedidoService {
             return;
         }
         this.pedidoRepository.delete(pedidoExistente);
+        emailService.enviarEmailPedidoCancelado(pedidoExistente.getCliente().getEmail(),
+                pedidoExistente);
 
     }
-
-    //colocar o @Audited em todas as entidades do banco. Nao coloquei para nao ter a chance de dar conflito
-    //alterei o POM e o Main tambem!
 
 }

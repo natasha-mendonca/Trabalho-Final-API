@@ -17,7 +17,7 @@ public class ClienteAtualizar {
     private String cpf;
     private String email;
     private String telefone;
-    private String endereco;
+    private EnderecoCriar endereco;
 
     public ClienteAtualizar (Cliente cliente){
         this.id = cliente.getId();
@@ -25,6 +25,8 @@ public class ClienteAtualizar {
         this.cpf = cliente.getCpf();
         this.email = cliente.getEmail();
         this.telefone = cliente.getTelefone();
-        this.endereco = cliente.getEndereco();
+        this.endereco = new EnderecoCriar(
+                cliente.getEndereco().getCep(),
+                cliente.getEndereco().getComplemento());
     }
 }

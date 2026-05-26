@@ -32,14 +32,15 @@ public class Cliente {
     @Column(length = 13)
     private String telefone;
 
-    @Column
-    private String endereco;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "endereco_id")
+    private Endereco endereco;
 
-    public Cliente(ClienteCriar cliente) {
+    public Cliente(ClienteCriar cliente, Endereco endereco) {
         this.nome = cliente.getNome();
         this.cpf = cliente.getCpf();
         this.email = cliente.getEmail();
         this.telefone = cliente.getTelefone();
-        this.endereco = cliente.getEndereco();
+        this.endereco = endereco;
     }
 }

@@ -44,7 +44,7 @@ public class Produto {
         this.descricao = produto.getDescricao();
         this.preco = produto.getPreco();
         this.estoque = produto.getEstoque();
-        this.ativo = false;
+        this.ativo = produto.getAtivo();
         this.categoria = categoria;
 
     }

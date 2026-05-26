@@ -1,6 +1,7 @@
 package org.serratec.trabalhoFinalApi.service;
 
 import jakarta.mail.Session;
+import org.serratec.trabalhoFinalApi.entity.Pedido;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -12,18 +13,10 @@ public class EmailService {
 
     private JavaMailSender javaMailSender;
     private String from;
-    private Session session;
 
-    public EmailService(JavaMailSender javaMailSender, @Value("${spring.mail.username}") String from, @Value("${spring.mail.host}") String host, @Value("${spring.mail.port}") String port, @Value("${spring.mail.username}") String username, @Value("${spring.mail.password}") String password) {
+    public EmailService(JavaMailSender javaMailSender, @Value("${spring.mail.username}") String from) {
         this.javaMailSender = javaMailSender;
         this.from = from;
-
-        Properties props = new Properties();
-        props.put("spring.mail.host", host);
-        props.put("spring.mail.port", port);
-        props.put("spring.mail.username", username);
-        props.put("spring.mail.password", password);
-        session = Session.getInstance(props);
     }
 
     public void enviarEmailCadastro(String to){
@@ -44,6 +37,41 @@ public class EmailService {
         message.setTo(to);
         message.setSubject("Alteração de dados");
         message.setText("Alteração de dados feita com sucesso! Caso não tenha sido você, entre em contato com nossa equipe: (21)99999-9999");
+
+        this.javaMailSender.send(message);
+    }
+
+    public void enviarEmailPedidoAprovado(String to, Pedido pedido){
+        SimpleMailMessage message = new SimpleMailMessage();
+
+        message.setFrom(from);
+        message.setTo(to);
+        message.setSubject("Pedido Aprovado");
+        message.setText("Seu pedido foi aprovado com sucesso!" +
+                "\nNúmero do pedido: " + pedido.getId());
+
+        this.javaMailSender.send(message);
+    }
+
+    public void enviarEmailPedidoAtualizado(String to, Pedido pedido){
+        SimpleMailMessage message = new SimpleMailMessage();
+
+        message.setFrom(from);
+        message.setTo(to);
+        message.setSubject("Pedido Atualizado");
+        message.setText("Seu pedido foi atualizado com sucesso!" +
+                "\nNúmero do pedido: " + pedido.getId());
+
+        this.javaMailSender.send(message);
+    }
+
+    public void enviarEmailPedidoCancelado(String to, Pedido pedido){
+        SimpleMailMessage message = new SimpleMailMessage();
+
+        message.setFrom(from);
+        message.setTo(to);
+        message.setSubject("Pedido Cancelado");
+        message.setText("Seu pedido com o número: " + pedido.getId() + "foi cancelado!");
 
         this.javaMailSender.send(message);
     }

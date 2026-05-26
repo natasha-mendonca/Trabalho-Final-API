@@ -1,6 +1,7 @@
 package org.serratec.trabalhoFinalApi.service;
 
 import org.serratec.trabalhoFinalApi.entity.Endereco;
+import org.serratec.trabalhoFinalApi.exception.CepInvalidoExceptionNatasha;
 import org.serratec.trabalhoFinalApi.model.EnderecoCriar;
 import org.serratec.trabalhoFinalApi.model.ViaCepResponse;
 import org.serratec.trabalhoFinalApi.repository.EnderecoRepository;
@@ -21,21 +22,23 @@ public class EnderecoService {
     }
 
     public Endereco adicionarEndereco(EnderecoCriar enderecoCriar) {
-        try{
-            ResponseEntity<ViaCepResponse> consultaViaCep = this.restClient
-                    .get()
-                    .uri("/ws/" + enderecoCriar.getCep() + "/json")
-                    .accept(MediaType.APPLICATION_JSON)
-                    .retrieve()
-                    .toEntity(ViaCepResponse.class);
 
-            Endereco endereco = new Endereco(enderecoCriar, consultaViaCep.getBody());
-            this.enderecoRepository.save(endereco);
-            return endereco;
+        ResponseEntity<ViaCepResponse> consultaViaCep = this.restClient
+                .get()
+                .uri("/ws/" + enderecoCriar.getCep() + "/json")
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .toEntity(ViaCepResponse.class);
+
+        ViaCepResponse body = consultaViaCep.getBody();
+
+        if (body == null || Boolean.TRUE.equals(body.erro())) {
+            throw new CepInvalidoExceptionNatasha("CEP inválido!");
         }
-        catch(Exception e){
-            e.printStackTrace();
-            return null;
-        }
+
+        Endereco endereco = new Endereco(enderecoCriar, body);
+        this.enderecoRepository.save(endereco);
+        return endereco;
+
     }
 }
