@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Check;
+import org.hibernate.envers.Audited;
 import org.serratec.trabalhoFinalApi.model.ItemPedidoSolicitacao;
 
 
@@ -15,6 +16,7 @@ import org.serratec.trabalhoFinalApi.model.ItemPedidoSolicitacao;
 @Entity
 @Table(name = "item_pedido")
 @Check(constraints = "quantidade >= 1")
+@Audited
 public class ItemPedido {
 
 //    @EmbeddedId
