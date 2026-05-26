@@ -107,4 +107,19 @@ public class ProdutoService {
 
         return new ProdutoAtualizar(produtoRepository.save(produtoExistente));
     }
+
+    public void atualizarEstoque(UUID id, Integer quant){
+        Produto produto = buscarProdutoId(id);
+
+        if(!produto.getAtivo()){
+            throw new RuntimeException("Produto inativo: " + produto.getNome() );
+        }
+
+        if(produto.getEstoque() < quant ){
+            throw new RuntimeException("Produto com estoque insuficiente: " + produto.getNome() );
+        }
+
+        produto.setEstoque(produto.getEstoque() - quant);
+        produtoRepository.save(produto);
+    }
 }
