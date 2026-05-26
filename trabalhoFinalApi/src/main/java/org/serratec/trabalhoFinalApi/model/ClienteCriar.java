@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+import org.serratec.trabalhoFinalApi.entity.Endereco;
 
 @Data
 @AllArgsConstructor
@@ -28,6 +28,5 @@ public class ClienteCriar {
     @NotBlank
     private String telefone;
 
-    @NotBlank
-    private String endereco;
+    private EnderecoCriar endereco;
 }
