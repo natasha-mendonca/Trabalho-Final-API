@@ -48,6 +48,8 @@ public class PedidoService {
 
             Produto produto = produtoService.buscarProdutoId(itemDTO.getProdutoId());
 
+            produtoService.atualizarEstoque(produto.getId(), itemDTO.getQuantidade());
+
             ItemPedido item = new ItemPedido(pedido, produto, itemDTO);
 
             itens.add(item);
