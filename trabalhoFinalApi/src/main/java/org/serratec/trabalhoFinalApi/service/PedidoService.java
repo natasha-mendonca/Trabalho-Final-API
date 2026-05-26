@@ -1,16 +1,19 @@
 package org.serratec.trabalhoFinalApi.service;
-
-
-// ------ NECESSITA CONECTAR COM A TABELA PRODUTO E CLIENTE---------
-// TIRAR OS COMENTARIOS GERAIS QUANDO PRODUTO E CLIENTE ESTIVEREM FUNCIONANDO
-
-
+import lombok.RequiredArgsConstructor;
+import org.serratec.trabalhoFinalApi.entity.Cliente;
+import org.serratec.trabalhoFinalApi.entity.ItemPedido;
 import org.serratec.trabalhoFinalApi.entity.Pedido;
+import org.serratec.trabalhoFinalApi.entity.Produto;
+import org.serratec.trabalhoFinalApi.model.ItemPedidoSolicitacao;
 import org.serratec.trabalhoFinalApi.model.PedidoAtualiza;
 import org.serratec.trabalhoFinalApi.model.PedidoBuscar;
+import org.serratec.trabalhoFinalApi.model.PedidoCriar;
+import org.serratec.trabalhoFinalApi.repository.ClienteRepository;
 import org.serratec.trabalhoFinalApi.repository.PedidoRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -18,50 +21,42 @@ public class PedidoService {
 
     private PedidoRepository pedidoRepository;
     private ProdutoService produtoService;
+    private ClienteRepository clienteRepository;
 
-//    @Autowired
-//    private ItemPedidoService itemPedidoService;
-//    @Autowired
-//    private ClienteRepository clienteRepository;
-
-
-    public PedidoService(PedidoRepository pedidoRepository, ProdutoService produtoService) {
+    public PedidoService(PedidoRepository pedidoRepository, ProdutoService produtoService, ClienteRepository clienteRepository) {
         this.pedidoRepository = pedidoRepository;
         this.produtoService = produtoService;
-    }
-
-    public PedidoService(PedidoRepository pedidoRepository) {
-        this.pedidoRepository = pedidoRepository;
+        this.clienteRepository = clienteRepository;
     }
 
     public Pedido buscarPedido(UUID id){
         return this.pedidoRepository.findById(id).orElseThrow(() -> new RuntimeException("Pedido não encontrado pelo id: " + id + " especificado. Informe outro!"));
     }
 
-//    public Cliente buscarCliente(UUID id){
-//        return this.clienteRepository.findById(id).orElseThrow(() -> new RuntimeException("Cliente não encontrado pelo id: " + id + " especificado. Informe outro!"));
-//    }
+    public Cliente buscarCliente(UUID id){
+        return this.clienteRepository.findById(id).orElseThrow(() -> new RuntimeException("Cliente não encontrado pelo id: " + id + " especificado. Informe outro!"));
+    }
 
-//    public Pedido inserirPedido(PedidoCriar pedidoCriar){
-//
-//        Cliente clienteExistente = buscarCliente(pedidoCriar.getClienteId());
-//        Pedido pedido = new Pedido(pedidoCriar, clienteExistente);
-//
-//        List<ItemPedido> itens = new ArrayList<>();
-//
-//        for (ItemPedidoSolicitacao itemDTO : pedidoCriar.getItens()) {
-//
-//            Produto produto = produtoService.buscarProduto(itemDTO.getProdutoId());
-//
-//            ItemPedido item = new ItemPedido(pedido, produto, itemDTO);
-//
-//            itens.add(item);
-//        }
-//
+    public Pedido inserirPedido(PedidoCriar pedidoCriar){
+
+        Cliente clienteExistente = buscarCliente(pedidoCriar.getClienteId());
+        Pedido pedido = new Pedido(pedidoCriar, clienteExistente);
+
+        List<ItemPedido> itens = new ArrayList<>();
+
+        for (ItemPedidoSolicitacao itemDTO : pedidoCriar.getItens()) {
+
+            Produto produto = produtoService.buscarProdutoId(itemDTO.getProdutoId());
+
+            ItemPedido item = new ItemPedido(pedido, produto, itemDTO);
+
+            itens.add(item);
+        }
+
         //rever esse setItens dentro do service!
-//        pedido.setItens(itens);
-//        return pedidoRepository.save(pedido);
-//    }
+        pedido.setItens(itens);
+        return pedidoRepository.save(pedido);
+    }
 
     public PedidoBuscar listarPedido(UUID id){
 

@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,17 +16,17 @@ public class ItemPedidoSolicitacao {
 
     @Schema(example = "1", nullable = false, description = "Campo produtoId")
     @NotNull(message = "O identificador do produto nao pode ser null")
-    private Long produtoId;
+    private UUID produtoId;
 
     @Schema(example = "3", nullable = false, description = "Campo de quantidade", minimum = "1")
     @NotNull(message = "Quantidade nao pode ser null")
     @Min(value = 1, message = "A quantidade do produto precisa ser igual ou maior que 1")
     private Integer quantidade;
 
-    @Schema(example = "2000.20", nullable = false, description = "Campo com o valor venda", minimum = "1")
-    @NotNull(message = "Valor de venda nao pode ser null")
-    @Min(value = 1 , message = "O valor do venda precisa ser igual ou maior que 1")
-    private Double valorVenda;
+//    @Schema(example = "2000.20", nullable = false, description = "Campo com o valor venda", minimum = "1")
+//    @NotNull(message = "Valor de venda nao pode ser null")
+//    @Min(value = 1 , message = "O valor do venda precisa ser igual ou maior que 1")
+//    private Double valorVenda;
 
     @Schema(example = "200", nullable = false, description = "Campo com o desconto", minimum = "0")
     @NotNull(message = "Desconto nao pode ser null")

@@ -28,6 +28,19 @@ public class ProdutoController {
 
     private ProdutoService produtoService;
 
+    @Operation(summary = "Cadastrar produto", description = "Cadastra um novo produto no sistema")
+    @ApiResponses(value = {
+            @ApiResponse (description = "Produto criado com sucesso", responseCode = "200"),
+            @ApiResponse (description = "Dados informados inválidos", responseCode = "400", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse (description = "Dados não encontrados", responseCode = "404", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse (description = "Erro interno no servidor", responseCode = "500", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+    })
+    @PostMapping
+    public ResponseEntity<ProdutoBuscar> cadastrarProduto(@RequestBody @Valid ProdutoCriar produtoCriar){
+        ProdutoBuscar produto = produtoService.cadastrarProduto(produtoCriar);
+        return ResponseEntity.status(HttpStatus.CREATED).body(produto);
+    }
+
     @Operation(summary = "Buscar produtos", description = "Busca produtos por: ID, nome, status ou nome da categoria do produto.")
     @ApiResponses(value = {
             @ApiResponse (description = "Produtos encontrados com sucesso", responseCode = "200"),
@@ -41,19 +54,6 @@ public class ProdutoController {
         return ResponseEntity.status(HttpStatus.OK).body(produtos);
     }
 
-
-    @Operation(summary = "Cadastrar produto", description = "Cadastra um novo produto no sistema")
-    @ApiResponses(value = {
-            @ApiResponse (description = "Produto criado com sucesso", responseCode = "200"),
-            @ApiResponse (description = "Dados informados inválidos", responseCode = "400", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
-            @ApiResponse (description = "Dados não encontrados", responseCode = "404", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
-            @ApiResponse (description = "Erro interno no servidor", responseCode = "500", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
-    })
-    @PostMapping
-    public ResponseEntity<ProdutoBuscar> cadastrarProduto(@RequestBody @Valid ProdutoCriar produtoCriar){
-        ProdutoBuscar produto = produtoService.cadastrarProduto(produtoCriar);
-        return ResponseEntity.status(HttpStatus.CREATED).body(produto);
-    }
 
     @Operation(summary = "Atualizar produto", description = "Atualiza os dados de um produto existente por ID")
     @ApiResponses(value = {

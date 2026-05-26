@@ -8,14 +8,19 @@ import org.serratec.trabalhoFinalApi.model.ClienteBuscar;
 import org.serratec.trabalhoFinalApi.model.ClienteCriar;
 import org.serratec.trabalhoFinalApi.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.util.Optional;
 import java.util.UUID;
 
-
+@Service
 public class ClienteService {
 
-    @Autowired
     private ClienteRepository clienteRepository;
+
+    public ClienteService(ClienteRepository clienteRepository) {
+        this.clienteRepository = clienteRepository;
+    }
 
     public Cliente buscarCliente (UUID id){
         return this.clienteRepository.findById(id).orElseThrow(() -> new RuntimeException("Cliente não encontrado pelo id: " + id + " especificado. Informe outro!"));
