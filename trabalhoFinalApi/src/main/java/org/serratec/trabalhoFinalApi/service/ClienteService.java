@@ -4,6 +4,7 @@ import org.serratec.trabalhoFinalApi.entity.Cliente;
 import org.serratec.trabalhoFinalApi.entity.Endereco;
 import org.serratec.trabalhoFinalApi.exception.ClienteNaoEncontradoNatasha;
 import org.serratec.trabalhoFinalApi.exception.CpfJaCadastradoNatasha;
+import org.serratec.trabalhoFinalApi.exception.usuario.UsuarioNaoEncontradoException;
 import org.serratec.trabalhoFinalApi.model.ClienteAtualizar;
 import org.serratec.trabalhoFinalApi.model.ClienteBuscar;
 import org.serratec.trabalhoFinalApi.model.ClienteCriar;
@@ -67,6 +68,14 @@ public class ClienteService {
         emailService.enviarEmailAlteracao(clienteAtualizado.getEmail());
 
         return new ClienteAtualizar(clienteAtualizado);
+    }
+
+    public void deletarCliente(UUID id) {
+        if (!clienteRepository.existsById(id)){
+            throw new UsuarioNaoEncontradoException("Cliente não Encontrado.");
+        }
+
+        clienteRepository.deleteById(id);
     }
 }
 

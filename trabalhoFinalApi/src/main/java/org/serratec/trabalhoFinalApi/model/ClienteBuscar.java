@@ -1,5 +1,6 @@
 package org.serratec.trabalhoFinalApi.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,11 +12,22 @@ import java.util.UUID;
 @AllArgsConstructor
 public class ClienteBuscar {
 
+    @Schema(description = "Id do cliente")
     private UUID id;
+
+    @Schema(description = "Nome completo do cliente")
     private String nome;
+
+    @Schema(description = "CPF do cliente")
     private String cpf;
+
+    @Schema(description = "E-mail do cliente")
     private String email;
+
+    @Schema(description = "Telefone do cliente")
     private String telefone;
+
+    @Schema(description = "Endereço do cliente")
     private EnderecoBuscar endereco;
 
     public ClienteBuscar (Cliente cliente){
