@@ -28,9 +28,9 @@ public class ItemPedidoSolicitacao {
 //    @Min(value = 1 , message = "O valor do venda precisa ser igual ou maior que 1")
 //    private Double valorVenda;
 
-    @Schema(example = "200", nullable = false, description = "Campo com o desconto", minimum = "0")
-    @NotNull(message = "Desconto nao pode ser null")
-    @Min(value = 0, message = "O valor do desconto precisa ser maior que 0")
-    private Double desconto;
+//    @Schema(example = "200", nullable = false, description = "Campo com o desconto", minimum = "0")
+//    @NotNull(message = "Desconto nao pode ser null")
+//    @Min(value = 0, message = "O valor do desconto precisa ser maior que 0")
+//    private Double desconto;
 
 }

@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.envers.Audited;
+import org.hibernate.envers.RelationTargetAuditMode;
 import org.serratec.trabalhoFinalApi.model.ClienteCriar;
 
 import java.util.UUID;
@@ -14,7 +15,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Entity
 @Audited
-public class Cliente {
+public class Cliente extends Auditoria{
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -34,6 +35,7 @@ public class Cliente {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "endereco_id")
+    @Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
     private Endereco endereco;
 
     public Cliente(ClienteCriar cliente, Endereco endereco) {

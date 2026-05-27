@@ -15,8 +15,8 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Audited
-public class Categoria {
+
+public class Categoria extends Auditoria{
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

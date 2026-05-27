@@ -49,6 +49,9 @@ public class Pedido extends Auditoria{
 
     @Column(name = "nome_cliente")
     private String nomeCliente;
+//
+//    @Column
+//    private Boolean deletado;
 
     public Pedido(PedidoCriar pedidoCriar, Cliente cliente) {
         this.observacoes = pedidoCriar.getObservacoes();
