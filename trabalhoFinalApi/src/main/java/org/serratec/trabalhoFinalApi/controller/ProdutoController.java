@@ -1,6 +1,7 @@
 package org.serratec.trabalhoFinalApi.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -9,10 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.serratec.trabalhoFinalApi.exception.generalista.MensagemErroSwagger;
-import org.serratec.trabalhoFinalApi.model.MensagemSucesso;
-import org.serratec.trabalhoFinalApi.model.ProdutoAtualizar;
-import org.serratec.trabalhoFinalApi.model.ProdutoBuscar;
-import org.serratec.trabalhoFinalApi.model.ProdutoCriar;
+import org.serratec.trabalhoFinalApi.model.*;
 import org.serratec.trabalhoFinalApi.service.ProdutoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,10 +29,10 @@ public class ProdutoController {
 
     @Operation(summary = "Cadastrar produto", description = "Cadastra um novo produto no sistema")
     @ApiResponses(value = {
-            @ApiResponse (description = "Produto criado com sucesso", responseCode = "201"),
-            @ApiResponse (description = "Dados informados inválidos", responseCode = "400", content = @Content(schema = @Schema(implementation = MensagemErroSwagger.class))),
-            @ApiResponse (description = "Dados não encontrados", responseCode = "404", content = @Content(schema = @Schema(implementation = MensagemErroSwagger.class))),
-            @ApiResponse (description = "Erro interno no servidor", responseCode = "500", content = @Content(schema = @Schema(implementation = MensagemErroSwagger.class)))
+            @ApiResponse (description = "Produto criado com sucesso", responseCode = "201", content = @Content(schema = @Schema(implementation = MensagemSucesso.class), mediaType = "application/json")),
+            @ApiResponse (description = "Dados informados inválidos", responseCode = "400", content = @Content(schema = @Schema(implementation = MensagemErroSwagger.class), mediaType = "application/json")),
+            @ApiResponse (description = "Dados não encontrados", responseCode = "404", content = @Content(schema = @Schema(implementation = MensagemErroSwagger.class), mediaType = "application/json")),
+            @ApiResponse (description = "Erro interno no servidor", responseCode = "500", content = @Content(schema = @Schema(implementation = MensagemErroSwagger.class), mediaType = "application/json"))
     })
     @PostMapping
     public ResponseEntity<MensagemSucesso> cadastrarProduto(@RequestBody @Valid ProdutoCriar produtoCriar){
@@ -44,10 +42,10 @@ public class ProdutoController {
 
     @Operation(summary = "Buscar produtos", description = "Busca produtos por: ID, nome, status ou nome da categoria do produto.")
     @ApiResponses(value = {
-            @ApiResponse (description = "Produtos encontrados com sucesso", responseCode = "200"),
-            @ApiResponse (description = "Dados informados inválidos", responseCode = "400", content = @Content(schema = @Schema(implementation = MensagemErroSwagger.class))),
-            @ApiResponse (description = "Dados não encontrados", responseCode = "404", content = @Content(schema = @Schema(implementation = MensagemErroSwagger.class))),
-            @ApiResponse (description = "Erro interno no servidor", responseCode = "500", content = @Content(schema = @Schema(implementation = MensagemErroSwagger.class)))
+            @ApiResponse (description = "Produtos encontrados com sucesso", responseCode = "200", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = ProdutoBuscar.class))) ),
+            @ApiResponse (description = "Dados informados inválidos", responseCode = "400", content = @Content(mediaType = "application/json", schema = @Schema(implementation = MensagemErroSwagger.class))),
+            @ApiResponse (description = "Dados não encontrados", responseCode = "404", content = @Content(mediaType = "application/json",schema = @Schema(implementation = MensagemErroSwagger.class))),
+            @ApiResponse (description = "Erro interno no servidor", responseCode = "500", content = @Content(mediaType = "application/json", schema = @Schema(implementation = MensagemErroSwagger.class)))
     })
     @GetMapping
     public ResponseEntity<List<ProdutoBuscar>> buscarProduto(@RequestParam(required = false) UUID id, @RequestParam(required = false) String nome, @RequestParam(required = false) Boolean ativo, @RequestParam(required = false) String categoriaNome){
@@ -58,10 +56,10 @@ public class ProdutoController {
 
     @Operation(summary = "Atualizar produto", description = "Atualiza os dados de um produto existente por ID")
     @ApiResponses(value = {
-            @ApiResponse (description = "Produto atualizado com sucesso", responseCode = "200"),
-            @ApiResponse (description = "Dados informados inválidos", responseCode = "400", content = @Content(schema = @Schema(implementation = MensagemErroSwagger.class))),
-            @ApiResponse (description = "Dados não encontrados", responseCode = "404", content = @Content(schema = @Schema(implementation = MensagemErroSwagger.class))),
-            @ApiResponse (description = "Erro interno no servidor", responseCode = "500", content = @Content(schema = @Schema(implementation = MensagemErroSwagger.class)))
+            @ApiResponse (description = "Produto atualizado com sucesso", responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = MensagemSucesso.class))),
+            @ApiResponse (description = "Dados informados inválidos", responseCode = "400", content = @Content(mediaType = "application/json", schema = @Schema(implementation = MensagemErroSwagger.class))),
+            @ApiResponse (description = "Dados não encontrados", responseCode = "404", content = @Content(mediaType = "application/json", schema = @Schema(implementation = MensagemErroSwagger.class))),
+            @ApiResponse (description = "Erro interno no servidor", responseCode = "500", content = @Content(mediaType = "application/json", schema = @Schema(implementation = MensagemErroSwagger.class)))
     })
     @PutMapping("/{id}")
     public ResponseEntity<MensagemSucesso> atualizarProduto(@PathVariable UUID id, @RequestBody @Valid ProdutoAtualizar produto){
@@ -72,9 +70,9 @@ public class ProdutoController {
     @Operation(summary = "Deletar produto", description = "Deleta o produto por ID")
     @ApiResponses(value = {
             @ApiResponse (description = "Produto deletado com sucesso", responseCode = "204"),
-            @ApiResponse (description = "Dados informados inválidos", responseCode = "400", content = @Content(schema = @Schema(implementation = MensagemErroSwagger.class))),
-            @ApiResponse (description = "Dados não encontrados", responseCode = "404", content = @Content(schema = @Schema(implementation = MensagemErroSwagger.class))),
-            @ApiResponse (description = "Erro interno no servidor", responseCode = "500", content = @Content(schema = @Schema(implementation = MensagemErroSwagger.class)))
+            @ApiResponse (description = "Dados informados inválidos", responseCode = "400", content = @Content(mediaType = "application/json", schema = @Schema(implementation = MensagemErroSwagger.class))),
+            @ApiResponse (description = "Dados não encontrados", responseCode = "404", content = @Content(mediaType = "application/json", schema = @Schema(implementation = MensagemErroSwagger.class))),
+            @ApiResponse (description = "Erro interno no servidor", responseCode = "500", content = @Content(mediaType = "application/json", schema = @Schema(implementation = MensagemErroSwagger.class)))
     })
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletarProduto(@PathVariable UUID id){

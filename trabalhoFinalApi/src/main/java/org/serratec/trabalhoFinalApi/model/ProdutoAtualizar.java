@@ -22,6 +22,7 @@ public class ProdutoAtualizar {
     @Schema(maxLength = 1000, description = "Campo contendo a descrição do Produto")
     private String descricao;
 
+    @Min(0)
     @Schema(description = "Campo contendo o preço do Produto", example = "19.99")
     private Double preco;
 
