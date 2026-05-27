@@ -2,6 +2,7 @@ package org.serratec.trabalhoFinalApi.service;
 
 import org.serratec.trabalhoFinalApi.entity.Endereco;
 import org.serratec.trabalhoFinalApi.exception.CepInvalidoExceptionNatasha;
+import org.serratec.trabalhoFinalApi.exception.infra.CepInvalidoException;
 import org.serratec.trabalhoFinalApi.model.EnderecoCriar;
 import org.serratec.trabalhoFinalApi.model.ViaCepResponse;
 import org.serratec.trabalhoFinalApi.repository.EnderecoRepository;
@@ -33,7 +34,7 @@ public class EnderecoService {
         ViaCepResponse body = consultaViaCep.getBody();
 
         if (body == null || Boolean.TRUE.equals(body.erro())) {
-            throw new CepInvalidoExceptionNatasha("CEP inválido!");
+            throw new CepInvalidoException(enderecoCriar.getCep());
         }
 
         Endereco endereco = new Endereco(enderecoCriar, body);
