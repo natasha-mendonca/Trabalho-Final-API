@@ -1,25 +1,22 @@
 package org.serratec.trabalhoFinalApi.service;
-import jakarta.persistence.EntityManager;
 
+import jakarta.persistence.EntityManager;
 import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;
 import org.serratec.trabalhoFinalApi.entity.Cliente;
 import org.serratec.trabalhoFinalApi.entity.ItemPedido;
 import org.serratec.trabalhoFinalApi.entity.Pedido;
 import org.serratec.trabalhoFinalApi.entity.Produto;
-import org.serratec.trabalhoFinalApi.exception.ClienteNaoEncontradoNatasha;
+import org.serratec.trabalhoFinalApi.exception.generalista.RequisicaoNaoEncontradoException;
 import org.serratec.trabalhoFinalApi.exception.usuario.ClienteNaoEncontradoException;
 import org.serratec.trabalhoFinalApi.exception.venda.PedidoInvalidoException;
 import org.serratec.trabalhoFinalApi.exception.venda.PedidoNaoEncontradoException;
-import org.serratec.trabalhoFinalApi.model.ItemPedidoSolicitacao;
-import org.serratec.trabalhoFinalApi.model.PedidoAtualiza;
-import org.serratec.trabalhoFinalApi.model.PedidoBuscar;
-import org.serratec.trabalhoFinalApi.model.PedidoCriar;
+import org.serratec.trabalhoFinalApi.model.*;
 import org.serratec.trabalhoFinalApi.repository.ClienteRepository;
 import org.serratec.trabalhoFinalApi.repository.PedidoRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -60,6 +57,15 @@ public class PedidoService {
         return reader.getRevisions(Pedido.class, pedidoId);
     }
 
+    public PedidoRastreioResponse buscarPorCodigoRastreio(String codigoRastreio) {
+
+        Pedido pedido = pedidoRepository
+                .findByCodigoRastreio(codigoRastreio)
+                .orElseThrow(()-> new RequisicaoNaoEncontradoException("Pedido com o código de rastreio: " + codigoRastreio));
+
+        return new PedidoRastreioResponse(pedido);
+    }
+
     public Pedido inserirPedido(PedidoCriar pedidoCriar){
 
         Cliente clienteExistente = buscarCliente(pedidoCriar.getClienteId());
@@ -79,6 +85,14 @@ public class PedidoService {
         }
 
         pedido.setItens(itens);
+
+        pedido.setCodigoRastreio("BR-" + UUID.randomUUID()
+                .toString()
+                .substring(0, 8)
+                .toUpperCase());
+
+        pedido.setPrevisaoEntrega(LocalDate.now().plusDays(7));
+
         Pedido pedidoSalvo = pedidoRepository.save(pedido);
         emailService.enviarEmailPedidoAprovado(clienteExistente.getEmail(), pedidoSalvo);
 
