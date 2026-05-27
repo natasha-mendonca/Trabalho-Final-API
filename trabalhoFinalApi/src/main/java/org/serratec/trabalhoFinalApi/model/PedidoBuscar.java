@@ -33,7 +33,7 @@ public class PedidoBuscar {
     @Schema(description = "Data do pedido", example = "2026-05-27T14:37:46.773Z")
     private LocalDateTime dataPedido;
 
-    @Schema(description = "valor total do pedido", example = "2000.0")
+    @Schema(description = "valor total do pedido", example = "20.0")
     private Double valorTotal;
 
     @Schema(description = "id para referencia o cliente da compra", example = "3fa85f64-5717-4562-b3fc-2c963f66afa6")
