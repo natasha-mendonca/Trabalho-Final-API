@@ -11,6 +11,8 @@ import org.serratec.trabalhoFinalApi.model.ClienteCriar;
 import org.serratec.trabalhoFinalApi.repository.ClienteRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -56,6 +58,7 @@ public class ClienteService {
         Cliente clienteAtualizado =  clienteOpt.get();
 
         clienteAtualizado.setCpf(cliente.getCpf());
+        clienteAtualizado.setDataNascimento(cliente.getDataNascimento());
         clienteAtualizado.setNome(cliente.getNome());
         clienteAtualizado.setEmail(cliente.getEmail());
         clienteAtualizado.setTelefone(cliente.getTelefone());
@@ -76,6 +79,12 @@ public class ClienteService {
         }
 
         clienteRepository.deleteById(id);
+    }
+    public List<Cliente> buscarAniversariantesDoDia(LocalDate data) {
+        return clienteRepository.findAniversariantesDoDia(
+                data.getDayOfMonth(),
+                data.getMonthValue()
+        );
     }
 }
 

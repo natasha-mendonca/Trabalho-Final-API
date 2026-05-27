@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.serratec.trabalhoFinalApi.entity.Cliente;
+
+import java.time.LocalDate;
 import java.util.UUID;
 
 
@@ -22,6 +24,9 @@ public class ClienteAtualizar {
     @Schema(description = "CPF do cliente")
     private String cpf;
 
+    @Schema(description = "Data de nascimento do cliente")
+    private LocalDate dataNascimento;
+
     @Schema(description = "E-mail do cliente")
     private String email;
 
@@ -35,6 +40,7 @@ public class ClienteAtualizar {
         this.id = cliente.getId();
         this.nome = cliente.getNome();
         this.cpf = cliente.getCpf();
+        this.dataNascimento = cliente.getDataNascimento();
         this.email = cliente.getEmail();
         this.telefone = cliente.getTelefone();
         this.endereco = new EnderecoCriar(

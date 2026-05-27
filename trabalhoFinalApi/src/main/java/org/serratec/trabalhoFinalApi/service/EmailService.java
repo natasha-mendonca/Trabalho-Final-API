@@ -1,12 +1,10 @@
 package org.serratec.trabalhoFinalApi.service;
 
-import jakarta.mail.Session;
 import org.serratec.trabalhoFinalApi.entity.Pedido;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
-import java.util.Properties;
 
 @Service
 public class EmailService {
@@ -74,5 +72,19 @@ public class EmailService {
         message.setText("Seu pedido com o número: " + pedido.getId() + "foi cancelado!");
 
         this.javaMailSender.send(message);
+    }
+
+    public void enviarEmailAniversario(String destinatario, String nome) {
+        SimpleMailMessage mensagem = new SimpleMailMessage();
+        mensagem.setTo(destinatario);
+        mensagem.setSubject("Feliz Aniversário, " + nome + "! 🎂");
+        mensagem.setText(
+                "Olá, " + nome + "!\n\n" +
+                        "Feliz Aniversário!" +
+                        "Toda a nossa equipe deseja a você um dia de extrema Felicidade!" +
+                        "Muito sucesso, saúde e paz.\\n\\n" +
+                        "Com carinho,\\nEquipe DizQueMeLeva"
+        );
+        this.javaMailSender.send(mensagem);
     }
 }

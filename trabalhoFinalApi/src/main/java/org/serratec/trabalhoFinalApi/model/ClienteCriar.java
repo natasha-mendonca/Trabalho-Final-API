@@ -9,6 +9,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.serratec.trabalhoFinalApi.entity.Endereco;
 
+import java.time.LocalDate;
+
 
 @Schema (name = "ClienteCriar", description = "Dados necessários para cadastrar um novo cliente")
 @Data
@@ -24,6 +26,10 @@ public class ClienteCriar {
     @Schema (description = "CPF do cliente (somente números)")
     @NotBlank
     private String cpf;
+
+    @Schema(description = "Data de nascimento do cliente") //ano/mes/dia
+    @NotBlank
+    private LocalDate dataNascimento;
 
     @Schema (description = "E-mail do cliente")
     @Size(max=50)
