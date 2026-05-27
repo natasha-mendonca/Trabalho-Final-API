@@ -24,6 +24,7 @@ public class PedidoBuscar {
     private LocalDateTime dataPedido;
     private Double valorTotal;
     private UUID clienteId;
+//    private Boolean deletado;
 
     //@ManyToOne
 //    private Cliente cliente;
@@ -57,5 +58,7 @@ public class PedidoBuscar {
         }
 
         this.clienteId = pedido.getCliente().getId();
+
+//        this.deletado = pedido.getDeletado();
     }
 }

@@ -1,5 +1,6 @@
 package org.serratec.trabalhoFinalApi.service;
 import jakarta.persistence.EntityManager;
+
 import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;
 import org.serratec.trabalhoFinalApi.entity.Cliente;
@@ -8,12 +9,15 @@ import org.serratec.trabalhoFinalApi.entity.Pedido;
 import org.serratec.trabalhoFinalApi.entity.Produto;
 import org.serratec.trabalhoFinalApi.exception.ClienteNaoEncontradoNatasha;
 import org.serratec.trabalhoFinalApi.exception.usuario.ClienteNaoEncontradoException;
+import org.serratec.trabalhoFinalApi.exception.venda.PedidoInvalidoException;
+import org.serratec.trabalhoFinalApi.exception.venda.PedidoNaoEncontradoException;
 import org.serratec.trabalhoFinalApi.model.ItemPedidoSolicitacao;
 import org.serratec.trabalhoFinalApi.model.PedidoAtualiza;
 import org.serratec.trabalhoFinalApi.model.PedidoBuscar;
 import org.serratec.trabalhoFinalApi.model.PedidoCriar;
 import org.serratec.trabalhoFinalApi.repository.ClienteRepository;
 import org.serratec.trabalhoFinalApi.repository.PedidoRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -29,6 +33,9 @@ public class PedidoService {
     private EmailService emailService;
     private EntityManager entityManager;
 
+    @Value("${app.desconto.padrao}")
+    private Double descontoPadrao;
+
     public PedidoService(PedidoRepository pedidoRepository, ProdutoService produtoService, ClienteRepository clienteRepository, EmailService emailService, EntityManager entityManager) {
         this.pedidoRepository = pedidoRepository;
         this.produtoService = produtoService;
@@ -38,11 +45,11 @@ public class PedidoService {
     }
 
     public Pedido buscarPedido(UUID id){
-        return this.pedidoRepository.findById(id).orElseThrow(() -> new ClienteNaoEncontradoException("Pedido não encontrado pelo id: " + id + " especificado. Informe outro!"));
+        return this.pedidoRepository.findById(id).orElseThrow(() -> new PedidoNaoEncontradoException("O id: " + id + " especificado nao foi encontrado. Informe outro!"));
     }
 
     public Cliente buscarCliente(UUID id){
-        return this.clienteRepository.findById(id).orElseThrow(() -> new ClienteNaoEncontradoException("Cliente não encontrado pelo id: " + id + " especificado. Informe outro!"));
+        return this.clienteRepository.findById(id).orElseThrow(() -> new ClienteNaoEncontradoException(id + " especificado. Informe outro!"));
     }
 
     public List<Number> buscarRevisoes(UUID pedidoId) {
@@ -64,7 +71,7 @@ public class PedidoService {
 
             produtoService.atualizarEstoque(produto.getId(), itemDTO.getQuantidade());
 
-            ItemPedido item = new ItemPedido(pedido, produto, itemDTO);
+            ItemPedido item = new ItemPedido(pedido, produto, itemDTO, descontoPadrao);
 
             itens.add(item);
         }
@@ -105,10 +112,9 @@ public class PedidoService {
         Pedido pedidoExistente =  buscarPedido(id);
 
         if(id == null){
-            //exception aqui!
-            System.out.println("Inform um id");
-            return;
+            throw new PedidoInvalidoException("id não pode ser null");
         }
+//        pedidoExistente.setDeletado(true);
         this.pedidoRepository.delete(pedidoExistente);
         emailService.enviarEmailPedidoCancelado(pedidoExistente.getCliente().getEmail(),
                 pedidoExistente);

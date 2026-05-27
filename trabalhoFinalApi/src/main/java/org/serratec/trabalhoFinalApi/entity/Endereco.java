@@ -13,8 +13,7 @@ import java.util.UUID;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Audited
-public class Endereco {
+public class Endereco extends Auditoria{
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

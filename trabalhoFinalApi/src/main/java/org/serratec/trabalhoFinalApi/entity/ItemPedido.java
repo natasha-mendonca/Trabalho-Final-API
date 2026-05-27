@@ -17,7 +17,7 @@ import org.serratec.trabalhoFinalApi.model.ItemPedidoSolicitacao;
 @Table(name = "item_pedido")
 @Check(constraints = "quantidade >= 1")
 @Audited
-public class ItemPedido {
+public class ItemPedido extends Auditoria{
 
 //    @EmbeddedId
     //chave composta de identificadores ( chave composta pela junçao das fks )
@@ -48,12 +48,13 @@ public class ItemPedido {
     @Column(name = "sub_total")
     private Double subTotal;
 
-    public ItemPedido(Pedido pedido, Produto produto, ItemPedidoSolicitacao itemPedidoSolicitacao){
+    public ItemPedido(Pedido pedido, Produto produto, ItemPedidoSolicitacao itemPedidoSolicitacao, Double descontoPadrao){
         this.pedido = pedido;
         this.produto = produto;
         this.quantidade = itemPedidoSolicitacao.getQuantidade();
         this.valorVenda = produto.getPreco();
-        this.desconto = itemPedidoSolicitacao.getDesconto();
+//        this.desconto = itemPedidoSolicitacao.getDesconto();
+        this.desconto = descontoPadrao;
 
         this.subTotal = (valorVenda * quantidade) - desconto;
     }
