@@ -7,7 +7,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.serratec.trabalhoFinalApi.entity.Cliente;
+import org.serratec.trabalhoFinalApi.model.ClienteAtualizar;
 import org.serratec.trabalhoFinalApi.model.ClienteCriar;
+import org.serratec.trabalhoFinalApi.model.MensagemSucesso;
 import org.serratec.trabalhoFinalApi.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -56,11 +58,32 @@ public class ClienteController {
         return ResponseEntity.status(CREATED).build();
     }
 
-    @DeleteMapping
-    @Operation (summary = "Exclui um cliente")
-    public ResponseEntity<Void> deleteCliente(@PathVariable UUID id){
+        @DeleteMapping("/{id}")
+        @Operation (summary = "Exclui um cliente")
+        @ApiResponses (value = {
+                @ApiResponse(responseCode = "200", description = "Cliente deletado com sucesso"),
+                @ApiResponse(responseCode = "404", description = "Cliente não encontrado")
+        })
+        public ResponseEntity<MensagemSucesso> deleteCliente(@Parameter (description = "UUID do cliente a ser deletado", required = true)
+            @PathVariable UUID id){
+            clienteService.deletarCliente(id);
+            return ResponseEntity.status(HttpStatus.OK).body (new MensagemSucesso("Cliente deletado com sucesso."));
+        }
 
-        clienteService.deletarCliente(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    @PutMapping("/{id}")
+    @Operation(summary = "Atualiza um cliente existente")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Cliente atualizado com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Cliente não encontrado"),
+            @ApiResponse(responseCode = "400", description = "Dados inválidos na requisição")
+    })
+    public ResponseEntity<ClienteAtualizar> atualizarCliente(
+            @Parameter(description = "UUID do cliente a ser atualizado", required = true)
+            @PathVariable UUID id,
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Dados para atualizar o cliente", required = true)
+            @RequestBody @Valid ClienteAtualizar cliente) {
+
+        ClienteAtualizar clienteAtualizado = clienteService.atualizarCliente(id, cliente);
+        return ResponseEntity.status(OK).body(clienteAtualizado);
     }
 }

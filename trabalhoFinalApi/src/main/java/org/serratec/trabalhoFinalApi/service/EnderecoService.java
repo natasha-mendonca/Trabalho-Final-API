@@ -1,7 +1,6 @@
 package org.serratec.trabalhoFinalApi.service;
 
 import org.serratec.trabalhoFinalApi.entity.Endereco;
-import org.serratec.trabalhoFinalApi.exception.CepInvalidoExceptionNatasha;
 import org.serratec.trabalhoFinalApi.exception.infra.CepInvalidoException;
 import org.serratec.trabalhoFinalApi.model.EnderecoCriar;
 import org.serratec.trabalhoFinalApi.model.ViaCepResponse;
