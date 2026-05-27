@@ -35,18 +35,4 @@ public abstract class Auditoria {
     @Column(name = "atualizado_por")
     private String atualizadoPor;
 
-//    @CreatedBy
-//    @Column(updatable = false)
-//    private String criadoPor;
-//
-//    @CreatedDate
-//    @Column(updatable = false)
-//    private LocalDateTime criadoEm;
-//
-//    @LastModifiedBy
-//    private String ultimaModificacaoPor;
-//
-//    @LastModifiedDate
-//    private LocalDateTime ultimaModificacaoEm;
-
 }

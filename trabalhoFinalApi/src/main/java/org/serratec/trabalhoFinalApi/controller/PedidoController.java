@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.serratec.trabalhoFinalApi.entity.Pedido;
 import org.serratec.trabalhoFinalApi.exception.generalista.MensagemErroSwagger;
 import org.serratec.trabalhoFinalApi.model.MensagemSucesso;
 import org.serratec.trabalhoFinalApi.model.PedidoAtualiza;
@@ -18,6 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Array;
 import java.util.List;
 import java.util.UUID;
 
@@ -51,7 +53,7 @@ public class PedidoController {
     }
 
     @Operation(summary = "Buscar pedido por id", description = "Retorna um pedido especificado pelo ID")
-    @ApiResponses(value = {@ApiResponse(description = "Busca de pedido retornada", responseCode = "200", content = @Content(mediaType = "application/json")),
+    @ApiResponses(value = {@ApiResponse(description = "Busca de pedido retornada", responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = PedidoBuscar.class))),
             @ApiResponse(description = "Dados informados inválidos", responseCode = "400", content = @Content(
                     mediaType = "application/json",
                     schema = @Schema(implementation = MensagemErroSwagger.class))),
@@ -105,7 +107,9 @@ public class PedidoController {
     }
 
     @Operation(summary = "Buscar revisoes", description = "Buscar dados de revisao do pedido")
-    @ApiResponses(value = {@ApiResponse(description = "Retorno dos dados de revisao", responseCode = "200", content = @Content(mediaType = "application/json")),
+    @ApiResponses(value = {@ApiResponse(description = "Retorno dos dados de revisao", responseCode = "200", content = @Content(
+                    mediaType = "application/json", schema = @Schema(
+                    type = "array", implementation = Integer.class, example = "[5]"))),
             @ApiResponse(description = "Dados invalidos", responseCode = "400", content = @Content(
                     mediaType = "application/json",
                     schema = @Schema(implementation =  MensagemErroSwagger.class))),
