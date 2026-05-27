@@ -6,6 +6,8 @@ import org.serratec.trabalhoFinalApi.entity.Cliente;
 import org.serratec.trabalhoFinalApi.entity.ItemPedido;
 import org.serratec.trabalhoFinalApi.entity.Pedido;
 import org.serratec.trabalhoFinalApi.entity.Produto;
+import org.serratec.trabalhoFinalApi.exception.ClienteNaoEncontradoNatasha;
+import org.serratec.trabalhoFinalApi.exception.usuario.ClienteNaoEncontradoException;
 import org.serratec.trabalhoFinalApi.model.ItemPedidoSolicitacao;
 import org.serratec.trabalhoFinalApi.model.PedidoAtualiza;
 import org.serratec.trabalhoFinalApi.model.PedidoBuscar;
@@ -36,11 +38,11 @@ public class PedidoService {
     }
 
     public Pedido buscarPedido(UUID id){
-        return this.pedidoRepository.findById(id).orElseThrow(() -> new RuntimeException("Pedido não encontrado pelo id: " + id + " especificado. Informe outro!"));
+        return this.pedidoRepository.findById(id).orElseThrow(() -> new ClienteNaoEncontradoException("Pedido não encontrado pelo id: " + id + " especificado. Informe outro!"));
     }
 
     public Cliente buscarCliente(UUID id){
-        return this.clienteRepository.findById(id).orElseThrow(() -> new RuntimeException("Cliente não encontrado pelo id: " + id + " especificado. Informe outro!"));
+        return this.clienteRepository.findById(id).orElseThrow(() -> new ClienteNaoEncontradoException("Cliente não encontrado pelo id: " + id + " especificado. Informe outro!"));
     }
 
     public List<Number> buscarRevisoes(UUID pedidoId) {
