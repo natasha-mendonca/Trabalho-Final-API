@@ -41,6 +41,7 @@ public class Cliente {
     public Cliente(ClienteCriar cliente, Endereco endereco) {
         this.nome = cliente.getNome();
         this.cpf = cliente.getCpf();
+        this.dataNascimento = cliente.getDataNascimento();
         this.email = cliente.getEmail();
         this.telefone = cliente.getTelefone();
         this.endereco = endereco;

@@ -2,8 +2,8 @@ package org.serratec.trabalhoFinalApi.service;
 
 import org.serratec.trabalhoFinalApi.entity.Cliente;
 import org.serratec.trabalhoFinalApi.entity.Endereco;
-import org.serratec.trabalhoFinalApi.exception.ClienteNaoEncontradoNatasha;
-import org.serratec.trabalhoFinalApi.exception.CpfJaCadastradoNatasha;
+import org.serratec.trabalhoFinalApi.exception.usuario.ClienteNaoEncontradoException;
+import org.serratec.trabalhoFinalApi.exception.usuario.CpfJaCadastradoException;
 import org.serratec.trabalhoFinalApi.exception.usuario.UsuarioNaoEncontradoException;
 import org.serratec.trabalhoFinalApi.model.ClienteAtualizar;
 import org.serratec.trabalhoFinalApi.model.ClienteBuscar;
@@ -30,13 +30,14 @@ public class ClienteService {
     }
 
     public Cliente buscarCliente (UUID id){
-        return this.clienteRepository.findById(id).orElseThrow(() -> new RuntimeException("Cliente não encontrado pelo id: " + id + " especificado. Informe outro!"));
+        return this.clienteRepository.findById(id).orElseThrow(() ->
+                new UsuarioNaoEncontradoException("Cliente não encontrado pelo id: " + id + " especificado. Informe outro!"));
     }
 
     public ClienteBuscar inserirCliente(ClienteCriar cliente) {
 
         if (clienteRepository.findByCpf(cliente.getCpf()).isPresent()){
-            throw new CpfJaCadastradoNatasha("CPF ja Cadastrado");
+            throw new CpfJaCadastradoException("CPF ja Cadastrado");
         }
 
         Endereco endereco = enderecoService.adicionarEndereco(cliente.getEndereco());
@@ -52,7 +53,7 @@ public class ClienteService {
         Optional<Cliente> clienteOpt = clienteRepository.findById(id);
 
         if(clienteOpt.isEmpty()){
-            throw new ClienteNaoEncontradoNatasha("Cliente com id: " + id + ", não Encontrado");
+            throw new ClienteNaoEncontradoException("Cliente com id: " + id + ", não Encontrado");
         }
 
         Cliente clienteAtualizado =  clienteOpt.get();
