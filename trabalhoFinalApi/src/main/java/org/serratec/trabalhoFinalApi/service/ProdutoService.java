@@ -6,6 +6,7 @@ import org.serratec.trabalhoFinalApi.entity.Produto;
 import org.serratec.trabalhoFinalApi.model.ProdutoAtualizar;
 import org.serratec.trabalhoFinalApi.model.ProdutoBuscar;
 import org.serratec.trabalhoFinalApi.model.ProdutoCriar;
+import org.serratec.trabalhoFinalApi.model.ProdutoRelatorio;
 import org.serratec.trabalhoFinalApi.repository.CategoriaRepository;
 import org.serratec.trabalhoFinalApi.repository.ProdutoRepository;
 import org.springframework.stereotype.Service;
@@ -98,7 +99,7 @@ public class ProdutoService {
         }
 
         if (produto.getCategoriaId() != null) {
-            Optional<Categoria> categoria = categoriaRepository.findById(id);
+            Optional<Categoria> categoria = categoriaRepository.findById(produto.getCategoriaId());
             if (categoria.isEmpty()){
                 throw new RuntimeException();
             }
@@ -121,5 +122,24 @@ public class ProdutoService {
 
         produto.setEstoque(produto.getEstoque() - quant);
         produtoRepository.save(produto);
+    }
+
+    public List<ProdutoRelatorio> buscarProdutosMaisVendidos() {
+        List<Object[]> resultado  = produtoRepository.buscarMaisVendidos();
+
+        List<ProdutoRelatorio> relatorio = new ArrayList<>();
+
+        for(Object[] linha : resultado){
+            ProdutoRelatorio produto = new ProdutoRelatorio();
+            produto.setId(UUID.fromString(linha[0].toString()));
+            produto.setNome(linha[1].toString());
+            produto.setCategoriaNome(linha[2].toString());
+            produto.setQuantidadeVendida(((Long) linha[3]).intValue());
+            produto.setReceitaTotal((Double) linha[4]);
+
+            relatorio.add(produto);
+        }
+
+        return relatorio;
     }
 }
