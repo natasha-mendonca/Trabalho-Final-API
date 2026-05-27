@@ -16,6 +16,9 @@ import org.serratec.trabalhoFinalApi.model.ItemPedidoSolicitacao;
 @Entity
 @Table(name = "item_pedido")
 @Check(constraints = "quantidade >= 1")
+@Check(constraints = "valor_venda >= 1")
+@Check(constraints = "desconto >= 0")
+@Check(constraints = "sub_total >= 1")
 @Audited
 public class ItemPedido extends Auditoria{
 
@@ -45,7 +48,7 @@ public class ItemPedido extends Auditoria{
     @Column(nullable = false)
     private Double desconto;
 
-    @Column(name = "sub_total")
+    @Column(name = "sub_total", nullable = false)
     private Double subTotal;
 
     public ItemPedido(Pedido pedido, Produto produto, ItemPedidoSolicitacao itemPedidoSolicitacao, Double descontoPadrao){
