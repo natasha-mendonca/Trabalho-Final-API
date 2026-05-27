@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PedidoAtualiza {
 
-    @Size(max = 40)
-    @Schema(description = "Campo contendo observacoes", example = "Pedido entregue ao destinatário", maxLength = 40)
+    @Size(max = 100)
+    @Schema(description = "Campo contendo observacoes", example = "Pedido entregue ao destinatário", maxLength = 100)
     private String observacoes;
 
     @Schema(description = "Campo contendo a forma de pagamento", nullable = false, example = "PIX")

@@ -30,10 +30,10 @@ public class Pedido extends Auditoria{
     private List<ItemPedido> itens = new ArrayList<>();
 
     @ManyToOne
-    @JoinColumn(name = "cliente_id")
+    @JoinColumn(name = "cliente_id", nullable = false)
     private Cliente cliente;
 
-    @Column
+    @Column(length = 100)
     private String observacoes;
 
     @Enumerated(EnumType.STRING)
@@ -47,7 +47,7 @@ public class Pedido extends Auditoria{
     @Column(name = "data_pedido", nullable = false)
     private LocalDateTime dataPedido;
 
-    @Column(name = "nome_cliente")
+    @Column(name = "nome_cliente", nullable = false)
     private String nomeCliente;
 //
 //    @Column
