@@ -53,6 +53,8 @@ public class PedidoService {
     }
 
     public List<Number> buscarRevisoes(UUID pedidoId) {
+        Pedido pedidoExistente = buscarPedido(pedidoId);
+
         AuditReader reader = AuditReaderFactory.get(entityManager);
 
         return reader.getRevisions(Pedido.class, pedidoId);
@@ -83,7 +85,7 @@ public class PedidoService {
         return pedidoSalvo;
     }
 
-    public PedidoBuscar listarPedido(UUID id){
+    public PedidoBuscar encontrarPedido(UUID id){
 
         Pedido pedido = buscarPedido(id);
 

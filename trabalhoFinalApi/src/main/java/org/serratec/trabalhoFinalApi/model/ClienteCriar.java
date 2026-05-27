@@ -3,6 +3,7 @@ package org.serratec.trabalhoFinalApi.model;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,7 +29,7 @@ public class ClienteCriar {
     private String cpf;
 
     @Schema(description = "Data de nascimento do cliente") //ano/mes/dia
-    @NotBlank
+    @NotNull(message = "Data de nascimento nao deve ser null")
     private LocalDate dataNascimento;
 
     @Schema (description = "E-mail do cliente")

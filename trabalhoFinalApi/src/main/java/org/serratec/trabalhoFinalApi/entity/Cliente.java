@@ -48,5 +48,6 @@ public class Cliente extends Auditoria{
         this.email = cliente.getEmail();
         this.telefone = cliente.getTelefone();
         this.endereco = endereco;
+        this.dataNascimento = cliente.getDataNascimento();
     }
 }
