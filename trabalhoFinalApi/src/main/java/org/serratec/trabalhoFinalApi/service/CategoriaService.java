@@ -2,6 +2,8 @@ package org.serratec.trabalhoFinalApi.service;
 
 import lombok.AllArgsConstructor;
 import org.serratec.trabalhoFinalApi.entity.Categoria;
+import org.serratec.trabalhoFinalApi.exception.catalogo.CategoriaPaiNaoEncontradaException;
+import org.serratec.trabalhoFinalApi.exception.generalista.RequisicaoNaoEncontradoException;
 import org.serratec.trabalhoFinalApi.model.CategoriaAtualizar;
 import org.serratec.trabalhoFinalApi.model.CategoriaBuscar;
 import org.serratec.trabalhoFinalApi.model.CategoriaCriar;
@@ -27,10 +29,15 @@ public class CategoriaService {
         } else if (id != null) {
             Optional<Categoria> categoria = this.categoriaRepository.findById(id);
             if(categoria.isEmpty()){
+                throw new CategoriaPaiNaoEncontradaException(id);
             }
             categorias.add(categoria.get());
         } else if (nome != null && !nome.isBlank()){
-            categorias = this.categoriaRepository.findByNome(nome);
+            categorias = this.categoriaRepository.findByNomeContainingIgnoreCase(nome);
+        }
+
+        if(categorias.isEmpty()){
+            throw new RequisicaoNaoEncontradoException("Nenhuma categoria encontrada");
         }
 
         return categorias
@@ -47,23 +54,23 @@ public class CategoriaService {
 
     public void deletarCategoria(UUID id){
         if(!categoriaRepository.existsById(id)){
-            throw new RuntimeException();
+            throw new CategoriaPaiNaoEncontradaException(id);
         }
         this.categoriaRepository.deleteById(id);
     }
 
-    public CategoriaAtualizar atualizarCategoria(UUID id, CategoriaAtualizar categoria) {
+    public void atualizarCategoria(UUID id, CategoriaAtualizar categoria) {
         Optional<Categoria> categoriaoOpt = categoriaRepository.findById(id);
 
         if (categoriaoOpt.isEmpty()) {
-            throw new RuntimeException();
+            throw new CategoriaPaiNaoEncontradaException(id);
         }
         Categoria categoriaExistente = categoriaoOpt.get();
 
-        if (categoria.getNome() != null) {
+        if (categoria.getNome() != null && !categoria.getNome().isBlank()) {
             categoriaExistente.setNome(categoria.getNome());
         }
 
-        return new CategoriaAtualizar(categoriaRepository.save(categoriaExistente));
+        categoriaRepository.save(categoriaExistente);
     }
 }
