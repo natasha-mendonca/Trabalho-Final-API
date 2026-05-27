@@ -23,7 +23,7 @@ public class ClienteService {
     public ClienteService(ClienteRepository clienteRepository, EmailService emailService, EnderecoService enderecoService) {
         this.clienteRepository = clienteRepository;
         this.emailService = emailService;
-        this.enderecoService = this.enderecoService;
+        this.enderecoService = enderecoService;
     }
 
     public Cliente buscarCliente (UUID id){
