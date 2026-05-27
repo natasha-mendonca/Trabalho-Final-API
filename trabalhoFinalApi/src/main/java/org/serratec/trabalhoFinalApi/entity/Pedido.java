@@ -6,10 +6,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.envers.Audited;
 import org.serratec.trabalhoFinalApi.model.FormasPagamento;
-import org.serratec.trabalhoFinalApi.model.PedidoAtualiza;
 import org.serratec.trabalhoFinalApi.model.PedidoCriar;
 import org.serratec.trabalhoFinalApi.model.Status;
-
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +48,12 @@ public class Pedido extends Auditoria{
 
     @Column(name = "nome_cliente")
     private String nomeCliente;
+
+    @Column(name = "codigo_rastreio", unique = true)
+    private String codigoRastreio;
+
+    @Column
+    private LocalDate previsaoEntrega;
 //
 //    @Column
 //    private Boolean deletado;
