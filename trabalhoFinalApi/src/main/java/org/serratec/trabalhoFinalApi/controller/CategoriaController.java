@@ -8,13 +8,14 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.serratec.trabalhoFinalApi.exception.generalista.MensagemErroSwagger;
 import org.serratec.trabalhoFinalApi.model.CategoriaAtualizar;
 import org.serratec.trabalhoFinalApi.model.CategoriaBuscar;
 import org.serratec.trabalhoFinalApi.model.CategoriaCriar;
+import org.serratec.trabalhoFinalApi.model.MensagemSucesso;
 import org.serratec.trabalhoFinalApi.service.CategoriaService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,23 +30,23 @@ public class CategoriaController {
 
     @Operation(summary = "Cadastrar categoria", description = "Cadastra uma nova categoria no sistema")
     @ApiResponses(value = {
-            @ApiResponse (description = "categoria criada com sucesso", responseCode = "200"),
-            @ApiResponse (description = "Dados informados inválidos", responseCode = "400", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
-            @ApiResponse (description = "Dados não encontrados", responseCode = "404", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
-            @ApiResponse (description = "Erro interno no servidor", responseCode = "500", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+            @ApiResponse (description = "categoria criada com sucesso", responseCode = "201"),
+            @ApiResponse (description = "Dados informados inválidos", responseCode = "400", content = @Content(schema = @Schema(implementation = MensagemErroSwagger.class))),
+            @ApiResponse (description = "Dados não encontrados", responseCode = "404", content = @Content(schema = @Schema(implementation = MensagemErroSwagger.class))),
+            @ApiResponse (description = "Erro interno no servidor", responseCode = "500", content = @Content(schema = @Schema(implementation = MensagemErroSwagger.class)))
     })
     @PostMapping
-    public ResponseEntity<CategoriaBuscar> cadastrarCategoria(@RequestBody @Valid CategoriaCriar categoriaCriar){
-        CategoriaBuscar categoria = categoriaService.cadastrarCategoria(categoriaCriar);
-        return ResponseEntity.status(HttpStatus.CREATED).body(categoria);
+    public ResponseEntity<MensagemSucesso> cadastrarCategoria(@RequestBody @Valid CategoriaCriar categoriaCriar){
+        categoriaService.cadastrarCategoria(categoriaCriar);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new MensagemSucesso("Categoria criada com sucesso!"));
     }
 
     @Operation(summary = "Buscar categorias", description = "Busca as categorias por: ID ou nome")
     @ApiResponses(value = {
             @ApiResponse(description = "Categorias encontradas com sucesso", responseCode = "200"),
-            @ApiResponse (description = "Dados informados inválidos", responseCode = "400", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
-            @ApiResponse (description = "Dados não encontrados", responseCode = "404", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
-            @ApiResponse (description = "Erro interno no servidor", responseCode = "500", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+            @ApiResponse (description = "Dados informados inválidos", responseCode = "400", content = @Content(schema = @Schema(implementation = MensagemErroSwagger.class))),
+            @ApiResponse (description = "Dados não encontrados", responseCode = "404", content = @Content(schema = @Schema(implementation = MensagemErroSwagger.class))),
+            @ApiResponse (description = "Erro interno no servidor", responseCode = "500", content = @Content(schema = @Schema(implementation = MensagemErroSwagger.class)))
     })
     @GetMapping
     public ResponseEntity<List<CategoriaBuscar>> buscarCategoria(@RequestParam(required = false) UUID id, @RequestParam(required = false) String nome){
@@ -57,22 +58,22 @@ public class CategoriaController {
     @Operation(summary = "Atualizar categoria", description = "Atualiza os dados de uma categoria existente por ID")
     @ApiResponses(value = {
             @ApiResponse (description = "Categoria atualizada com sucesso", responseCode = "200"),
-            @ApiResponse (description = "Dados informados inválidos", responseCode = "400", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
-            @ApiResponse (description = "Dados não encontrados", responseCode = "404", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
-            @ApiResponse (description = "Erro interno no servidor", responseCode = "500", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+            @ApiResponse (description = "Dados informados inválidos", responseCode = "400", content = @Content(schema = @Schema(implementation = MensagemErroSwagger.class))),
+            @ApiResponse (description = "Dados não encontrados", responseCode = "404", content = @Content(schema = @Schema(implementation = MensagemErroSwagger.class))),
+            @ApiResponse (description = "Erro interno no servidor", responseCode = "500", content = @Content(schema = @Schema(implementation = MensagemErroSwagger.class)))
     })
     @PutMapping("/{id}")
-    public ResponseEntity<CategoriaAtualizar> atualizarCategoria(@PathVariable UUID id, @RequestBody @Valid CategoriaAtualizar categoria){
-        CategoriaAtualizar categoriaAtualizado = categoriaService.atualizarCategoria(id, categoria);
-        return ResponseEntity.ok(categoriaAtualizado);
+    public ResponseEntity<MensagemSucesso> atualizarCategoria(@PathVariable UUID id, @RequestBody @Valid CategoriaAtualizar categoria){
+        categoriaService.atualizarCategoria(id, categoria);
+        return ResponseEntity.status(HttpStatus.OK).body(new MensagemSucesso("Categoria atualizada com sucesso!"));
     }
 
     @Operation(summary = "Deletar categoria", description = "Deleta a categoria por ID")
     @ApiResponses(value = {
-            @ApiResponse (description = "Categoria deletada com sucesso", responseCode = "200"),
-            @ApiResponse (description = "Dados informados inválidos", responseCode = "400", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
-            @ApiResponse (description = "Dados não encontrados", responseCode = "404", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
-            @ApiResponse (description = "Erro interno no servidor", responseCode = "500", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+            @ApiResponse (description = "Categoria deletada com sucesso", responseCode = "204"),
+            @ApiResponse (description = "Dados informados inválidos", responseCode = "400", content = @Content(schema = @Schema(implementation = MensagemErroSwagger.class))),
+            @ApiResponse (description = "Dados não encontrados", responseCode = "404", content = @Content(schema = @Schema(implementation = MensagemErroSwagger.class))),
+            @ApiResponse (description = "Erro interno no servidor", responseCode = "500", content = @Content(schema = @Schema(implementation = MensagemErroSwagger.class)))
     })
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletarCategoria(@PathVariable UUID id){

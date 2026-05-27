@@ -1,6 +1,7 @@
 package org.serratec.trabalhoFinalApi.service;
 import jakarta.persistence.EntityManager;
 
+import jakarta.transaction.Transactional;
 import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;
 import org.serratec.trabalhoFinalApi.entity.Cliente;
@@ -8,7 +9,9 @@ import org.serratec.trabalhoFinalApi.entity.ItemPedido;
 import org.serratec.trabalhoFinalApi.entity.Pedido;
 import org.serratec.trabalhoFinalApi.entity.Produto;
 import org.serratec.trabalhoFinalApi.exception.ClienteNaoEncontradoNatasha;
+import org.serratec.trabalhoFinalApi.exception.catalogo.ProdutoNaoEncontradoException;
 import org.serratec.trabalhoFinalApi.exception.usuario.ClienteNaoEncontradoException;
+import org.serratec.trabalhoFinalApi.exception.venda.EstoqueInsuficienteException;
 import org.serratec.trabalhoFinalApi.exception.venda.PedidoInvalidoException;
 import org.serratec.trabalhoFinalApi.exception.venda.PedidoNaoEncontradoException;
 import org.serratec.trabalhoFinalApi.model.ItemPedidoSolicitacao;
@@ -60,6 +63,7 @@ public class PedidoService {
         return reader.getRevisions(Pedido.class, pedidoId);
     }
 
+    @Transactional
     public Pedido inserirPedido(PedidoCriar pedidoCriar){
 
         Cliente clienteExistente = buscarCliente(pedidoCriar.getClienteId());
@@ -70,6 +74,14 @@ public class PedidoService {
         for (ItemPedidoSolicitacao itemDTO : pedidoCriar.getItens()) {
 
             Produto produto = produtoService.buscarProdutoId(itemDTO.getProdutoId());
+
+            if(!produto.getAtivo()){
+                throw new ProdutoNaoEncontradoException(produto.getId());
+            }
+
+            if(produto.getEstoque() < itemDTO.getQuantidade() ){
+                throw new EstoqueInsuficienteException(produto.getNome(), produto.getEstoque());
+            }
 
             produtoService.atualizarEstoque(produto.getId(), itemDTO.getQuantidade());
 

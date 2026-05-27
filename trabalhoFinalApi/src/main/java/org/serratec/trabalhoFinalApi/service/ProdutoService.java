@@ -3,10 +3,11 @@ package org.serratec.trabalhoFinalApi.service;
 import lombok.AllArgsConstructor;
 import org.serratec.trabalhoFinalApi.entity.Categoria;
 import org.serratec.trabalhoFinalApi.entity.Produto;
-import org.serratec.trabalhoFinalApi.model.ProdutoAtualizar;
-import org.serratec.trabalhoFinalApi.model.ProdutoBuscar;
-import org.serratec.trabalhoFinalApi.model.ProdutoCriar;
-import org.serratec.trabalhoFinalApi.model.ProdutoRelatorio;
+import org.serratec.trabalhoFinalApi.exception.catalogo.CategoriaPaiNaoEncontradaException;
+import org.serratec.trabalhoFinalApi.exception.catalogo.ProdutoNaoEncontradoException;
+import org.serratec.trabalhoFinalApi.exception.generalista.RequisicaoNaoEncontradoException;
+import org.serratec.trabalhoFinalApi.exception.venda.EstoqueInsuficienteException;
+import org.serratec.trabalhoFinalApi.model.*;
 import org.serratec.trabalhoFinalApi.repository.CategoriaRepository;
 import org.serratec.trabalhoFinalApi.repository.ProdutoRepository;
 import org.springframework.stereotype.Service;
@@ -24,7 +25,7 @@ public class ProdutoService {
     private CategoriaRepository categoriaRepository;
 
     public Produto buscarProdutoId(UUID id) {
-        return this.produtoRepository.findById(id).orElseThrow(() -> new RuntimeException("Produto não encontrado pelo id: " + id + " especificado. Informe outro!"));
+        return this.produtoRepository.findById(id).orElseThrow(() -> new ProdutoNaoEncontradoException(id));
     }
 
     public List<ProdutoBuscar> buscarProduto(UUID id, Boolean ativo, String nome, String categoriaNome){
@@ -35,14 +36,19 @@ public class ProdutoService {
         } else if (id != null) {
             Optional<Produto> produto = this.produtoRepository.findById(id);
             if(produto.isEmpty()){
+                throw new ProdutoNaoEncontradoException(id);
             }
             produtos.add(produto.get());
         } else if (nome != null && !nome.isBlank()){
-            produtos = this.produtoRepository.findByNome(nome);
+            produtos = this.produtoRepository.findByNomeContainingIgnoreCase(nome);
         } else if (ativo != null){
             produtos = this.produtoRepository.findByAtivo(ativo);
         } else if (categoriaNome != null && !categoriaNome.isBlank()){
-            produtos = this.produtoRepository.findByCategoriaNome(categoriaNome);
+            produtos = this.produtoRepository.findByCategoriaNomeContainingIgnoreCase(categoriaNome);
+        }
+
+        if(produtos.isEmpty()){
+            throw new RequisicaoNaoEncontradoException("Nenhum produto encontrado");
         }
 
         return produtos
@@ -55,7 +61,7 @@ public class ProdutoService {
         Optional<Categoria> categoriaOpt = categoriaRepository.findById(produtoCriar.getCategoriaId());
 
         if(categoriaOpt.isEmpty()){
-            throw new RuntimeException();
+            throw new CategoriaPaiNaoEncontradaException(produtoCriar.getCategoriaId());
         }
 
         Produto produto = new Produto(produtoCriar, categoriaOpt.get());
@@ -65,20 +71,20 @@ public class ProdutoService {
 
     public void deletarProduto(UUID id){
         if(!produtoRepository.existsById(id)){
-            throw new RuntimeException();
+            throw new ProdutoNaoEncontradoException(id);
         }
         this.produtoRepository.deleteById(id);
     }
 
-    public ProdutoAtualizar atualizarProduto(UUID id, ProdutoAtualizar produto) {
+    public void atualizarProduto(UUID id, ProdutoAtualizar produto) {
         Optional<Produto> produtoOpt = produtoRepository.findById(id);
 
         if (produtoOpt.isEmpty()) {
-            throw new RuntimeException();
+            throw new ProdutoNaoEncontradoException(id);
         }
         Produto produtoExistente = produtoOpt.get();
 
-        if (produto.getNome() != null) {
+        if (produto.getNome() != null && !produto.getNome().isBlank()) {
             produtoExistente.setNome(produto.getNome());
         }
 
@@ -101,23 +107,19 @@ public class ProdutoService {
         if (produto.getCategoriaId() != null) {
             Optional<Categoria> categoria = categoriaRepository.findById(produto.getCategoriaId());
             if (categoria.isEmpty()){
-                throw new RuntimeException();
+                throw new CategoriaPaiNaoEncontradaException(produto.getCategoriaId());
             }
             produtoExistente.setCategoria(categoria.get());
         }
 
-        return new ProdutoAtualizar(produtoRepository.save(produtoExistente));
+        produtoRepository.save(produtoExistente);
     }
 
     public void atualizarEstoque(UUID id, Integer quant){
         Produto produto = buscarProdutoId(id);
 
-        if(!produto.getAtivo()){
-            throw new RuntimeException("Produto inativo: " + produto.getNome() );
-        }
-
-        if(produto.getEstoque() < quant ){
-            throw new RuntimeException("Produto com estoque insuficiente: " + produto.getNome() );
+        if(produto.getEstoque() < quant){
+            throw new EstoqueInsuficienteException(produto.getNome(), quant);
         }
 
         produto.setEstoque(produto.getEstoque() - quant);
@@ -138,6 +140,10 @@ public class ProdutoService {
             produto.setReceitaTotal((Double) linha[4]);
 
             relatorio.add(produto);
+        }
+
+        if(relatorio.isEmpty()){
+            throw new RequisicaoNaoEncontradoException("lista vazia");
         }
 
         return relatorio;

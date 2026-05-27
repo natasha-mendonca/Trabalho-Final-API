@@ -8,11 +8,11 @@ import java.util.List;
 import java.util.UUID;
 
 public interface ProdutoRepository extends JpaRepository<Produto, UUID> {
-    List<Produto> findByNome(String nome);
+    List<Produto> findByNomeContainingIgnoreCase(String nome);
 
     List<Produto> findByAtivo(Boolean ativo);
 
-    List<Produto> findByCategoriaNome(String categoriaNome);
+    List<Produto> findByCategoriaNomeContainingIgnoreCase(String categoriaNome);
 
     @Query(value = """
         select p.id, p.nome, c.nome, sum(ip.quantidade), sum((ip.valor_venda - ip.desconto) * ip.quantidade)
