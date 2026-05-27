@@ -10,10 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.serratec.trabalhoFinalApi.entity.Pedido;
 import org.serratec.trabalhoFinalApi.exception.generalista.MensagemErroSwagger;
-import org.serratec.trabalhoFinalApi.model.MensagemSucesso;
-import org.serratec.trabalhoFinalApi.model.PedidoAtualiza;
-import org.serratec.trabalhoFinalApi.model.PedidoBuscar;
-import org.serratec.trabalhoFinalApi.model.PedidoCriar;
+import org.serratec.trabalhoFinalApi.model.*;
 import org.serratec.trabalhoFinalApi.service.PedidoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -67,6 +64,50 @@ public class PedidoController {
     ResponseEntity<PedidoBuscar> buscar(@Parameter(description = "Id do pedido", required = true)
                                               @PathVariable UUID id) {
         return ResponseEntity.ok(this.pedidoService.encontrarPedido(id));
+    }
+
+    @Operation(summary = "Consultar rastreamento do pedido",
+            description = "Retorna as informações de rastreamento do pedido através do código de rastreio"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    description = "Rastreamento encontrado com sucesso",
+                    responseCode = "200"
+            ),
+            @ApiResponse(
+                    description = "Código de rastreio inválido",
+                    responseCode = "400",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    implementation = MensagemErroSwagger.class
+                            )
+                    )
+            ),
+            @ApiResponse(
+                    description = "Pedido não encontrado",
+                    responseCode = "404",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    implementation = MensagemErroSwagger.class
+                            )
+                    )
+            ),
+            @ApiResponse(
+                    description = "Erro interno no servidor",
+                    responseCode = "500",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    implementation = MensagemErroSwagger.class
+                            )
+                    )
+            )
+    })
+    @GetMapping("/rastreio/{codigo}")
+    ResponseEntity<PedidoRastreioResponse> buscarPorCodigoRastreio(@PathVariable String codigoRastreio){
+        return ResponseEntity.ok(pedidoService.buscarPorCodigoRastreio(codigoRastreio));
     }
 
     @Operation(summary = "Atualizar pedido", description = "Atualizados dados de um pedido")
