@@ -60,21 +60,4 @@ public class Pedido extends Auditoria{
         this.nomeCliente = cliente.getNome();
 
     }
-
-    public void atualizarDados(PedidoAtualiza pedidoAtualiza) {
-
-        if(pedidoAtualiza.getObservacoes() != null){
-            this.observacoes = pedidoAtualiza.getObservacoes();
-        }
-
-        if(pedidoAtualiza.getFormasDePagamento() != null) {
-            this.formaDePagamento = pedidoAtualiza.getFormasDePagamento();
-        }
-
-        if (pedidoAtualiza.getStatus() != null){
-            this.status = pedidoAtualiza.getStatus();
-        }
-
-        //data pedido altera em algo?
-    }
 }

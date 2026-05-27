@@ -69,7 +69,6 @@ public class PedidoService {
             itens.add(item);
         }
 
-        //rever esse setItens dentro do service!
         pedido.setItens(itens);
         Pedido pedidoSalvo = pedidoRepository.save(pedido);
         emailService.enviarEmailPedidoAprovado(clienteExistente.getEmail(), pedidoSalvo);
@@ -87,7 +86,16 @@ public class PedidoService {
     public void atualizarPedido(UUID id, PedidoAtualiza pedidoAtualiza){
         Pedido pedidoExistente =  buscarPedido(id);
 
-        pedidoExistente.atualizarDados(pedidoAtualiza);
+        if(pedidoAtualiza.getObservacoes() != null){
+            pedidoExistente.setObservacoes(pedidoAtualiza.getObservacoes());
+        }
+        if(pedidoAtualiza.getFormasDePagamento() != null) {
+            pedidoExistente.setFormaDePagamento(pedidoAtualiza.getFormasDePagamento());
+        }
+        if (pedidoAtualiza.getStatus() != null){
+            pedidoExistente.setStatus(pedidoAtualiza.getStatus());
+        }
+
         Pedido pedidoAtualizado = this.pedidoRepository.save(pedidoExistente);
         emailService.enviarEmailPedidoAtualizado(pedidoAtualizado.getCliente().getEmail(), pedidoAtualizado);
     }
