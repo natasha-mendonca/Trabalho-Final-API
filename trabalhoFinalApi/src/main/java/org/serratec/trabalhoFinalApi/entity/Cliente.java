@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.serratec.trabalhoFinalApi.model.ClienteCriar;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Data
@@ -23,6 +24,9 @@ public class Cliente {
 
     @Column(unique = true, length = 11)
     private String cpf;
+
+    @Column
+    private LocalDate dataNascimento;
 
     @Column(unique = true, length = 50)
     private String email;
