@@ -29,7 +29,7 @@ public class ClienteCriar {
     private String cpf;
 
     @Schema(description = "Data de nascimento do cliente") //ano/mes/dia
-    @NotNull
+    @NotNull(message = "Data de nascimento nao deve ser null")
     private LocalDate dataNascimento;
 
     @Schema (description = "E-mail do cliente")

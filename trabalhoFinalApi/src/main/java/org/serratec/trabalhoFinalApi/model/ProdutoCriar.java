@@ -22,6 +22,7 @@ public class ProdutoCriar {
     private String descricao;
 
     @NotNull
+    @Min(0)
     @Schema(nullable = false, description = "Campo contendo o preço do Produto", example = "19.99")
     private Double preco;
 

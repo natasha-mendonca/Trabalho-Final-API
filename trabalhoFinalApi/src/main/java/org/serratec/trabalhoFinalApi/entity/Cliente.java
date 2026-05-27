@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.RelationTargetAuditMode;
 import org.serratec.trabalhoFinalApi.model.ClienteCriar;
 
 import java.time.LocalDate;
@@ -13,7 +15,8 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Cliente {
+@Audited
+public class Cliente extends Auditoria{
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -36,6 +39,7 @@ public class Cliente {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "endereco_id")
+    @Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
     private Endereco endereco;
 
     public Cliente(ClienteCriar cliente, Endereco endereco) {
@@ -45,5 +49,6 @@ public class Cliente {
         this.email = cliente.getEmail();
         this.telefone = cliente.getTelefone();
         this.endereco = endereco;
+        this.dataNascimento = cliente.getDataNascimento();
     }
 }

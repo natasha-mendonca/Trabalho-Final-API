@@ -1,6 +1,7 @@
 package org.serratec.trabalhoFinalApi.model;
 
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,14 +17,28 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class PedidoBuscar {
 
+    @Schema(description = "Id do pedido", example = "835c45e4-edf6-463c-bb7d-951cbcfdec46")
     private UUID id;
     private List<ItemPedidoBuscar> itens;
+
+    @Schema(description = "Observações do pedido", example = "Entregar apos as 18h")
     private String observacoes;
+
+    @Schema(description = "Formas de pagamento(Enum)", example = "CREDITO")
     private FormasPagamento formaDePagamento;
+
+    @Schema(description = "Status do pedido", example = "CRIADO")
     private Status status;
+
+    @Schema(description = "Data do pedido", example = "2026-05-27T14:37:46.773Z")
     private LocalDateTime dataPedido;
+
+    @Schema(description = "valor total do pedido", example = "20.0")
     private Double valorTotal;
+
+    @Schema(description = "id para referencia o cliente da compra", example = "3fa85f64-5717-4562-b3fc-2c963f66afa6")
     private UUID clienteId;
+//    private Boolean deletado;
 
     //@ManyToOne
 //    private Cliente cliente;
@@ -57,5 +72,7 @@ public class PedidoBuscar {
         }
 
         this.clienteId = pedido.getCliente().getId();
+
+//        this.deletado = pedido.getDeletado();
     }
 }

@@ -33,7 +33,7 @@ public class EnderecoService {
         ViaCepResponse body = consultaViaCep.getBody();
 
         if (body == null || Boolean.TRUE.equals(body.erro())) {
-            throw new CepInvalidoException("CEP inválido!");
+            throw new CepInvalidoException(enderecoCriar.getCep());
         }
 
         Endereco endereco = new Endereco(enderecoCriar, body);

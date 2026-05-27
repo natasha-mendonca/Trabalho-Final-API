@@ -4,11 +4,11 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.envers.Audited;
 import org.serratec.trabalhoFinalApi.model.FormasPagamento;
-import org.serratec.trabalhoFinalApi.model.PedidoAtualiza;
 import org.serratec.trabalhoFinalApi.model.PedidoCriar;
 import org.serratec.trabalhoFinalApi.model.Status;
-
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +18,8 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Pedido {
+@Audited
+public class Pedido extends Auditoria{
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -28,10 +29,10 @@ public class Pedido {
     private List<ItemPedido> itens = new ArrayList<>();
 
     @ManyToOne
-    @JoinColumn(name = "cliente_id")
+    @JoinColumn(name = "cliente_id", nullable = false)
     private Cliente cliente;
 
-    @Column
+    @Column(length = 100)
     private String observacoes;
 
     @Enumerated(EnumType.STRING)
@@ -45,8 +46,17 @@ public class Pedido {
     @Column(name = "data_pedido", nullable = false)
     private LocalDateTime dataPedido;
 
-    @Column(name = "nome_cliente")
+    @Column(name = "nome_cliente", nullable = false)
     private String nomeCliente;
+
+    @Column(name = "codigo_rastreio", unique = true)
+    private String codigoRastreio;
+
+    @Column
+    private LocalDate previsaoEntrega;
+//
+//    @Column
+//    private Boolean deletado;
 
     public Pedido(PedidoCriar pedidoCriar, Cliente cliente) {
         this.observacoes = pedidoCriar.getObservacoes();
@@ -57,22 +67,5 @@ public class Pedido {
         this.cliente = cliente;
         this.nomeCliente = cliente.getNome();
 
-    }
-
-    public void atualizarDados(PedidoAtualiza pedidoAtualiza) {
-
-        if(pedidoAtualiza.getObservacoes() != null){
-            this.observacoes = pedidoAtualiza.getObservacoes();
-        }
-
-        if(pedidoAtualiza.getFormasDePagamento() != null) {
-            this.formaDePagamento = pedidoAtualiza.getFormasDePagamento();
-        }
-
-        if (pedidoAtualiza.getStatus() != null){
-            this.status = pedidoAtualiza.getStatus();
-        }
-
-        //data pedido altera em algo?
     }
 }

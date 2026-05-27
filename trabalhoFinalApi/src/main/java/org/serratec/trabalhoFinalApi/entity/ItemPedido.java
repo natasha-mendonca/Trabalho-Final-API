@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Check;
+import org.hibernate.envers.Audited;
 import org.serratec.trabalhoFinalApi.model.ItemPedidoSolicitacao;
 
 
@@ -15,7 +16,11 @@ import org.serratec.trabalhoFinalApi.model.ItemPedidoSolicitacao;
 @Entity
 @Table(name = "item_pedido")
 @Check(constraints = "quantidade >= 1")
-public class ItemPedido {
+@Check(constraints = "valor_venda >= 1")
+@Check(constraints = "desconto >= 0")
+@Check(constraints = "sub_total >= 1")
+@Audited
+public class ItemPedido extends Auditoria{
 
 //    @EmbeddedId
     //chave composta de identificadores ( chave composta pela junçao das fks )
@@ -43,15 +48,16 @@ public class ItemPedido {
     @Column(nullable = false)
     private Double desconto;
 
-    @Column(name = "sub_total")
+    @Column(name = "sub_total", nullable = false)
     private Double subTotal;
 
-    public ItemPedido(Pedido pedido, Produto produto, ItemPedidoSolicitacao itemPedidoSolicitacao){
+    public ItemPedido(Pedido pedido, Produto produto, ItemPedidoSolicitacao itemPedidoSolicitacao, Double descontoPadrao){
         this.pedido = pedido;
         this.produto = produto;
         this.quantidade = itemPedidoSolicitacao.getQuantidade();
         this.valorVenda = produto.getPreco();
-        this.desconto = itemPedidoSolicitacao.getDesconto();
+//        this.desconto = itemPedidoSolicitacao.getDesconto();
+        this.desconto = descontoPadrao;
 
         this.subTotal = (valorVenda * quantidade) - desconto;
     }
