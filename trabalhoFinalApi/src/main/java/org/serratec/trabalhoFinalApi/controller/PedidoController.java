@@ -51,7 +51,7 @@ public class PedidoController {
     }
 
     @Operation(summary = "Buscar pedido por id", description = "Retorna um pedido especificado pelo ID")
-    @ApiResponses(value = {@ApiResponse(description = "Busca de pedido retornada", responseCode = "200"),
+    @ApiResponses(value = {@ApiResponse(description = "Busca de pedido retornada", responseCode = "200", content = @Content(mediaType = "application/json")),
             @ApiResponse(description = "Dados informados inválidos", responseCode = "400", content = @Content(
                     mediaType = "application/json",
                     schema = @Schema(implementation = MensagemErroSwagger.class))),
@@ -62,13 +62,13 @@ public class PedidoController {
                     mediaType = "application/json",
                     schema = @Schema(implementation =  MensagemErroSwagger.class)))})
     @GetMapping("/{id}")
-    ResponseEntity<PedidoBuscar> buscar(@Parameter(description = "Id do pedido", example = "87fe4a1d-a281-45c4-bc96-8547507785bf")
+    ResponseEntity<PedidoBuscar> buscar(@Parameter(description = "Id do pedido", required = true)
                                               @PathVariable UUID id) {
         return ResponseEntity.ok(this.pedidoService.encontrarPedido(id));
     }
 
     @Operation(summary = "Atualizar pedido", description = "Atualizados dados de um pedido")
-    @ApiResponses(value = {@ApiResponse(description = "Veiculo atualizado com sucesso", responseCode = "200"),
+    @ApiResponses(value = {@ApiResponse(description = "Veiculo atualizado com sucesso", responseCode = "200", content = @Content(mediaType = "application/json")),
             @ApiResponse(description = "Dados informados inválidos", responseCode = "400", content = @Content(
                     mediaType = "application/json",
                     schema = @Schema(implementation =  MensagemErroSwagger.class))),
@@ -79,7 +79,7 @@ public class PedidoController {
                     mediaType = "application/json",
                     schema = @Schema(implementation =  MensagemErroSwagger.class)))})
     @PutMapping("/{id}")
-    ResponseEntity<MensagemSucesso> atualizar(@Parameter(description = "Id do pedido", example = "87fe4a1d-a281-45c4-bc96-8547507785bf")
+    ResponseEntity<MensagemSucesso> atualizar(@Parameter(description = "Id do pedido", required = true)
                                               @PathVariable UUID id, @Valid @RequestBody PedidoAtualiza pedidoAtualiza) {
         this.pedidoService.atualizarPedido(id, pedidoAtualiza);
         return ResponseEntity.status(HttpStatus.OK).body(new MensagemSucesso("Pedido atualizado com sucesso!"));
@@ -97,7 +97,7 @@ public class PedidoController {
                     mediaType = "application/json",
                     schema = @Schema(implementation =  MensagemErroSwagger.class)))})
     @DeleteMapping("/{id}")
-    ResponseEntity<Void> deletar(@Parameter(description = "Id do pedido", example = "87fe4a1d-a281-45c4-bc96-8547507785bf")
+    ResponseEntity<Void> deletar(@Parameter(description = "Id do pedido", required = true)
                                             @PathVariable UUID id) {
 
         this.pedidoService.deletarPedido(id);
@@ -105,7 +105,7 @@ public class PedidoController {
     }
 
     @Operation(summary = "Buscar revisoes", description = "Buscar dados de revisao do pedido")
-    @ApiResponses(value = {@ApiResponse(description = "Retorno dos dados de revisao", responseCode = "200"),
+    @ApiResponses(value = {@ApiResponse(description = "Retorno dos dados de revisao", responseCode = "200", content = @Content(mediaType = "application/json")),
             @ApiResponse(description = "Dados invalidos", responseCode = "400", content = @Content(
                     mediaType = "application/json",
                     schema = @Schema(implementation =  MensagemErroSwagger.class))),
@@ -116,7 +116,7 @@ public class PedidoController {
                     mediaType = "application/json",
                     schema = @Schema(implementation =  MensagemErroSwagger.class)))})
     @GetMapping("/revisoes/{id}")
-    public ResponseEntity<List<Number>> buscarRevisoes(@PathVariable UUID id) {
+    public ResponseEntity<List<Number>> buscarRevisoes( @Parameter(description = "Id do pedido", required = true) @PathVariable UUID id) {
         List<Number> revisoes = pedidoService.buscarRevisoes(id);
 //        if (revisoes.isEmpty()) {
 //            throw new RequisicaoNaoEncontradoException("Nao ha revisao desse pedido pelo id: " + id);

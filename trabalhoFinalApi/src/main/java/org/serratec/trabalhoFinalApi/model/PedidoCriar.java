@@ -26,7 +26,7 @@ public class PedidoCriar {
     private UUID clienteId;
 
     @Schema(example = "pedido necessita de urgencia", description = "Campo de observaçoes(opcional)", maxLength = 40)
-    @Size(max = 40)
+    @Size(max = 100, message = "O tamanho do texto nao deve ultrapassar o 100 caracteres")
     private String observacoes;
 
     @Schema(example = "PIX", nullable = false, description = "Campo com a forma de pegamento")
