@@ -4,8 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.envers.Audited;
-import org.serratec.trabalhoFinalApi.model.EnderecoCriar;
+import org.serratec.trabalhoFinalApi.model.EnderecoDto.EnderecoCriar;
 import org.serratec.trabalhoFinalApi.model.ViaCepResponse;
 import java.util.UUID;
 

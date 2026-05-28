@@ -1,8 +1,6 @@
 package org.serratec.trabalhoFinalApi.exception.infra;
 
 import org.serratec.trabalhoFinalApi.exception.EcommerceBadRequestException;
-import org.serratec.trabalhoFinalApi.exception.EcommerceException;
-import org.springframework.http.HttpStatus;
 
 public class CepInvalidoException extends EcommerceBadRequestException {
     public CepInvalidoException(String cep) {

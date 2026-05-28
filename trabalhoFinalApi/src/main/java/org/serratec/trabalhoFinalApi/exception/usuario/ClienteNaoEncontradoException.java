@@ -1,6 +1,5 @@
 package org.serratec.trabalhoFinalApi.exception.usuario;
 
-import org.serratec.trabalhoFinalApi.exception.EcommerceException;
 import org.serratec.trabalhoFinalApi.exception.EcommerceNotFoundException;
 
 public class ClienteNaoEncontradoException extends EcommerceNotFoundException {

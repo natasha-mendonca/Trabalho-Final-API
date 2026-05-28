@@ -2,7 +2,7 @@ package org.serratec.trabalhoFinalApi.service;
 
 import org.serratec.trabalhoFinalApi.entity.Endereco;
 import org.serratec.trabalhoFinalApi.exception.infra.CepInvalidoException;
-import org.serratec.trabalhoFinalApi.model.EnderecoCriar;
+import org.serratec.trabalhoFinalApi.model.EnderecoDto.EnderecoCriar;
 import org.serratec.trabalhoFinalApi.model.ViaCepResponse;
 import org.serratec.trabalhoFinalApi.repository.EnderecoRepository;
 import org.springframework.http.MediaType;

@@ -1,5 +1,4 @@
-package org.serratec.trabalhoFinalApi.model;
-
+package org.serratec.trabalhoFinalApi.model.ItemPedidoDto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;

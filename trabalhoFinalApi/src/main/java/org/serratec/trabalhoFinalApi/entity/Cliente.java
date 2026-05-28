@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.RelationTargetAuditMode;
-import org.serratec.trabalhoFinalApi.model.ClienteCriar;
+import org.serratec.trabalhoFinalApi.model.ClienteDto.ClienteCriar;
 
 import java.time.LocalDate;
 import java.util.UUID;

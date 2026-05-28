@@ -1,10 +1,12 @@
-package org.serratec.trabalhoFinalApi.model;
+package org.serratec.trabalhoFinalApi.model.PedidoDto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.serratec.trabalhoFinalApi.model.FormasPagamento;
+import org.serratec.trabalhoFinalApi.model.Status;
 
 @Data
 @AllArgsConstructor
@@ -20,8 +22,5 @@ public class PedidoAtualiza {
 
     @Schema(description = "Campo contendo o status", nullable = false, example = "ENTREGUE")
     private Status status;
-
-//    private LocalDateTime datePedidoAtualizado;
-
 
 }

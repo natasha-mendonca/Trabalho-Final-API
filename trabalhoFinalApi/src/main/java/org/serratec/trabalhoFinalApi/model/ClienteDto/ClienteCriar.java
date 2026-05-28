@@ -1,4 +1,4 @@
-package org.serratec.trabalhoFinalApi.model;
+package org.serratec.trabalhoFinalApi.model.ClienteDto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
@@ -8,7 +8,7 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.serratec.trabalhoFinalApi.entity.Endereco;
+import org.serratec.trabalhoFinalApi.model.EnderecoDto.EnderecoCriar;
 
 import java.time.LocalDate;
 

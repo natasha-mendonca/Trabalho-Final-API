@@ -5,8 +5,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.envers.Audited;
-import org.serratec.trabalhoFinalApi.model.CategoriaCriar;
+import org.serratec.trabalhoFinalApi.model.CategoriaDto.CategoriaCriar;
 
 import java.util.List;
 import java.util.UUID;

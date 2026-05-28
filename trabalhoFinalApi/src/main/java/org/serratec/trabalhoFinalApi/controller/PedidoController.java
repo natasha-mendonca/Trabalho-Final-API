@@ -8,15 +8,16 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import org.serratec.trabalhoFinalApi.entity.Pedido;
 import org.serratec.trabalhoFinalApi.exception.generalista.MensagemErroSwagger;
 import org.serratec.trabalhoFinalApi.model.*;
+import org.serratec.trabalhoFinalApi.model.PedidoDto.PedidoAtualiza;
+import org.serratec.trabalhoFinalApi.model.PedidoDto.PedidoBuscar;
+import org.serratec.trabalhoFinalApi.model.PedidoDto.PedidoCriar;
 import org.serratec.trabalhoFinalApi.service.PedidoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Array;
 import java.util.List;
 import java.util.UUID;
 
@@ -39,7 +40,7 @@ public class PedidoController {
             @ApiResponse(description = "Dados não encontrados", responseCode = "404", content = @Content(
                     mediaType = "applicaton/json",
                     schema = @Schema(implementation = MensagemErroSwagger.class))),
-            @ApiResponse(description = "Erro inteiro no servidor", responseCode = "500", content = @Content(
+            @ApiResponse(description = "Erro interno no servidor", responseCode = "500", content = @Content(
                     mediaType = "application/json",
                     schema = @Schema(implementation = MensagemErroSwagger.class)))})
     @PostMapping
@@ -57,7 +58,7 @@ public class PedidoController {
             @ApiResponse(description = "Dados não encontrados", responseCode = "404", content = @Content(
                     mediaType = "application/json",
                     schema = @Schema(implementation = MensagemErroSwagger.class))),
-            @ApiResponse(description = "Erro inteiro no servidor", responseCode = "500", content = @Content(
+            @ApiResponse(description = "Erro interno no servidor", responseCode = "500", content = @Content(
                     mediaType = "application/json",
                     schema = @Schema(implementation =  MensagemErroSwagger.class)))})
     @GetMapping("/{id}")
@@ -118,7 +119,7 @@ public class PedidoController {
             @ApiResponse(description = "Dados não encontrados", responseCode = "404", content = @Content(
                     mediaType = "application/json",
                     schema = @Schema(implementation =  MensagemErroSwagger.class))),
-            @ApiResponse(description = "Erro inteiro no servidor", responseCode = "500", content = @Content(
+            @ApiResponse(description = "Erro interno no servidor", responseCode = "500", content = @Content(
                     mediaType = "application/json",
                     schema = @Schema(implementation =  MensagemErroSwagger.class)))})
     @PutMapping("/{id}")
@@ -136,7 +137,7 @@ public class PedidoController {
             @ApiResponse(description = "Dados não encontrados", responseCode = "404", content = @Content(
                     mediaType = "application/json",
                     schema = @Schema(implementation =  MensagemErroSwagger.class))),
-            @ApiResponse(description = "Erro inteiro no servidor", responseCode = "500", content = @Content(
+            @ApiResponse(description = "Erro interno no servidor", responseCode = "500", content = @Content(
                     mediaType = "application/json",
                     schema = @Schema(implementation =  MensagemErroSwagger.class)))})
     @DeleteMapping("/{id}")
@@ -157,7 +158,7 @@ public class PedidoController {
             @ApiResponse(description = "Revisoes não encontrados", responseCode = "404", content = @Content(
                     mediaType = "applicaton/json",
                     schema = @Schema(implementation =  MensagemErroSwagger.class))),
-            @ApiResponse(description = "Erro inteiro no servidor", responseCode = "500", content = @Content(
+            @ApiResponse(description = "Erro interno no servidor", responseCode = "500", content = @Content(
                     mediaType = "application/json",
                     schema = @Schema(implementation =  MensagemErroSwagger.class)))})
     @GetMapping("/revisoes/{id}")

@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Check;
 import org.hibernate.envers.Audited;
-import org.serratec.trabalhoFinalApi.model.ItemPedidoSolicitacao;
+import org.serratec.trabalhoFinalApi.model.ItemPedidoDto.ItemPedidoSolicitacao;
 
 
 @Data
@@ -21,10 +21,6 @@ import org.serratec.trabalhoFinalApi.model.ItemPedidoSolicitacao;
 @Check(constraints = "sub_total >= 1")
 @Audited
 public class ItemPedido extends Auditoria{
-
-//    @EmbeddedId
-    //chave composta de identificadores ( chave composta pela junçao das fks )
-//    private ItemPedidoId id;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

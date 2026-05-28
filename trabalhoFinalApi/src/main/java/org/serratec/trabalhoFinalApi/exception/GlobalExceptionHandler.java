@@ -1,7 +1,6 @@
-package org.serratec.trabalhoFinalApi.controller;
+package org.serratec.trabalhoFinalApi.exception;
 
 import jakarta.servlet.http.HttpServletRequest;
-import org.serratec.trabalhoFinalApi.exception.EcommerceException;
 import org.serratec.trabalhoFinalApi.model.MensagemErro;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
