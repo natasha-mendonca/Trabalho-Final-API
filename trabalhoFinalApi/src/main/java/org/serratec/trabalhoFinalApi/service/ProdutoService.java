@@ -34,11 +34,7 @@ public class ProdutoService {
         if(id == null && ativo == null && nome == null && categoriaNome == null){
             produtos = this.produtoRepository.findAll();
         } else if (id != null) {
-            Optional<Produto> produto = this.produtoRepository.findById(id);
-            if(produto.isEmpty()){
-                throw new ProdutoNaoEncontradoException(id);
-            }
-            produtos.add(produto.get());
+            produtos.add(buscarProdutoId(id));
         } else if (nome != null && !nome.isBlank()){
             produtos = this.produtoRepository.findByNomeContainingIgnoreCase(nome);
         } else if (ativo != null){
@@ -143,7 +139,7 @@ public class ProdutoService {
         }
 
         if(relatorio.isEmpty()){
-            throw new RequisicaoNaoEncontradoException("lista vazia");
+            throw new RequisicaoNaoEncontradoException("Não existe pedidos");
         }
 
         return relatorio;

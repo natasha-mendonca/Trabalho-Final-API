@@ -1,6 +1,7 @@
 package org.serratec.trabalhoFinalApi.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,8 +22,6 @@ public class ClienteAtualizar {
     @Schema(description = "Nome completo do cliente")
     private String nome;
 
-    @Schema(description = "CPF do cliente")
-    private String cpf;
 
     @Schema(description = "Data de nascimento do cliente")
     private LocalDate dataNascimento;
@@ -39,7 +38,6 @@ public class ClienteAtualizar {
     public ClienteAtualizar (Cliente cliente){
         this.id = cliente.getId();
         this.nome = cliente.getNome();
-        this.cpf = cliente.getCpf();
         this.dataNascimento = cliente.getDataNascimento();
         this.email = cliente.getEmail();
         this.telefone = cliente.getTelefone();

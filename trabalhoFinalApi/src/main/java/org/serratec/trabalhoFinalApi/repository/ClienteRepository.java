@@ -22,4 +22,6 @@ public interface ClienteRepository extends JpaRepository<Cliente, UUID> {
     @Query("SELECT c FROM Cliente c WHERE " +
             "DAY(c.dataNascimento) = :dia AND MONTH(c.dataNascimento) = :mes")
     List<Cliente> findAniversariantesDoDia(@Param("dia") int dia, @Param("mes") int mes);
+
+    Optional<Cliente> findByEmail(String email);
 }
