@@ -45,8 +45,24 @@ public class EmailService {
         message.setFrom(from);
         message.setTo(to);
         message.setSubject("Pedido Aprovado");
-        message.setText("Seu pedido foi aprovado com sucesso!" +
-                "\nNúmero do pedido: " + pedido.getId());
+        message.setText(
+                "Olá, " + pedido.getNomeCliente() + "!\n\n"
+
+                        + "Seu pedido foi aprovado com sucesso.\n\n"
+
+                        + "Número do pedido: "
+                        + pedido.getId() + "\n"
+
+                        + "Código de rastreio: "
+                        + pedido.getCodigoRastreio() + "\n"
+
+                        + "Previsão de entrega: "
+                        + pedido.getPrevisaoEntrega() + "\n\n"
+
+                        + "Agradecemos pela preferência!\n"
+
+                        + "Equipe DizQueMeLeva"
+        );
 
         this.javaMailSender.send(message);
     }
@@ -57,8 +73,22 @@ public class EmailService {
         message.setFrom(from);
         message.setTo(to);
         message.setSubject("Pedido Atualizado");
-        message.setText("Seu pedido foi atualizado com sucesso!" +
-                "\nNúmero do pedido: " + pedido.getId());
+        message.setText(
+                "Olá, " + pedido.getNomeCliente() + "!\n\n"
+
+                        + "Seu pedido foi atualizado.\n\n"
+
+                        + "Status atual: "
+                        + pedido.getStatus() + "\n"
+
+                        + "Código de rastreio: "
+                        + pedido.getCodigoRastreio() + "\n"
+
+                        + "Previsão de entrega: "
+                        + pedido.getPrevisaoEntrega() + "\n\n"
+
+                        + "Equipe DizQueMeLeva "
+        );
 
         this.javaMailSender.send(message);
     }
@@ -69,7 +99,21 @@ public class EmailService {
         message.setFrom(from);
         message.setTo(to);
         message.setSubject("Pedido Cancelado");
-        message.setText("Seu pedido com o número: " + pedido.getId() + "foi cancelado!");
+        message.setText(
+                "Olá, " + pedido.getNomeCliente() + "!\n\n"
+
+                        + "Seu pedido foi cancelado.\n\n"
+
+                        + "Número do pedido: "
+                        + pedido.getId() + "\n"
+
+                        + "Código de rastreio: "
+                        + pedido.getCodigoRastreio() + "\n\n"
+
+                        + "Caso tenha dúvidas, entre em contato com nossa equipe.\n\n"
+
+                        + "Equipe DizQueMeLeva 🚚"
+        );
 
         this.javaMailSender.send(message);
     }

@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import static org.serratec.trabalhoFinalApi.enums.StatusPedido.APROVADO;
+
 @Service
 public class PedidoService {
 
@@ -108,6 +110,7 @@ public class PedidoService {
 
     public void atualizarPedido(UUID id, PedidoAtualiza pedidoAtualiza){
         Pedido pedidoExistente =  buscarPedido(id);
+        Status statusAntigo = pedidoExistente.getStatus();
 
         if(pedidoAtualiza.getObservacoes() != null){
             pedidoExistente.setObservacoes(pedidoAtualiza.getObservacoes());
@@ -120,7 +123,27 @@ public class PedidoService {
         }
 
         Pedido pedidoAtualizado = this.pedidoRepository.save(pedidoExistente);
-        emailService.enviarEmailPedidoAtualizado(pedidoAtualizado.getCliente().getEmail(), pedidoAtualizado);
+
+        if(statusAntigo != pedidoAtualizado.getStatus()){
+            switch (pedidoAtualizado.getStatus()) {
+
+                case APROVADO ->
+                        emailService.enviarEmailPedidoAprovado(
+                                pedidoAtualizado.getCliente().getEmail(),
+                                pedidoAtualizado
+                        );
+                case CANCELADO ->
+                        emailService.enviarEmailPedidoCancelado(
+                                pedidoAtualizado.getCliente().getEmail(),
+                                pedidoAtualizado
+                        );
+                default ->
+                        emailService.enviarEmailPedidoAtualizado(
+                                pedidoAtualizado.getCliente().getEmail(),
+                                pedidoAtualizado
+                        );
+            }
+        }
     }
 
     public void deletarPedido(UUID id){

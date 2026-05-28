@@ -61,7 +61,7 @@ public class Pedido extends Auditoria{
     public Pedido(PedidoCriar pedidoCriar, Cliente cliente) {
         this.observacoes = pedidoCriar.getObservacoes();
         this.formaDePagamento = pedidoCriar.getFormasDePagamento();
-        this.status = Status.CRIADO;
+        this.status = Status.AGUARDANDO;
         this.dataPedido = LocalDateTime.now();
 
         this.cliente = cliente;
