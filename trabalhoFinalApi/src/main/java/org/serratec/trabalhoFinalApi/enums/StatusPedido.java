@@ -1,3 +1,5 @@
+/*
+
 package org.serratec.trabalhoFinalApi.enums;
 
 public enum StatusPedido {
@@ -7,3 +9,4 @@ public enum StatusPedido {
     ENTREGUE,
     CANCELADO
 }
+*/

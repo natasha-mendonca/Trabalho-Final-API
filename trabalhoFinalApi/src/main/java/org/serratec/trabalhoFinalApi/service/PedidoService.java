@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import static org.serratec.trabalhoFinalApi.enums.StatusPedido.APROVADO;
+//import static org.serratec.trabalhoFinalApi.enums.StatusPedido.APROVADO;
 
 @Service
 public class PedidoService {
@@ -141,7 +141,7 @@ public class PedidoService {
         if(statusAntigo != pedidoAtualizado.getStatus()){
             switch (pedidoAtualizado.getStatus()) {
 
-                case APROVADO ->
+                case CRIADO ->
                         emailService.enviarEmailPedidoAprovado(
                                 pedidoAtualizado.getCliente().getEmail(),
                                 pedidoAtualizado
