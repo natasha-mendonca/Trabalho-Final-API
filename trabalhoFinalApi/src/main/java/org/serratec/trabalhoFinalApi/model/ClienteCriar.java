@@ -26,6 +26,7 @@ public class ClienteCriar {
 
     @Schema (description = "CPF do cliente (somente números)")
     @NotBlank
+    @Size(max = 11, min = 11)
     private String cpf;
 
     @Schema(description = "Data de nascimento do cliente") //ano/mes/dia

@@ -60,6 +60,7 @@ public class CategoriaService {
     }
 
     public void atualizarCategoria(UUID id, CategoriaAtualizar categoria) {
+
         Optional<Categoria> categoriaoOpt = categoriaRepository.findById(id);
 
         if (categoriaoOpt.isEmpty()) {

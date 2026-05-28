@@ -4,6 +4,7 @@ import org.serratec.trabalhoFinalApi.entity.Cliente;
 import org.serratec.trabalhoFinalApi.entity.Endereco;
 import org.serratec.trabalhoFinalApi.exception.usuario.ClienteNaoEncontradoException;
 import org.serratec.trabalhoFinalApi.exception.usuario.CpfJaCadastradoException;
+import org.serratec.trabalhoFinalApi.exception.usuario.EmailJaCadastradoException;
 import org.serratec.trabalhoFinalApi.exception.usuario.UsuarioNaoEncontradoException;
 import org.serratec.trabalhoFinalApi.model.ClienteAtualizar;
 import org.serratec.trabalhoFinalApi.model.ClienteBuscar;
@@ -37,7 +38,10 @@ public class ClienteService {
     public ClienteBuscar inserirCliente(ClienteCriar cliente) {
 
         if (clienteRepository.findByCpf(cliente.getCpf()).isPresent()){
-            throw new CpfJaCadastradoException("CPF ja Cadastrado");
+            throw new CpfJaCadastradoException(cliente.getCpf());
+        }
+        if(!clienteRepository.findByEmail(cliente.getEmail()).isEmpty()){
+            throw new EmailJaCadastradoException(cliente.getEmail());
         }
 
         Endereco endereco = enderecoService.adicionarEndereco(cliente.getEndereco());
@@ -58,25 +62,48 @@ public class ClienteService {
 
         Cliente clienteAtualizado =  clienteOpt.get();
 
-        clienteAtualizado.setCpf(cliente.getCpf());
-        clienteAtualizado.setDataNascimento(cliente.getDataNascimento());
-        clienteAtualizado.setNome(cliente.getNome());
-        clienteAtualizado.setEmail(cliente.getEmail());
-        clienteAtualizado.setTelefone(cliente.getTelefone());
 
-        Endereco enderecoAtualizado = enderecoService.adicionarEndereco(cliente.getEndereco());
+        if(cliente.getNome() != null){
+            clienteAtualizado.setNome(cliente.getNome());
+        }
 
-        clienteAtualizado.setEndereco(enderecoAtualizado);
+        if(cliente.getEmail() != null) {
+            if(!clienteRepository.findByEmail(cliente.getEmail()).isPresent()){
+                clienteAtualizado.setEmail(cliente.getEmail());
+            } else {
+                throw new EmailJaCadastradoException(cliente.getEmail());
+            }
+        }
+
+        if(cliente.getTelefone() != null){
+            clienteAtualizado.setTelefone(cliente.getTelefone());
+        }
+
+        if(cliente.getDataNascimento() != null){
+            clienteAtualizado.setDataNascimento(cliente.getDataNascimento());
+        }
+
+        if(cliente.getEndereco() != null){
+            Endereco enderecoAtualizado = enderecoService.adicionarEndereco(cliente.getEndereco());
+            clienteAtualizado.setEndereco(enderecoAtualizado);
+        }
+
+
 
         clienteRepository.save(clienteAtualizado);
-        emailService.enviarEmailAlteracao(clienteAtualizado.getEmail());
+
+        if(clienteAtualizado.getEmail() != null ){
+            emailService.enviarEmailAlteracao(
+                    clienteAtualizado.getEmail()
+            );
+        }
 
         return new ClienteAtualizar(clienteAtualizado);
     }
 
     public void deletarCliente(UUID id) {
         if (!clienteRepository.existsById(id)){
-            throw new UsuarioNaoEncontradoException("Cliente não Encontrado.");
+            throw new UsuarioNaoEncontradoException(id.toString());
         }
 
         clienteRepository.deleteById(id);
