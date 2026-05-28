@@ -1,4 +1,4 @@
-package org.serratec.trabalhoFinalApi.entity;
+package org.serratec.trabalhoFinalApi.model;
 
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.stereotype.Component;
