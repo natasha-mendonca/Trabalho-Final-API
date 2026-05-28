@@ -17,10 +17,10 @@ public class PedidoAtualiza {
     @Schema(description = "Campo contendo observacoes", example = "Pedido entregue ao destinatário", maxLength = 100)
     private String observacoes;
 
-    @Schema(description = "Campo contendo a forma de pagamento", nullable = false, example = "PIX")
+    @Schema(description = "Campo contendo a forma de pagamento", example = "PIX")
     private FormasPagamento formasDePagamento;
 
-    @Schema(description = "Campo contendo o status", nullable = false, example = "ENTREGUE")
+    @Schema(description = "Campo contendo o status", example = "ENTREGUE")
     private Status status;
 
 }

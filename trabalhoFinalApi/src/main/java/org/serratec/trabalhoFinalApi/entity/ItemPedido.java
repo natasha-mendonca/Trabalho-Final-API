@@ -52,7 +52,6 @@ public class ItemPedido extends Auditoria{
         this.produto = produto;
         this.quantidade = itemPedidoSolicitacao.getQuantidade();
         this.valorVenda = produto.getPreco();
-//        this.desconto = itemPedidoSolicitacao.getDesconto();
         this.desconto = descontoPadrao;
 
         this.subTotal = (valorVenda * quantidade) - desconto;

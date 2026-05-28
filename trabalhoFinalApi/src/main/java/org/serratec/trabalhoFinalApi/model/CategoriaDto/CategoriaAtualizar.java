@@ -11,7 +11,7 @@ import org.serratec.trabalhoFinalApi.entity.Categoria;
 @NoArgsConstructor
 public class CategoriaAtualizar {
 
-    @Schema( description = "Campo contendo o nome da Categoria", example = "Roupas")
+    @Schema( description = "Campo contendo o nome da Categoria", example = "Metal")
     private String nome;
 
     public CategoriaAtualizar(Categoria categoria){

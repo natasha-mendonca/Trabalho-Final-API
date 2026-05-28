@@ -1,5 +1,6 @@
 package org.serratec.trabalhoFinalApi.model.CategoriaDto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,8 +14,11 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CategoriaBuscar {
+    @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
     private UUID id;
+    @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
     private String nome;
+    @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
     private List<String> produtos;
 
     public CategoriaBuscar(Categoria categoria){

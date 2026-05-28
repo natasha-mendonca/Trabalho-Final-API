@@ -25,7 +25,6 @@ public class GlobalExceptionHandler {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDateTime.now());
         body.put("status",ex.getStatus().value());
-//        body.put("codigo", ex.getCodigo());
         body.put("mensagem", ex.getMessage());
 
         return new ResponseEntity<>(body, ex.getStatus());
@@ -36,7 +35,6 @@ public class GlobalExceptionHandler {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDateTime.now());
         body.put("status", HttpStatus.BAD_REQUEST.value());
-//        body.put("codigo", "SYS-001");
 
         String mensagemErro = ex.getBindingResult().getAllErrors().get(0).getDefaultMessage();
         body.put("mensagem", mensagemErro);
@@ -74,9 +72,9 @@ public class GlobalExceptionHandler {
 
         String mensagemOriginal = ex.getMessage();
         if (mensagemOriginal != null && mensagemOriginal.contains("UUID")) {
-            body.put("message", "Formato de UUID inválido. O ID enviado nao possui o padrão de 36 caracteres. Verifice todos os campos novamente antes de enviar a requisicao");
+            body.put("menssagem", "Formato de UUID inválido. O ID enviado nao possui o padrão de 36 caracteres. Verifice todos os campos novamente antes de enviar a requisicao");
         } else {
-            body.put("message", "Erro na leitura do corpo da requisição (JSON malformado).");
+            body.put("menssagem", "Erro na leitura do corpo da requisição (JSON malformado).");
         }
         return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
     }

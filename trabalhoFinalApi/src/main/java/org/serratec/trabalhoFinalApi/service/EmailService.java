@@ -126,8 +126,8 @@ public class EmailService {
                 "Olá, " + nome + "!\n\n" +
                         "Feliz Aniversário!" +
                         "Toda a nossa equipe deseja a você um dia de extrema Felicidade!" +
-                        "Muito sucesso, saúde e paz.\\n\\n" +
-                        "Com carinho,\\nEquipe DizQueMeLeva"
+                        "Muito sucesso, saúde e paz.\n\n" +
+                        "Com carinho,\nEquipe DizQueMeLeva"
         );
         this.javaMailSender.send(mensagem);
     }

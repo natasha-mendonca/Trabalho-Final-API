@@ -15,7 +15,6 @@ import org.serratec.trabalhoFinalApi.model.ClienteDto.ClienteBuscar;
 import org.serratec.trabalhoFinalApi.model.ClienteDto.ClienteCriar;
 import org.serratec.trabalhoFinalApi.model.MensagemSucesso;
 import org.serratec.trabalhoFinalApi.service.ClienteService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +28,6 @@ import java.util.UUID;
 @Tag(name = "Cliente", description = "Pacote contendo as requisições envolvendo clientes")
 public class ClienteController {
 
-    @Autowired
     private ClienteService clienteService;
 
     public ClienteController (ClienteService clienteService) {
@@ -50,15 +48,17 @@ public class ClienteController {
                     mediaType = "application/json",
                     schema = @Schema(implementation =  MensagemErroSwagger.class)))})
     @GetMapping("/{id}")
-    public ResponseEntity<Cliente> buscarPorId(@Parameter (description = "UUID do cliente a ser buscado", required = true) @PathVariable UUID id) {
+    public ResponseEntity<ClienteBuscar> buscarPorId(@Parameter (description = "UUID do cliente a ser buscado", required = true) @PathVariable UUID id) {
         Cliente cliente = this.clienteService.buscarCliente(id);
-        return ResponseEntity.status(OK).body(cliente);
+        return ResponseEntity.status(OK).body(new ClienteBuscar(cliente));
     }
 
     @PostMapping
     @Operation (summary = "Cadastra um novo cliente", description = "Insercao de um novo cliente no sistema")
     @ApiResponses (value = {
-            @ApiResponse (responseCode = "201", description = "Cliente cadastrado com sucesso", content = @Content(mediaType = "application/json")),
+            @ApiResponse (responseCode = "201", description = "Cliente cadastrado com sucesso", content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = MensagemSucesso.class))),
             @ApiResponse (responseCode = "400", description = "Dados inválidos na requisição", content = @Content(
                     mediaType = "application/json",
                     schema = @Schema(implementation = MensagemErroSwagger.class)
@@ -94,15 +94,16 @@ public class ClienteController {
                         mediaType = "application/json",
                         schema = @Schema(implementation =  MensagemErroSwagger.class)))})
         @DeleteMapping("/{id}")
-        public ResponseEntity<MensagemSucesso> deleteCliente(@Parameter (description = "UUID do cliente a ser deletado", required = true)
+        public ResponseEntity<Void> deleteCliente(@Parameter (description = "UUID do cliente a ser deletado", required = true)
             @PathVariable UUID id){
             clienteService.deletarCliente(id);
-            return ResponseEntity.status(HttpStatus.OK).body (new MensagemSucesso("Cliente deletado com sucesso."));
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
 
 
     @Operation(summary = "Atualizar cliente", description = "Atualizar dados de um cliente")
-    @ApiResponses(value = {@ApiResponse(description = "Cliente atualizado com sucesso", responseCode = "200", content = @Content(mediaType = "application/json")),
+    @ApiResponses(value = {@ApiResponse(description = "Cliente atualizado com sucesso", responseCode = "200", content = @Content(mediaType = "application/json",
+            schema = @Schema(implementation = MensagemSucesso.class))),
             @ApiResponse(description = "Dados informados inválidos", responseCode = "400", content = @Content(
                     mediaType = "application/json",
                     schema = @Schema(implementation =  MensagemErroSwagger.class))),
@@ -119,7 +120,7 @@ public class ClienteController {
             @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Dados para atualizar o cliente", required = true)
             @RequestBody @Valid ClienteAtualizar cliente) {
 
-        ClienteAtualizar clienteAtualizado = clienteService.atualizarCliente(id, cliente);
+        this.clienteService.atualizarCliente(id, cliente);
         return ResponseEntity.status(OK).body(new MensagemSucesso("Cliente atualizado com sucesso!"));
     }
 }

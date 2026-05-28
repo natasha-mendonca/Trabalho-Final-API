@@ -11,22 +11,22 @@ import org.serratec.trabalhoFinalApi.entity.ItemPedido;
 @NoArgsConstructor
 public class ItemPedidoBuscar {
 
-    @Schema(description = "id", example = "1")
+    @Schema(description = "id", example = "1", requiredMode = Schema.RequiredMode.REQUIRED)
     private Long id;
 
-    @Schema(description = "Nome do produto", example = "ChaveiroMagico")
+    @Schema(description = "Nome do produto", example = "ChaveiroMagico", requiredMode = Schema.RequiredMode.REQUIRED)
     private String nomeProduto;
 
-    @Schema(description = "Quantidade requisitada", example = "3")
+    @Schema(description = "Quantidade requisitada", example = "3", requiredMode = Schema.RequiredMode.REQUIRED)
     private Integer quantidade;
 
-    @Schema(description = "Valor da venda", example = "20.0")
+    @Schema(description = "Valor da venda", example = "20.0", requiredMode = Schema.RequiredMode.REQUIRED)
     private Double valorVenda;
 
-    @Schema(description = "Valor de desconto", example = "0.0")
+    @Schema(description = "Valor de desconto", example = "0.0", requiredMode = Schema.RequiredMode.REQUIRED)
     private Double desconto;
 
-    @Schema(description = "valor subtotal do item, baseado no desconto e na quantidade", example = "20.0")
+    @Schema(description = "valor subtotal do item, baseado no desconto e na quantidade", example = "20.0", requiredMode = Schema.RequiredMode.REQUIRED)
     private Double subTotal;
 
     public ItemPedidoBuscar(ItemPedido itemPedido) {
@@ -36,7 +36,6 @@ public class ItemPedidoBuscar {
         this.desconto = itemPedido.getDesconto();
         this.subTotal = itemPedido.getSubTotal();
 
-        // Verificacao caso o produto venha nulo por algum motivo
         if (itemPedido.getProduto() != null) {
             this.nomeProduto = itemPedido.getProduto().getNome();
         }

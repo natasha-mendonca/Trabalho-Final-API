@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.serratec.trabalhoFinalApi.exception.generalista.MensagemErroSwagger;
+import org.serratec.trabalhoFinalApi.exception.generalista.RequisicaoNaoEncontradoException;
 import org.serratec.trabalhoFinalApi.model.*;
 import org.serratec.trabalhoFinalApi.model.PedidoDto.PedidoAtualiza;
 import org.serratec.trabalhoFinalApi.model.PedidoDto.PedidoBuscar;
@@ -33,7 +34,9 @@ public class PedidoController {
     }
 
     @Operation(summary = "Criar pedido", description = "Insere dados do pedido no sistema")
-    @ApiResponses(value = {@ApiResponse(description = "Pedido criado com sucesso", responseCode = "201", content = @Content(mediaType = "application/json")),
+    @ApiResponses(value = {@ApiResponse(description = "Pedido criado com sucesso", responseCode = "201", content = @Content(
+            mediaType = "application/json",
+            schema = @Schema(implementation = MensagemSucesso.class))),
             @ApiResponse(description = "Dados invalidos", responseCode = "400", content = @Content(
                     mediaType = "application/json",
                     schema = @Schema(implementation = MensagemErroSwagger.class))),
@@ -47,7 +50,7 @@ public class PedidoController {
     ResponseEntity<MensagemSucesso> criar(@RequestBody @Valid PedidoCriar pedidoCriar) {
 
         this.pedidoService.inserirPedido(pedidoCriar);
-        return ResponseEntity.ok().body(new MensagemSucesso("Pedido inserido com sucesso"));
+        return ResponseEntity.status(HttpStatus.CREATED).body(new MensagemSucesso("Pedido inserido com sucesso"));
     }
 
     @Operation(summary = "Buscar pedido por id", description = "Retorna um pedido especificado pelo ID")
@@ -73,7 +76,13 @@ public class PedidoController {
     @ApiResponses(value = {
             @ApiResponse(
                     description = "Rastreamento encontrado com sucesso",
-                    responseCode = "200"
+                    responseCode = "200",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    implementation = PedidoRastreioResponse.class
+                            )
+                    )
             ),
             @ApiResponse(
                     description = "Código de rastreio inválido",
@@ -106,13 +115,16 @@ public class PedidoController {
                     )
             )
     })
-    @GetMapping("/rastreio/{codigo}")
-    ResponseEntity<PedidoRastreioResponse> buscarPorCodigoRastreio(@PathVariable String codigoRastreio){
+    @GetMapping("/rastreio/{codigoRastreio}")
+    ResponseEntity<PedidoRastreioResponse> buscarPorCodigoRastreio(@Parameter(description = "codigo de rastreio(Ex: BR-51A01E58)", required = true) @PathVariable String codigoRastreio){
         return ResponseEntity.ok(pedidoService.buscarPorCodigoRastreio(codigoRastreio));
     }
 
-    @Operation(summary = "Atualizar pedido", description = "Atualizados dados de um pedido")
-    @ApiResponses(value = {@ApiResponse(description = "Veiculo atualizado com sucesso", responseCode = "200", content = @Content(mediaType = "application/json")),
+    @Operation(summary = "Atualizar pedido", description = "Atualizar dados de um pedido")
+    @ApiResponses(value = {@ApiResponse(description = "Pedido atualizado com sucesso", responseCode = "200", content = @Content(
+            mediaType = "application/json",
+            schema = @Schema(implementation = MensagemSucesso.class)
+    )),
             @ApiResponse(description = "Dados informados inválidos", responseCode = "400", content = @Content(
                     mediaType = "application/json",
                     schema = @Schema(implementation =  MensagemErroSwagger.class))),
@@ -164,9 +176,9 @@ public class PedidoController {
     @GetMapping("/revisoes/{id}")
     public ResponseEntity<List<Number>> buscarRevisoes( @Parameter(description = "Id do pedido", required = true) @PathVariable UUID id) {
         List<Number> revisoes = pedidoService.buscarRevisoes(id);
-//        if (revisoes.isEmpty()) {
-//            throw new RequisicaoNaoEncontradoException("Nao ha revisao desse pedido pelo id: " + id);
-//        }
+        if (revisoes.isEmpty()) {
+            throw new RequisicaoNaoEncontradoException("Nao ha revisao desse pedido pelo id: " + id);
+        }
 
         return ResponseEntity.ok(revisoes);
     }

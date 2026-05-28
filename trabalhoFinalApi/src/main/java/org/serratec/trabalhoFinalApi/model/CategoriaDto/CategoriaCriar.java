@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CategoriaCriar {
 
-    @NotBlank
-    @Schema(nullable = false, description = "Campo contendo o nome da Categoria", example = "Roupas")
+    @NotBlank(message = "Nome da categoria nao deve estar em branco")
+    @Schema(nullable = false, description = "Campo contendo o nome da Categoria", example = "Metal")
     private String nome;
 }

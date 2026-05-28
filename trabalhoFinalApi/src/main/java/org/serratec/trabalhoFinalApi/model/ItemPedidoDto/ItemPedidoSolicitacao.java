@@ -22,15 +22,4 @@ public class ItemPedidoSolicitacao {
     @NotNull(message = "Quantidade nao pode ser null")
     @Min(value = 1, message = "A quantidade do produto precisa ser igual ou maior que 1")
     private Integer quantidade;
-
-//    @Schema(example = "2000.20", nullable = false, description = "Campo com o valor venda", minimum = "1")
-//    @NotNull(message = "Valor de venda nao pode ser null")
-//    @Min(value = 1 , message = "O valor do venda precisa ser igual ou maior que 1")
-//    private Double valorVenda;
-
-//    @Schema(example = "200", nullable = false, description = "Campo com o desconto", minimum = "0")
-//    @NotNull(message = "Desconto nao pode ser null")
-//    @Min(value = 0, message = "O valor do desconto precisa ser maior que 0")
-//    private Double desconto;
-
 }

@@ -1,6 +1,5 @@
 package org.serratec.trabalhoFinalApi.repository;
 
-import jakarta.validation.constraints.NotBlank;
 import org.serratec.trabalhoFinalApi.entity.Cliente;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,7 +13,7 @@ import java.util.UUID;
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, UUID> {
 
-    Optional<Object> findByCpf(@NotBlank String cpf);
+    Optional<Cliente> findByCpf(String cpf);
 
     @Query("SELECT c FROM Cliente c WHERE " +
             "DAY(c.dataNascimento) = :dia AND MONTH(c.dataNascimento) = :mes")

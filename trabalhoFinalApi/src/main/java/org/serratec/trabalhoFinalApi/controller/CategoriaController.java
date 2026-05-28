@@ -73,6 +73,7 @@ public class CategoriaController {
             @ApiResponse (description = "Categoria deletada com sucesso", responseCode = "204"),
             @ApiResponse (description = "Dados informados inválidos", responseCode = "400", content = @Content(mediaType = "application/json", schema = @Schema(implementation = MensagemErroSwagger.class))),
             @ApiResponse (description = "Dados não encontrados", responseCode = "404", content = @Content(mediaType = "application/json", schema = @Schema(implementation = MensagemErroSwagger.class))),
+            @ApiResponse (description = "Dados em conflito(nao é possivel deletar uma categoria que possui produtos cadastrados)", responseCode = "409", content = @Content(mediaType = "application/json", schema = @Schema(implementation = MensagemErroSwagger.class))),
             @ApiResponse (description = "Erro interno no servidor", responseCode = "500", content = @Content(mediaType = "application/json", schema = @Schema(implementation = MensagemErroSwagger.class)))
     })
     @DeleteMapping("/{id}")

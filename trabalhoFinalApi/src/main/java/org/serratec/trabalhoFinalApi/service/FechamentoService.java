@@ -1,8 +1,8 @@
 package org.serratec.trabalhoFinalApi.service;
 
+import org.serratec.trabalhoFinalApi.exception.generalista.RequisicaoMalRealizadaException;
 import org.serratec.trabalhoFinalApi.exception.generalista.RequisicaoNaoEncontradoException;
 import org.serratec.trabalhoFinalApi.repository.PedidoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -10,8 +10,11 @@ import java.time.LocalDateTime;
 @Service
 public class FechamentoService {
 
-    @Autowired
     private PedidoRepository pedidoRepository;
+
+    public FechamentoService(PedidoRepository pedidoRepository) {
+        this.pedidoRepository = pedidoRepository;
+    }
 
     public Double calcularFaturamento(String tipo) {
         LocalDateTime fim = LocalDateTime.now();
@@ -31,12 +34,12 @@ public class FechamentoService {
                 inicio = LocalDateTime.of(fim.getYear(), 1, 1, 0, 0);
                 break;
             default:
-                throw new RequisicaoNaoEncontradoException("Tipo de relatório é inválido. Use o tipo: hoje, semana ou ano.");
+                throw new RequisicaoMalRealizadaException("Tipo de relatório é inválido. Use o tipo: hoje, semana ou ano.");
         }
 
         Double total = pedidoRepository.somarFaturamento(inicio, fim);
 
-        if(total == null){
+        if(total == null || total == 0.0){
             throw new RequisicaoNaoEncontradoException("O registro nao consta no banco");
         }
         return total;

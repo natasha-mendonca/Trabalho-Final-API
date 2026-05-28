@@ -46,7 +46,7 @@ public class Produto extends Auditoria{
         this.descricao = produto.getDescricao();
         this.preco = produto.getPreco();
         this.estoque = produto.getEstoque();
-        this.ativo = produto.getAtivo();
+        this.ativo = produto.getAtivo() != null ? produto.getAtivo() : false;
         this.categoria = categoria;
 
     }

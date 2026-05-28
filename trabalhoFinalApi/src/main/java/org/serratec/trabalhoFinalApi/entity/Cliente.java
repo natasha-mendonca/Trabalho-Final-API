@@ -1,6 +1,7 @@
 package org.serratec.trabalhoFinalApi.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -34,12 +35,13 @@ public class Cliente extends Auditoria{
     @Column(unique = true, length = 50)
     private String email;
 
-    @Column(length = 13)
+    @Column(length = 11)
     private String telefone;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "endereco_id")
     @Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
+    @Valid
     private Endereco endereco;
 
     public Cliente(ClienteCriar cliente, Endereco endereco) {

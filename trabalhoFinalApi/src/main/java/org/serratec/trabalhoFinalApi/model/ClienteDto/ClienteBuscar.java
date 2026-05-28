@@ -14,22 +14,22 @@ import java.util.UUID;
 @AllArgsConstructor
 public class ClienteBuscar {
 
-    @Schema(description = "Id do cliente")
+    @Schema(description = "Id do cliente", requiredMode = Schema.RequiredMode.REQUIRED)
     private UUID id;
 
-    @Schema(description = "Nome completo do cliente")
+    @Schema(description = "Nome completo do cliente", requiredMode = Schema.RequiredMode.REQUIRED)
     private String nome;
 
-    @Schema(description = "CPF do cliente")
+    @Schema(description = "CPF do cliente", requiredMode = Schema.RequiredMode.REQUIRED)
     private String cpf;
 
-    @Schema(description = "E-mail do cliente")
+    @Schema(description = "E-mail do cliente", requiredMode = Schema.RequiredMode.REQUIRED)
     private String email;
 
-    @Schema(description = "Telefone do cliente")
+    @Schema(description = "Telefone do cliente", requiredMode = Schema.RequiredMode.REQUIRED)
     private String telefone;
 
-    @Schema(description = "Endereço do cliente")
+    @Schema(description = "Endereço do cliente", requiredMode = Schema.RequiredMode.REQUIRED)
     private EnderecoBuscar endereco;
 
     public ClienteBuscar (Cliente cliente){
