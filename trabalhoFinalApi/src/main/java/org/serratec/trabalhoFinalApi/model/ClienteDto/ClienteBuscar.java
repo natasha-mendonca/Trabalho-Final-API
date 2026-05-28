@@ -1,10 +1,12 @@
-package org.serratec.trabalhoFinalApi.model;
+package org.serratec.trabalhoFinalApi.model.ClienteDto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.serratec.trabalhoFinalApi.entity.Cliente;
+import org.serratec.trabalhoFinalApi.model.EnderecoDto.EnderecoBuscar;
+
 import java.util.UUID;
 
 @Data

@@ -1,6 +1,5 @@
 package org.serratec.trabalhoFinalApi.exception.catalogo;
 
-import org.serratec.trabalhoFinalApi.exception.EcommerceException;
 import org.serratec.trabalhoFinalApi.exception.EcommerceNotFoundException;
 
 import java.util.UUID;

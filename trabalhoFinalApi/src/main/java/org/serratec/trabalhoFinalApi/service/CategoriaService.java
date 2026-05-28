@@ -4,9 +4,9 @@ import lombok.AllArgsConstructor;
 import org.serratec.trabalhoFinalApi.entity.Categoria;
 import org.serratec.trabalhoFinalApi.exception.catalogo.CategoriaPaiNaoEncontradaException;
 import org.serratec.trabalhoFinalApi.exception.generalista.RequisicaoNaoEncontradoException;
-import org.serratec.trabalhoFinalApi.model.CategoriaAtualizar;
-import org.serratec.trabalhoFinalApi.model.CategoriaBuscar;
-import org.serratec.trabalhoFinalApi.model.CategoriaCriar;
+import org.serratec.trabalhoFinalApi.model.CategoriaDto.CategoriaAtualizar;
+import org.serratec.trabalhoFinalApi.model.CategoriaDto.CategoriaBuscar;
+import org.serratec.trabalhoFinalApi.model.CategoriaDto.CategoriaCriar;
 import org.serratec.trabalhoFinalApi.repository.CategoriaRepository;
 import org.springframework.stereotype.Service;
 

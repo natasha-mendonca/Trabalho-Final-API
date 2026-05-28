@@ -6,9 +6,9 @@ import org.serratec.trabalhoFinalApi.exception.usuario.ClienteNaoEncontradoExcep
 import org.serratec.trabalhoFinalApi.exception.usuario.CpfJaCadastradoException;
 import org.serratec.trabalhoFinalApi.exception.usuario.EmailJaCadastradoException;
 import org.serratec.trabalhoFinalApi.exception.usuario.UsuarioNaoEncontradoException;
-import org.serratec.trabalhoFinalApi.model.ClienteAtualizar;
-import org.serratec.trabalhoFinalApi.model.ClienteBuscar;
-import org.serratec.trabalhoFinalApi.model.ClienteCriar;
+import org.serratec.trabalhoFinalApi.model.ClienteDto.ClienteAtualizar;
+import org.serratec.trabalhoFinalApi.model.ClienteDto.ClienteBuscar;
+import org.serratec.trabalhoFinalApi.model.ClienteDto.ClienteCriar;
 import org.serratec.trabalhoFinalApi.repository.ClienteRepository;
 import org.springframework.stereotype.Service;
 

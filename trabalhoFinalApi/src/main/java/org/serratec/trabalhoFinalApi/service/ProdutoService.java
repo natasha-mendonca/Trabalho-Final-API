@@ -8,6 +8,9 @@ import org.serratec.trabalhoFinalApi.exception.catalogo.ProdutoNaoEncontradoExce
 import org.serratec.trabalhoFinalApi.exception.generalista.RequisicaoNaoEncontradoException;
 import org.serratec.trabalhoFinalApi.exception.venda.EstoqueInsuficienteException;
 import org.serratec.trabalhoFinalApi.model.*;
+import org.serratec.trabalhoFinalApi.model.ProdutoDto.ProdutoAtualizar;
+import org.serratec.trabalhoFinalApi.model.ProdutoDto.ProdutoBuscar;
+import org.serratec.trabalhoFinalApi.model.ProdutoDto.ProdutoCriar;
 import org.serratec.trabalhoFinalApi.repository.CategoriaRepository;
 import org.serratec.trabalhoFinalApi.repository.ProdutoRepository;
 import org.springframework.stereotype.Service;

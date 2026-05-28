@@ -20,7 +20,7 @@ import java.util.List;
 
 
 @Tag(name = "Relatório: Produtos mais vendidos", description = "Pacote contendo as requisições envolvendo relatório de produtos mais vendidos")
-@RequestMapping("/mais-vendidos")
+@RequestMapping("/maisvendidos")
 @RestController
 @AllArgsConstructor
 public class RelatorioController {

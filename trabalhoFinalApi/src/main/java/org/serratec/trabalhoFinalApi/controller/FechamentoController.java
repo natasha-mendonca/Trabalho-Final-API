@@ -8,7 +8,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.serratec.trabalhoFinalApi.exception.generalista.MensagemErroSwagger;
-import org.serratec.trabalhoFinalApi.model.PedidoBuscar;
 import org.serratec.trabalhoFinalApi.model.RelatorioResponse;
 import org.serratec.trabalhoFinalApi.service.FechamentoService;
 import org.springframework.http.ResponseEntity;

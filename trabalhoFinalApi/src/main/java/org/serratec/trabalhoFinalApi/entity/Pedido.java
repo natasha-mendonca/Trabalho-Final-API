@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.envers.Audited;
 import org.serratec.trabalhoFinalApi.model.FormasPagamento;
-import org.serratec.trabalhoFinalApi.model.PedidoCriar;
+import org.serratec.trabalhoFinalApi.model.PedidoDto.PedidoCriar;
 import org.serratec.trabalhoFinalApi.model.Status;
 import java.time.LocalDate;
 import java.time.LocalDateTime;

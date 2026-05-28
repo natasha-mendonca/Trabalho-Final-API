@@ -16,6 +16,10 @@ import org.serratec.trabalhoFinalApi.exception.venda.EstoqueInsuficienteExceptio
 import org.serratec.trabalhoFinalApi.exception.venda.PedidoInvalidoException;
 import org.serratec.trabalhoFinalApi.exception.venda.PedidoNaoEncontradoException;
 import org.serratec.trabalhoFinalApi.model.*;
+import org.serratec.trabalhoFinalApi.model.ItemPedidoDto.ItemPedidoSolicitacao;
+import org.serratec.trabalhoFinalApi.model.PedidoDto.PedidoAtualiza;
+import org.serratec.trabalhoFinalApi.model.PedidoDto.PedidoBuscar;
+import org.serratec.trabalhoFinalApi.model.PedidoDto.PedidoCriar;
 import org.serratec.trabalhoFinalApi.repository.ClienteRepository;
 import org.serratec.trabalhoFinalApi.repository.PedidoRepository;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,8 +28,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
-//import static org.serratec.trabalhoFinalApi.enums.StatusPedido.APROVADO;
 
 @Service
 public class PedidoService {
