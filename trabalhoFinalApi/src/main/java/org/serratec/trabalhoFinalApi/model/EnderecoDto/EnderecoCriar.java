@@ -13,11 +13,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class EnderecoCriar {
 
-    @Schema (description = "CEP do endereço")
+    @Schema (description = "CEP do endereço", nullable = false)
     @NotBlank(message = "O CEP é obrigatório!")
     private String cep;
 
-    @Schema (description = "Complemento do endereço")
+    @Schema (description = "Complemento do endereço", nullable = false)
     @NotBlank(message = "O complemento é obrigatório!")
     private String complemento;
 

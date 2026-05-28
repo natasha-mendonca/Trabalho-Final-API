@@ -23,4 +23,6 @@ public interface ProdutoRepository extends JpaRepository<Produto, UUID> {
         order by sum(ip.quantidade) DESC
 """, nativeQuery = true)
     List<Object[]> buscarMaisVendidos();
+
+    Boolean existsByCategoriaId(UUID categoriaId);
 }

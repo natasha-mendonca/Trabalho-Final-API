@@ -10,19 +10,19 @@ public class PedidoRastreioResponse {
 
     @Schema(
             description = "Código de rastreamento do pedido",
-            example = "BR-A1B2C3D4"
+            example = "BR-A1B2C3D4", requiredMode = Schema.RequiredMode.REQUIRED
     )
     private String codigoRastreio;
 
     @Schema(
             description = "Status atual do pedido",
-            example = "ENVIADO"
+            example = "ENVIADO", requiredMode = Schema.RequiredMode.REQUIRED
     )
     private String status;
 
     @Schema(
             description = "Data prevista para entrega",
-            example = "2026-06-02"
+            example = "2026-06-02", requiredMode = Schema.RequiredMode.REQUIRED
     )
     private LocalDate previsaoEntrega;
 

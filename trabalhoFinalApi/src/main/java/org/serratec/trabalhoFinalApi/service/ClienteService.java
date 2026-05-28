@@ -32,7 +32,7 @@ public class ClienteService {
 
     public Cliente buscarCliente (UUID id){
         return this.clienteRepository.findById(id).orElseThrow(() ->
-                new UsuarioNaoEncontradoException("Cliente não encontrado pelo id: " + id + " especificado. Informe outro!"));
+                new ClienteNaoEncontradoException(id + " especificado. Informe outro!"));
     }
 
     public ClienteBuscar inserirCliente(ClienteCriar cliente) {
@@ -67,14 +67,6 @@ public class ClienteService {
             clienteAtualizado.setNome(cliente.getNome());
         }
 
-        if(cliente.getEmail() != null) {
-            if(!clienteRepository.findByEmail(cliente.getEmail()).isPresent()){
-                clienteAtualizado.setEmail(cliente.getEmail());
-            } else {
-                throw new EmailJaCadastradoException(cliente.getEmail());
-            }
-        }
-
         if(cliente.getTelefone() != null){
             clienteAtualizado.setTelefone(cliente.getTelefone());
         }
@@ -103,7 +95,7 @@ public class ClienteService {
 
     public void deletarCliente(UUID id) {
         if (!clienteRepository.existsById(id)){
-            throw new UsuarioNaoEncontradoException(id.toString());
+            throw new UsuarioNaoEncontradoException("id: " + id.toString());
         }
 
         clienteRepository.deleteById(id);

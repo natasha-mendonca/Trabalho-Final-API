@@ -25,22 +25,18 @@ public class OpenApiConfig {
         server.setUrl("http://localhost:8080/api/v1");
         server.setDescription("Api rodando localmente");
 
-        Server serverPrd = new Server();
-        serverPrd.setUrl("https://api.serratec.org/");
-        serverPrd.setDescription("Api rodando no ambiente produtivo");
-
         Contact contact = new Contact();
-        contact.setUrl("linkedin");
-        contact.setEmail("usuario@gmail.com");
+        contact.setUrl("https://github.com/natasha-mendonca/Trabalho-Final-API.git");
+        contact.setEmail("c.carvalho@docente.senai.br");
         contact.setName("Trabalho em grupo");
 
         Info info = new Info()
                 .contact(contact)
-                .description("Api e-commerce de venda de produtos")
-                .title("Trabalho em grupo APIRest")
+                .description("Trabalho em grupo APIRest")
+                .title("Api e-commerce de venda de produtos")
                 .version(this.versao);
 
-        return new OpenAPI().info(info).servers(List.of(server,serverPrd));
+        return new OpenAPI().info(info).servers(List.of(server));
     }
 
 }

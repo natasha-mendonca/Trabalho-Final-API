@@ -19,38 +19,27 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class PedidoBuscar {
 
-    @Schema(description = "Id do pedido", example = "835c45e4-edf6-463c-bb7d-951cbcfdec46")
+    @Schema(description = "Id do pedido", example = "835c45e4-edf6-463c-bb7d-951cbcfdec46", requiredMode = Schema.RequiredMode.REQUIRED)
     private UUID id;
     private List<ItemPedidoBuscar> itens;
 
-    @Schema(description = "Observações do pedido", example = "Entregar apos as 18h")
+    @Schema(description = "Observações do pedido", example = "Entregar apos as 18h", requiredMode = Schema.RequiredMode.REQUIRED)
     private String observacoes;
 
-    @Schema(description = "Formas de pagamento(Enum)", example = "CREDITO")
+    @Schema(description = "Formas de pagamento(Enum)", example = "CREDITO", requiredMode = Schema.RequiredMode.REQUIRED)
     private FormasPagamento formaDePagamento;
 
-    @Schema(description = "Status do pedido", example = "CRIADO")
+    @Schema(description = "Status do pedido", example = "CRIADO", requiredMode = Schema.RequiredMode.REQUIRED)
     private Status status;
 
-    @Schema(description = "Data do pedido", example = "2026-05-27T14:37:46.773Z")
+    @Schema(description = "Data do pedido", example = "2026-05-27T14:37:46.773Z", requiredMode = Schema.RequiredMode.REQUIRED)
     private LocalDateTime dataPedido;
 
-    @Schema(description = "valor total do pedido", example = "20.0")
+    @Schema(description = "valor total do pedido", example = "20.0", requiredMode = Schema.RequiredMode.REQUIRED)
     private Double valorTotal;
 
-    @Schema(description = "id para referencia o cliente da compra", example = "3fa85f64-5717-4562-b3fc-2c963f66afa6")
+    @Schema(description = "id para referencia o cliente da compra", example = "3fa85f64-5717-4562-b3fc-2c963f66afa6", requiredMode = Schema.RequiredMode.REQUIRED)
     private UUID clienteId;
-//    private Boolean deletado;
-
-    //@ManyToOne
-//    private Cliente cliente;
-
-
-    //    private String formatDataPedido(LocalDateTime dataPedido){
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-//        return dataPedido.format(formatter);
-//    }
-
 
 
     public PedidoBuscar(Pedido pedido) {
@@ -60,13 +49,11 @@ public class PedidoBuscar {
         this.status = pedido.getStatus();
         this.formaDePagamento = pedido.getFormaDePagamento();
 
-        // Funcionalidade: Pedro: converter a lista de entidades ItemPedido dentro de Pedido para ItemPedidoBuscar(dto)
         if (pedido.getItens() != null) {
             this.itens = pedido.getItens().stream()
                     .map(ItemPedidoBuscar::new)
                     .collect(Collectors.toList());
         }
-        //Funcionalidade: Pedro: para cada item do ItemPedidoBuscar pegue o subtotal e some(.sum())
         if (this.itens != null) {
             this.valorTotal = this.itens.stream()
                     .mapToDouble(ItemPedidoBuscar::getSubTotal)
@@ -75,6 +62,5 @@ public class PedidoBuscar {
 
         this.clienteId = pedido.getCliente().getId();
 
-//        this.deletado = pedido.getDeletado();
     }
 }

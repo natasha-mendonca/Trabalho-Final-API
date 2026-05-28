@@ -15,7 +15,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class ProdutoAtualizar {
 
-    @Schema( description = "Campo contendo o nome do Produto", example = "Camiseta")
+    @Schema( description = "Campo contendo o nome do Produto", example = "PendureJogador01")
     private String nome;
 
     @Size(max = 1000)

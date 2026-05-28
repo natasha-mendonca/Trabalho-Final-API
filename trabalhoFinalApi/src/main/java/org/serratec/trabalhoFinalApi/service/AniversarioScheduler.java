@@ -18,7 +18,6 @@ public class AniversarioScheduler {
         this.emailService = emailService;
     }
 
-    // executa todos os dias à meia-noite
     @Scheduled(cron = "0 0 0 * * *")
     public void verificarAniversariantes() {
         LocalDate hoje = LocalDate.now();

@@ -54,9 +54,6 @@ public class Pedido extends Auditoria{
 
     @Column
     private LocalDate previsaoEntrega;
-//
-//    @Column
-//    private Boolean deletado;
 
     public Pedido(PedidoCriar pedidoCriar, Cliente cliente) {
         this.observacoes = pedidoCriar.getObservacoes();

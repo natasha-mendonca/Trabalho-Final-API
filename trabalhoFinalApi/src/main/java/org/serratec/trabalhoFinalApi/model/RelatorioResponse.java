@@ -10,12 +10,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RelatorioResponse {
 
-    @Schema(example = "sucesso")
+    @Schema(example = "sucesso", requiredMode = Schema.RequiredMode.REQUIRED)
     private String sucesso;
 
-    @Schema(example = "HOJE")
+    @Schema(example = "HOJE", requiredMode = Schema.RequiredMode.REQUIRED)
     private String tipo_relatorio;
 
-    @Schema(example = "600.0")
+    @Schema(example = "600.0", requiredMode = Schema.RequiredMode.REQUIRED)
     private Double valor_total;
 }

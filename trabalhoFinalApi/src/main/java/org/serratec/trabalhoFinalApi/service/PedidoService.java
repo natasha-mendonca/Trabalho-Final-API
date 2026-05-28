@@ -164,12 +164,11 @@ public class PedidoService {
 
     public void deletarPedido(UUID id){
 
-        Pedido pedidoExistente =  buscarPedido(id);
-
         if(id == null){
             throw new PedidoInvalidoException("id não pode ser null");
         }
-//        pedidoExistente.setDeletado(true);
+        Pedido pedidoExistente =  buscarPedido(id);
+
         this.pedidoRepository.delete(pedidoExistente);
         emailService.enviarEmailPedidoCancelado(pedidoExistente.getCliente().getEmail(),
                 pedidoExistente);
